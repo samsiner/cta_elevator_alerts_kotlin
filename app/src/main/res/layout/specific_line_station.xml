@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+        android:id="@+id/img_ada"
+        android:layout_height="30dp"
+        android:layout_width="30dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/accessible"
+        android:contentDescription="@string/content_description_accessible_icon" />
+
+        <RelativeLayout
+            android:id="@+id/relative_line_graphic"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/img_ada"
+            android:layout_toRightOf="@+id/img_ada"
+            >
+
+            <View
+                android:id="@+id/view_vertical_bar_top"
+                style="@style/stationLineLine"
+                android:background="@color/colorRedLine"
+                android:layout_alignParentTop="true"
+                />
+            <View
+                android:id="@+id/view_vertical_bar_bottom"
+                style="@style/stationLineLine"
+                android:background="@color/colorRedLine"
+                android:layout_alignParentBottom="true"
+                />
+            <View
+                android:id="@+id/view_circle"
+                android:layout_height="16dp"
+                android:layout_width="16dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/circle"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                />
+
+            <ImageView
+                android:id="@+id/img_status"
+                style="@style/StatusImage"
+                android:layout_centerVertical="true"
+                android:src="@drawable/status_red"
+                android:contentDescription="@string/image_elevator_out"
+            />
+            <!--android:layout_height="19dp"-->
+            <!--android:layout_width="19dp"-->
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_line_station"
+            style="@style/StationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/relative_line_graphic"
+            android:layout_toRightOf="@+id/relative_line_graphic"
+            />
+
+        <ImageView
+            android:id="@+id/img_star_icon"
+            style="@style/icon_small_star"
+            android:layout_toLeftOf="@id/img_right"
+            android:layout_toStartOf="@id/img_right"
+            />
+
+        <ImageView
+        android:id="@+id/img_right"
+        style="@style/rightArrow"
+        android:contentDescription="@string/content_description_right_arrow"
+        />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
