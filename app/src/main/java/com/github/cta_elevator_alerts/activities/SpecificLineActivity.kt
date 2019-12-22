@@ -27,22 +27,22 @@ import com.github.cta_elevator_alerts.viewmodels.SpecificLineViewModel
  */
 
 class SpecificLineActivity : AppCompatActivity() {
-    private var vm: SpecificLineViewModel? = null
-    private var lineAlertsAdapter: SpecificLineAlertsAdapter? = null
-    private var specificLineAdapter: SpecificLineAdapter? = null
+    private lateinit var vm: SpecificLineViewModel
+    private lateinit var lineAlertsAdapter: SpecificLineAlertsAdapter
+    private lateinit var specificLineAdapter: SpecificLineAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_specific_line)
         vm = ViewModelProviders.of(this).get(SpecificLineViewModel::class.java)
         val line = intent.getStringExtra("line")
-        vm!!.line = line
+        vm.line = line
 
         addFavoritesObserver()
 
-        val lineAlertIDs = vm!!.allLineAlerts
+        val lineAlertIDs = vm.allLineAlerts
         lineAlertsAdapter = SpecificLineAlertsAdapter(this, lineAlertIDs!!)
-        specificLineAdapter = SpecificLineAdapter(this, vm!!.getLine())
+        specificLineAdapter = SpecificLineAdapter(this, vm.getLine())
 
         if (lineAlertIDs.isNotEmpty()) {
             val lineAlertsRecyclerView = findViewById<RecyclerView>(R.id.recycler_specific_line_alert_stations)
@@ -56,15 +56,15 @@ class SpecificLineActivity : AppCompatActivity() {
         }
 
         val specificLineRecyclerView = findViewById<RecyclerView>(R.id.recycler_specific_line)
-        specificLineAdapter!!.setToolbar(intent.getStringExtra("line"))
+        specificLineAdapter.setToolbar(intent.getStringExtra("line"))
         specificLineRecyclerView.adapter = specificLineAdapter
         specificLineRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     private fun addFavoritesObserver() {
-        vm!!.favorites.observe(this, Observer<List<Station>>{
-            lineAlertsAdapter!!.notifyDataSetChanged()
-            specificLineAdapter!!.notifyDataSetChanged()
+        vm.favorites.observe(this, Observer<List<Station>>{
+            lineAlertsAdapter.notifyDataSetChanged()
+            specificLineAdapter.notifyDataSetChanged()
         })
     }
 
@@ -76,19 +76,19 @@ class SpecificLineActivity : AppCompatActivity() {
     }
 
     fun getStationName(stationID: String): String? {
-        return vm!!.getStationName(stationID)
+        return vm.getStationName(stationID)
     }
 
     fun getHasElevator(stationID: String): Boolean {
-        return vm!!.getHasElevator(stationID)
+        return vm.getHasElevator(stationID)
     }
 
     fun getIsFavorite(stationID: String): Boolean {
-        return vm!!.getIsFavorite(stationID)
+        return vm.getIsFavorite(stationID)
     }
 
     fun getHasElevatorAlert(stationID: String): Boolean {
-        return vm!!.getHasElevatorAlert(stationID)
+        return vm.getHasElevatorAlert(stationID)
     }
 
     fun onBackPressed(v: View) {

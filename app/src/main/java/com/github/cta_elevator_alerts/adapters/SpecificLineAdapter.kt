@@ -23,7 +23,6 @@ import com.github.cta_elevator_alerts.activities.SpecificLineActivity
  */
 
 class SpecificLineAdapter(private val context: Context, private val lineStations: List<String>?) : RecyclerView.Adapter<SpecificLineAdapter.SpecificLineAdapterViewHolder>() {
-
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val toolbar: androidx.appcompat.widget.Toolbar = (context as Activity).findViewById(R.id.toolbar)
     private val toolbarTextView: TextView = (context as Activity).findViewById(R.id.txt_toolbar)
@@ -45,42 +44,42 @@ class SpecificLineAdapter(private val context: Context, private val lineStations
                 "Red Line" -> {
                     verticalBarTop.setBackgroundResource(R.color.colorRedLine)
                     verticalBarBottom.setBackgroundResource(R.color.colorRedLine)
-                    circle.setStroke(5, context.resources.getColor(R.color.colorRedLine))
+                    circle.setStroke(5, ContextCompat.getColor(context, R.color.colorRedLine))
                 }
                 "Blue Line" -> {
                     verticalBarTop.setBackgroundResource(R.color.colorBlueLine)
                     verticalBarBottom.setBackgroundResource(R.color.colorBlueLine)
-                    circle.setStroke(5, context.resources.getColor(R.color.colorBlueLine))
+                    circle.setStroke(5, ContextCompat.getColor(context, R.color.colorBlueLine))
                 }
                 "Brown Line" -> {
                     verticalBarTop.setBackgroundResource(R.color.colorBrownLine)
                     verticalBarBottom.setBackgroundResource(R.color.colorBrownLine)
-                    circle.setStroke(5, context.resources.getColor(R.color.colorBrownLine))
+                    circle.setStroke(5, ContextCompat.getColor(context, R.color.colorBrownLine))
                 }
                 "Green Line" -> {
                     verticalBarTop.setBackgroundResource(R.color.colorGreenLine)
                     verticalBarBottom.setBackgroundResource(R.color.colorGreenLine)
-                    circle.setStroke(5, context.resources.getColor(R.color.colorGreenLine))
+                    circle.setStroke(5, ContextCompat.getColor(context, R.color.colorGreenLine))
                 }
                 "Orange Line" -> {
                     verticalBarTop.setBackgroundResource(R.color.colorOrangeLine)
                     verticalBarBottom.setBackgroundResource(R.color.colorOrangeLine)
-                    circle.setStroke(5, context.resources.getColor(R.color.colorOrangeLine))
+                    circle.setStroke(5, ContextCompat.getColor(context, R.color.colorOrangeLine))
                 }
                 "Pink Line" -> {
                     verticalBarTop.setBackgroundResource(R.color.colorPinkLine)
                     verticalBarBottom.setBackgroundResource(R.color.colorPinkLine)
-                    circle.setStroke(5, context.resources.getColor(R.color.colorPinkLine))
+                    circle.setStroke(5, ContextCompat.getColor(context, R.color.colorPinkLine))
                 }
                 "Purple Line" -> {
                     verticalBarTop.setBackgroundResource(R.color.colorPurpleLine)
                     verticalBarBottom.setBackgroundResource(R.color.colorPurpleLine)
-                    circle.setStroke(5, context.resources.getColor(R.color.colorPurpleLine))
+                    circle.setStroke(5, ContextCompat.getColor(context, R.color.colorPurpleLine))
                 }
                 "Yellow Line" -> {
                     verticalBarTop.setBackgroundResource(R.color.colorYellowLine)
                     verticalBarBottom.setBackgroundResource(R.color.colorYellowLine)
-                    circle.setStroke(5, context.resources.getColor(R.color.colorYellowLine))
+                    circle.setStroke(5, ContextCompat.getColor(context, R.color.colorYellowLine))
                 }
             }
         }

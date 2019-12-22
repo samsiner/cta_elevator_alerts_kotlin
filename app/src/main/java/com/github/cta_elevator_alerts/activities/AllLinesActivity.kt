@@ -22,8 +22,7 @@ import com.github.cta_elevator_alerts.viewmodels.AllLinesViewModel
  */
 
 class AllLinesActivity : AppCompatActivity() {
-    var allLinesViewModel: AllLinesViewModel? = null
-        private set
+    lateinit var allLinesViewModel: AllLinesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

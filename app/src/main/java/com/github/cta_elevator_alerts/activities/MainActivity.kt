@@ -39,12 +39,12 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var stationAlertsViewModel: MainViewModel
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
     private lateinit var favoritesAdapter: StationListAdapter
     private lateinit var alertsAdapter: StationListAdapter
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var tvAlertsTime: TextView
+    lateinit var stationAlertsViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun addLastUpdatedObserver() {
         stationAlertsViewModel.updateAlertsTime.observe(this, Observer<String>{
-            tvAlertsTime.setText(it)
+            tvAlertsTime.text = it
 
             val editor = sharedPreferences.edit()
             editor.putString("LastUpdatedTime", it)

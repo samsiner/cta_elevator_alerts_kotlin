@@ -27,7 +27,7 @@ import java.util.ArrayList
 class StationListAdapter(private val context: Context) : RecyclerView.Adapter<StationListAdapter.StationListViewHolder>() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
-    private val lineColors: IntArray = context.getResources().getIntArray(R.array.lineColors)
+    private val lineColors: IntArray = context.resources.getIntArray(R.array.lineColors)
     private val vm: MainViewModel? = (context as MainActivity).stationAlertsViewModel
     private var stations: List<Station> = ArrayList()
 
@@ -89,7 +89,7 @@ class StationListAdapter(private val context: Context) : RecyclerView.Adapter<St
         }
 
         //Make station clickable to see details
-        (holder.tv.parent as View).setOnClickListener { v ->
+        (holder.tv.parent as View).setOnClickListener {
             val intent = Intent(context, DisplayAlertActivity::class.java)
             intent.putExtra("stationID", current.stationID)
             intent.putExtra("fromMain", true)

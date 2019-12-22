@@ -25,14 +25,14 @@ import com.github.cta_elevator_alerts.viewmodels.DisplayAlertViewModel
 class DisplayAlertActivity : AppCompatActivity() {
     private lateinit var starIcon: ImageView
     private lateinit var favoriteText: TextView
-    private lateinit var stationID: String
-    private var isFavorite: Boolean? = null
     private var mRepository: StationRepository? = null
+    lateinit var stationID: String
+    var isFavorite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_alert)
-        val tvshortDesc = findViewById<TextView>(R.id.txt_alert_shortDesc)
+        val tvShortDesc = findViewById<TextView>(R.id.txt_alert_shortDesc)
         val toolbarText = findViewById<TextView>(R.id.txt_toolbar)
         starIcon = this.findViewById(R.id.img_star_icon)
         favoriteText = this.findViewById(R.id.favorited_text)
@@ -47,9 +47,9 @@ class DisplayAlertActivity : AppCompatActivity() {
         toolbarText.text = mDisplayAlertViewModel.stationName //Set Station Name
 
         isFavorite = mDisplayAlertViewModel.isFavorite
-        val hasElevator = mRepository!!.mGetHasElevator(stationID)
+        val hasElevator = mRepository?.mGetHasElevator(stationID) ?: false
 
-        if (isFavorite!! && hasElevator) {
+        if (isFavorite && hasElevator) {
             starIcon.setImageResource(R.drawable.star_icon_full)
             favoriteText.setText(R.string.added_to_favorites)
         } else if (hasElevator) {
@@ -63,11 +63,11 @@ class DisplayAlertActivity : AppCompatActivity() {
 
         //Set alert description
         if (!mDisplayAlertViewModel.hasElevator)
-            tvshortDesc.setText(R.string.no_elevator)
+            tvShortDesc.setText(R.string.no_elevator)
         else if (!mDisplayAlertViewModel.hasAlert)
-            tvshortDesc.setText(R.string.present_elevator)
+            tvShortDesc.setText(R.string.present_elevator)
         else
-            tvshortDesc.text = mDisplayAlertViewModel.shortDesc
+            tvShortDesc.text = mDisplayAlertViewModel.shortDesc
     }
 
     fun toMainActivity(v: View) {
@@ -90,17 +90,16 @@ class DisplayAlertActivity : AppCompatActivity() {
     }
 
     fun clickStarIcon(v: View) {
-        if (isFavorite!!) {
+        isFavorite = if (isFavorite) {
             starIcon.setImageResource(R.drawable.star_icon_empty)
             favoriteText.setText(R.string.add_to_favorites)
-            mRepository!!.removeFavorite(stationID)
-            isFavorite = false
+            mRepository?.removeFavorite(stationID)
+            false
         } else {
             starIcon.setImageResource(R.drawable.star_icon_full)
             favoriteText.setText(R.string.added_to_favorites)
-            mRepository!!.addFavorite(stationID)
-            isFavorite = true
+            mRepository?.addFavorite(stationID)
+            true
         }
-
     }
 }

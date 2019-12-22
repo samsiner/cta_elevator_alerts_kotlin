@@ -40,15 +40,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return mRepository!!.mGetHasElevatorAlert(stationID)
     }
 
-    fun removeAlertKing() {
-        mRepository!!.removeAlertKing()
-    }
-
-    fun addAlertHoward() {
-        mRepository!!.addAlertHoward()
-    }
-
-    fun mGetStationAlertIDs(): List<String> {
-        return mRepository!!.mGetStationAlertIDs()
-    }
+//    fun removeAlertKing() {
+//        mRepository!!.removeAlertKing()
+//    }
+//
+//    fun addAlertHoward() {
+//        mRepository!!.addAlertHoward()
+//    }
+//
+//    fun mGetStationAlertIDs(): List<String> {
+//        return mRepository!!.mGetStationAlertIDs()
+//    }
 }

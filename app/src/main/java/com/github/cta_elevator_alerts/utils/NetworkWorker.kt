@@ -3,9 +3,7 @@ package com.github.cta_elevator_alerts.utils
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.util.Log
-import androidx.work.ListenableWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 

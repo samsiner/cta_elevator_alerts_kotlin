@@ -7,8 +7,6 @@ import androidx.lifecycle.LiveData
 import com.github.cta_elevator_alerts.model.Station
 import com.github.cta_elevator_alerts.model.StationRepository
 
-import java.util.Arrays
-
 /**
  * ViewModel between SpecificLineActivity and StationRepository
  *

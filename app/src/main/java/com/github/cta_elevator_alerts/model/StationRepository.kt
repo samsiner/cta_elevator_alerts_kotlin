@@ -249,10 +249,10 @@ class StationRepository private constructor(application: Application) {
     fun buildStations() {
         if (mStationDao.stationCount > 0) return
 
-        val JSONString = pullJSONFromWebService("https://data.cityofchicago.org/resource/8pix-ypme.json")
+        val jsonstring = pullJSONFromWebService("https://data.cityofchicago.org/resource/8pix-ypme.json")
 
         try {
-            val arr = JSONArray(JSONString)
+            val arr = JSONArray(jsonstring)
 
             for (i in 0 until arr.length()) {
                 val obj = arr.get(i) as JSONObject
@@ -346,17 +346,17 @@ class StationRepository private constructor(application: Application) {
     }
 
     fun buildAlerts() {
-        val JSONString = pullJSONFromWebService("https://lapi.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON")
+        val jsonstring = pullJSONFromWebService("https://lapi.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON")
 
         //Set internet connection status
-        connectionStatusLD.postValue(JSONString != "NO INTERNET")
-        if (JSONString == "NO INTERNET") return
+        connectionStatusLD.postValue(jsonstring != "NO INTERNET")
+        if (jsonstring == "NO INTERNET") return
 
         val currentAlerts = ArrayList<String>() //For multiple alerts
         val beforeStationsOut = ArrayList(mStationDao.allAlertStationIDs)
 
         try {
-            val outer = JSONObject(JSONString)
+            val outer = JSONObject(jsonstring)
             val inner = outer.getJSONObject("CTAAlerts")
             val arrAlerts = inner.getJSONArray("Alert")
 
@@ -490,9 +490,8 @@ class StationRepository private constructor(application: Application) {
     }
 
     companion object {
-
         @Volatile
-        private var INSTANCE: StationRepository? = null
+        var INSTANCE: StationRepository? = null
 
         fun getInstance(application: Application): StationRepository? {
             if (INSTANCE == null) {

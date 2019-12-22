@@ -29,6 +29,7 @@
 
         <ImageView
             android:id="@+id/img_star_icon"
+            android:contentDescription="@string/star_icon"
             style="@style/icon_small_star"
             android:layout_toLeftOf="@id/img_right_arrow"
             android:layout_toStartOf="@id/img_right_arrow"

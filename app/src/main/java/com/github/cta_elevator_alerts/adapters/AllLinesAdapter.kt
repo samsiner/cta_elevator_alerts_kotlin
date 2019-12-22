@@ -23,7 +23,6 @@ import com.github.cta_elevator_alerts.viewmodels.AllLinesViewModel
  */
 
 class AllLinesAdapter(private val context: Context) : RecyclerView.Adapter<AllLinesAdapter.AllLinesViewHolder>() {
-
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val mLines = arrayOf("Red Line", "Blue Line", "Brown Line", "Green Line", "Orange Line", "Pink Line", "Purple Line", "Yellow Line")
     private val toolbarTextView: TextView = (context as Activity).findViewById(R.id.txt_toolbar)
@@ -49,7 +48,7 @@ class AllLinesAdapter(private val context: Context) : RecyclerView.Adapter<AllLi
             holder.alertIcon.setImageResource(R.drawable.status_red)
         }
 
-        (holder.allLinesTextView.parent as View).setOnClickListener { v ->
+        (holder.allLinesTextView.parent as View).setOnClickListener {
             val intent = Intent(context, SpecificLineActivity::class.java)
             intent.putExtra("line", current)
             intent.putExtra("fromFavorites", (context as Activity).intent.getBooleanExtra("fromFavorites", false))
