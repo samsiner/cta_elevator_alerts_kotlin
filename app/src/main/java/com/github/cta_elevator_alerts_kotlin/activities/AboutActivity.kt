@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts.activities
+package com.github.cta_elevator_alerts_kotlin.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,7 @@ import android.widget.TextView
 
 import androidx.appcompat.app.AppCompatActivity
 
-import com.github.cta_elevator_alerts.R
+import com.github.cta_elevator_alerts_kotlin.R
 
 /**
  * AboutActivity shows information about the app.

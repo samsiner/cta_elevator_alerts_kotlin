@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts.utils
+package com.github.cta_elevator_alerts_kotlin.utils
 
 import android.app.Application
 import android.content.Context
@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 
-import com.github.cta_elevator_alerts.model.StationRepository
+import com.github.cta_elevator_alerts_kotlin.model.StationRepository
 
 import java.util.ArrayList
 

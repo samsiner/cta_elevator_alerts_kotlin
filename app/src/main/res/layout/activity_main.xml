@@ -2,36 +2,47 @@
 
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe_main_activity"
     android:layout_width="match_parent"
-     android:layout_height="match_parent">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context=".activities.MainActivity"
-        android:orientation="vertical">
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/chicago_train_dark_50"
-                android:contentDescription="@string/content_description_train"/>
-        </LinearLayout>
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:fitsSystemWindows="true"-->
+<!--        tools:context="com.github.cta_elevator_alerts_kotlin.activities.MainActivity"-->
+<!--        android:orientation="vertical">-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+<!--            <ImageView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:src="@drawable/chicago_train_dark_50"-->
+<!--                android:contentDescription="@string/content_description_train"/>-->
+<!--        </LinearLayout>-->
 
-            <include layout="@layout/toolbar" />
-            <include layout="@layout/content_scrolling" />
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="vertical">-->
 
-    </RelativeLayout>
+<!--            <include layout="@layout/toolbar" />-->
+<!--            <include layout="@layout/content_scrolling" />-->
+<!--        </LinearLayout>-->
+
+<!--    </RelativeLayout>-->
+    <include layout="@layout/toolbar" />
+    <include layout="@layout/content_scrolling" />
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

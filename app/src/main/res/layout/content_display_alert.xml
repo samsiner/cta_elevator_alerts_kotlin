@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.DisplayAlertActivity"
+    tools:context="com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity"
     tools:showIn="@layout/activity_display_alert">
 
     <LinearLayout

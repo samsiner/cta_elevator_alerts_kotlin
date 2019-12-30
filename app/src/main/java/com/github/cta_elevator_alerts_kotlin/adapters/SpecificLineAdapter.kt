@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts.adapters
+package com.github.cta_elevator_alerts_kotlin.adapters
 
 import android.app.Activity
 import android.content.Context
@@ -13,8 +13,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 import com.github.cta_elevator_alerts.R
-import com.github.cta_elevator_alerts.activities.DisplayAlertActivity
-import com.github.cta_elevator_alerts.activities.SpecificLineActivity
+import com.github.cta_elevator_alerts_kotlin.R
+import com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity
+import com.github.cta_elevator_alerts_kotlin.activities.SpecificLineActivity
+import com.github.cta_elevator_alerts_kotlin.fragments.SpecificLineFragment
 
 /**
  * Adapter for all stations with SpecificLineActivity (RecyclerView)
@@ -92,7 +94,7 @@ class SpecificLineAdapter(private val context: Context, private val lineStations
 
     override fun onBindViewHolder(holder: SpecificLineAdapterViewHolder, position: Int) {
         val currStationID = lineStations!![position]
-        val currStationName = (context as SpecificLineActivity).getStationName(currStationID)
+        val currStationName = (context as SpecificLineFragment).getStationName(currStationID)
         val transparentColor = ContextCompat.getColor(context, R.color.colorTransparent)
         val hasElevator = context.getHasElevator(currStationID)
         val isFavorite = context.getIsFavorite(currStationID)

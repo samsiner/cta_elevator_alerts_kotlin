@@ -1,14 +1,12 @@
 package com.github.cta_elevator_alerts
 
-import android.content.Intent
-
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.core.internal.deps.guava.collect.Iterables
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
-import com.github.cta_elevator_alerts.activities.AllLinesActivity
-import com.github.cta_elevator_alerts.activities.SpecificLineActivity
+import com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity
+import com.github.cta_elevator_alerts_kotlin.activities.SpecificLineActivity
 
 import org.junit.Rule
 import org.junit.Test

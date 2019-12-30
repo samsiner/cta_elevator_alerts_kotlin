@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts.utils
+package com.github.cta_elevator_alerts_kotlin.utils
 
 import android.app.Application
 import android.app.NotificationChannel
@@ -14,8 +14,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 
 import com.github.cta_elevator_alerts.R
-import com.github.cta_elevator_alerts.activities.DisplayAlertActivity
-import com.github.cta_elevator_alerts.model.StationRepository
+import com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity
+import com.github.cta_elevator_alerts_kotlin.model.StationRepository
 
 import java.util.ArrayList
 

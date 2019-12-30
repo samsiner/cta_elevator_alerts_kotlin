@@ -1,7 +1,6 @@
 package com.github.cta_elevator_alerts
 
 import android.content.Context
-import android.content.Intent
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -11,13 +10,13 @@ import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 
-import com.github.cta_elevator_alerts.activities.AllLinesActivity
-import com.github.cta_elevator_alerts.activities.DisplayAlertActivity
-import com.github.cta_elevator_alerts.activities.MainActivity
-import com.github.cta_elevator_alerts.model.Station
-import com.github.cta_elevator_alerts.model.StationDao
-import com.github.cta_elevator_alerts.model.StationRepository
-import com.github.cta_elevator_alerts.model.StationRoomDatabase
+import com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity
+import com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity
+import com.github.cta_elevator_alerts_kotlin.activities.MainActivity
+import com.github.cta_elevator_alerts_kotlin.model.Station
+import com.github.cta_elevator_alerts_kotlin.model.StationDao
+import com.github.cta_elevator_alerts_kotlin.model.StationRepository
+import com.github.cta_elevator_alerts_kotlin.model.StationRoomDatabase
 
 import org.junit.After
 import org.junit.Before

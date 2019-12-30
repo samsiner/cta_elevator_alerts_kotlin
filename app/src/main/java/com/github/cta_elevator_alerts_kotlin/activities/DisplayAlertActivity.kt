@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts.activities
+package com.github.cta_elevator_alerts_kotlin.activities
 
 import android.content.Intent
 import android.graphics.Color
@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 
 import com.github.cta_elevator_alerts.R
-import com.github.cta_elevator_alerts.model.StationRepository
+import com.github.cta_elevator_alerts_kotlin.model.StationRepository
 import com.github.cta_elevator_alerts.viewmodels.DisplayAlertViewModel
 
 /**

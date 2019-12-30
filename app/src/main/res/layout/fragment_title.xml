@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="mainViewModel"
+            type="com.github.cta_elevator_alerts_kotlin.viewmodels.MainViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.github.cta_elevator_alerts_kotlin.activities.MainActivity"
+        tools:showIn="@layout/activity_main">
+
+        <LinearLayout style="@style/ActivityStyle">
+
+            <RelativeLayout
+                android:id="@+id/btn_to_all_lines"
+                style="@style/actionButton"
+                android:background="@drawable/btn_outline_white"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="15dp"
+                android:onClick="toAllLinesActivity">
+                <TextView
+                    style="@style/ActionButtonText"
+                    android:text="@string/view_all_lines"
+                    android:textColor="@color/colorWhite"/>
+                <ImageView
+                    android:src="@drawable/right_arrow"
+                    style="@style/rightArrow"
+                    android:tint="@color/colorWhite"
+                    android:contentDescription="@string/content_description_right_arrow"/>
+            </RelativeLayout>
+
+            <TextView
+                android:text="@string/title_favorites"
+                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                style="@style/SubHeaderText"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/noFavoritesAdded"
+                android:text="@string/no_favorites_added"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textStyle="italic"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_favorite_stations"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_favorites_added"
+                android:background="@drawable/main_activity_containers"
+                android:layout_marginBottom="15dp"
+                />
+
+            <TextView
+                android:text="@string/title_all_alerts"
+                style="@style/SubHeaderText"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/noStationAlerts"
+                android:text="@string/no_current_alerts"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center"
+                android:textStyle="italic"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_station_alerts"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/main_activity_containers"
+                />
+
+            <!--        <RelativeLayout-->
+            <!--            android:id="@+id/btn_to_all_lines"-->
+            <!--            style="@style/actionButton"-->
+            <!--            android:layout_marginTop="30dp"-->
+            <!--            android:layout_marginBottom="30dp"-->
+            <!--            android:onClick="toAllLinesActivity">-->
+            <!--            <TextView-->
+            <!--                style="@style/ActionButtonText"-->
+            <!--                android:text="@string/all_lines" />-->
+            <!--            <ImageView-->
+            <!--                android:src="@drawable/right_arrow"-->
+            <!--                style="@style/rightArrow"-->
+            <!--                android:contentDescription="@string/content_description_right_arrow"/>-->
+            <!--        </RelativeLayout>-->
+
+            <TextView
+                android:id="@+id/txt_update_alert_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/colorWhite"
+                android:textStyle="italic"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

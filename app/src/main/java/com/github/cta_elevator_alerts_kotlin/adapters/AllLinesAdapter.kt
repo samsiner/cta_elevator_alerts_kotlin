@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts.adapters
+package com.github.cta_elevator_alerts_kotlin.adapters
 
 import android.app.Activity
 import android.content.Context
@@ -10,11 +10,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.github.cta_elevator_alerts_kotlin.R
 
-import com.github.cta_elevator_alerts.R
-import com.github.cta_elevator_alerts.activities.AllLinesActivity
-import com.github.cta_elevator_alerts.activities.SpecificLineActivity
-import com.github.cta_elevator_alerts.viewmodels.AllLinesViewModel
+import com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity
+import com.github.cta_elevator_alerts_kotlin.activities.SpecificLineActivity
+import com.github.cta_elevator_alerts_kotlin.viewmodels.AllLinesViewModel
 
 /**
  * Adapter for AllLinesActivity (RecyclerView)

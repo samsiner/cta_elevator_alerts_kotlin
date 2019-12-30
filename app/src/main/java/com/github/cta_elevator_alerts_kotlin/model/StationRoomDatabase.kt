@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts.model
+package com.github.cta_elevator_alerts_kotlin.model
 
 import android.content.Context
 

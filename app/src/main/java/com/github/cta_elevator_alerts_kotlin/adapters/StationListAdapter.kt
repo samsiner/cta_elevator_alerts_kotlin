@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts.adapters
+package com.github.cta_elevator_alerts_kotlin.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -11,9 +11,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 import com.github.cta_elevator_alerts.R
-import com.github.cta_elevator_alerts.activities.DisplayAlertActivity
-import com.github.cta_elevator_alerts.activities.MainActivity
-import com.github.cta_elevator_alerts.model.Station
+import com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity
+import com.github.cta_elevator_alerts_kotlin.activities.MainActivity
+import com.github.cta_elevator_alerts_kotlin.model.Station
 import com.github.cta_elevator_alerts.viewmodels.MainViewModel
 
 import java.util.ArrayList

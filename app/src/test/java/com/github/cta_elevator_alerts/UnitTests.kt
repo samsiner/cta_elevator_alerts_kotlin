@@ -1,6 +1,6 @@
 package com.github.cta_elevator_alerts
 
-import com.github.cta_elevator_alerts.model.Station
+import com.github.cta_elevator_alerts_kotlin.model.Station
 
 import org.junit.Test
 import org.junit.runner.RunWith

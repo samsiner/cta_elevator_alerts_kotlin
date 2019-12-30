@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/allLinesFragment">
+
+    <fragment
+        android:id="@+id/allLinesFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.fragments.AllLinesFragment"
+        android:label="fragment_all_lines"
+        tools:layout="@layout/fragment_all_lines" >
+        <action
+            android:id="@+id/action_allLinesFragment_to_specificLineFragment"
+            app:destination="@id/specificLineFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/specificLineFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.fragments.SpecificLineFragment"
+        android:label="fragment_specific_line"
+        tools:layout="@layout/fragment_specific_line" >
+        <action
+            android:id="@+id/action_specificLineFragment_to_displayAlert"
+            app:destination="@id/displayAlert" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayAlert"
+        android:name="com.github.cta_elevator_alerts_kotlin.fragments.DisplayAlertFragment"
+        android:label="fragment_display_alert"
+        tools:layout="@layout/fragment_display_alert" />
+    <fragment
+        android:id="@+id/titleFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.fragments.TitleFragment"
+        android:label="fragment_title"
+        tools:layout="@layout/fragment_title" >
+        <action
+            android:id="@+id/action_titleFragment_to_allLinesFragment"
+            app:destination="@id/allLinesFragment" />
+    </fragment>
+</navigation>

@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts.activities
+package com.github.cta_elevator_alerts_kotlin.activities
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -22,10 +22,12 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 
 import com.github.cta_elevator_alerts.R
-import com.github.cta_elevator_alerts.adapters.StationListAdapter
-import com.github.cta_elevator_alerts.model.Station
-import com.github.cta_elevator_alerts.utils.NetworkWorker
+import com.github.cta_elevator_alerts_kotlin.adapters.StationListAdapter
+import com.github.cta_elevator_alerts_kotlin.model.Station
+import com.github.cta_elevator_alerts_kotlin.utils.NetworkWorker
 import com.github.cta_elevator_alerts.viewmodels.MainViewModel
+import com.github.cta_elevator_alerts_kotlin.R
+import com.github.cta_elevator_alerts_kotlin.viewmodels.MainViewModel
 
 import java.util.concurrent.TimeUnit
 
@@ -40,51 +42,14 @@ import java.util.concurrent.TimeUnit
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var favoritesAdapter: StationListAdapter
-    private lateinit var alertsAdapter: StationListAdapter
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var tvAlertsTime: TextView
     lateinit var stationAlertsViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
 
-        val about = findViewById<ImageView>(R.id.img_home_icon)
-        about.setImageResource(R.drawable.icon_info)
-        about.setOnClickListener{this.toAboutActivity(it)}
-
-        val backArrow = findViewById<ImageView>(R.id.img_back_arrow)
-        backArrow.visibility = View.INVISIBLE
-
-        stationAlertsViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
-        //Create adapter to display favorites
-        val favoritesRecyclerView = findViewById<RecyclerView>(R.id.recycler_favorite_stations)
-        favoritesAdapter = StationListAdapter(this)
-        favoritesRecyclerView.adapter = favoritesAdapter
-        favoritesRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        //Create adapter to display alerts
-        val alertsRecyclerView = findViewById<RecyclerView>(R.id.recycler_station_alerts)
-        alertsAdapter = StationListAdapter(this)
-        alertsRecyclerView.adapter = alertsAdapter
-        alertsRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        //Create SharedPreferences for last updated date/time
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        tvAlertsTime = findViewById(R.id.txt_update_alert_time)
-        val time = sharedPreferences.getString("LastUpdatedTime", "")
-        if (time != null && time != "") tvAlertsTime.text = time
-
-        //        addTestButtons();
-
         addSwipeRefresh()
-        addAlertsObserver()
-        addFavoritesObserver()
-        addLastUpdatedObserver()
         addConnectionStatusObserver()
         addPeriodicWorker()
     }
@@ -100,45 +65,6 @@ class MainActivity : AppCompatActivity() {
             addOneTimeWorker()
             mSwipeRefreshLayout.isRefreshing = false
         }
-    }
-
-    private fun addAlertsObserver() {
-        stationAlertsViewModel.stationAlerts.observe(this, Observer<List<Station>>{
-            alertsAdapter.updateStationList(it)
-
-            //If no alerts
-            val tv = findViewById<TextView>(R.id.noStationAlerts)
-            if (it.isEmpty()) {
-                tv.visibility = View.VISIBLE
-            } else {
-                tv.visibility = View.GONE
-            }
-        }
-        )
-    }
-
-    private fun addFavoritesObserver() {
-        stationAlertsViewModel.favorites.observe(this, Observer<List<Station>>{
-            favoritesAdapter.updateStationList(it)
-
-            //If no favorites
-            val tv = findViewById<TextView>(R.id.noFavoritesAdded)
-            if (it.isEmpty()) {
-                tv.visibility = View.VISIBLE
-            } else {
-                tv.visibility = View.GONE
-            }
-        })
-    }
-
-    private fun addLastUpdatedObserver() {
-        stationAlertsViewModel.updateAlertsTime.observe(this, Observer<String>{
-            tvAlertsTime.text = it
-
-            val editor = sharedPreferences.edit()
-            editor.putString("LastUpdatedTime", it)
-            editor.apply()
-        })
     }
 
     private fun addConnectionStatusObserver() {

@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts.activities
+package com.github.cta_elevator_alerts_kotlin.activities
 
 import android.content.Intent
 import android.os.Bundle
