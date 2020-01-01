@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.github.cta_elevator_alerts_kotlin.activities.MainActivity"
-        tools:showIn="@layout/activity_main">
+        tools:context="com.github.cta_elevator_alerts_kotlin.fragments.TitleFragment">
 
         <LinearLayout style="@style/ActivityStyle">
 
@@ -23,8 +22,7 @@
                 style="@style/actionButton"
                 android:background="@drawable/btn_outline_white"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="15dp"
-                android:onClick="toAllLinesActivity">
+                android:layout_marginBottom="15dp">
                 <TextView
                     style="@style/ActionButtonText"
                     android:text="@string/view_all_lines"
@@ -62,6 +60,7 @@
                 android:text="@string/no_favorites_added"
                 android:background="@drawable/main_activity_containers"
                 android:layout_marginBottom="15dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 />
 
             <TextView
@@ -85,6 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/main_activity_containers"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 />
 
             <!--        <RelativeLayout-->

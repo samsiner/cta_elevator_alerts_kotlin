@@ -21,11 +21,9 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 
-import com.github.cta_elevator_alerts.R
 import com.github.cta_elevator_alerts_kotlin.adapters.StationListAdapter
 import com.github.cta_elevator_alerts_kotlin.model.Station
 import com.github.cta_elevator_alerts_kotlin.utils.NetworkWorker
-import com.github.cta_elevator_alerts.viewmodels.MainViewModel
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.viewmodels.MainViewModel
 
@@ -50,8 +48,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         addSwipeRefresh()
-        addConnectionStatusObserver()
+//        addConnectionStatusObserver()
         addPeriodicWorker()
+        addOneTimeWorker()
     }
 
     override fun onResume() {
@@ -100,16 +99,16 @@ class MainActivity : AppCompatActivity() {
 
         WorkManager.getInstance(this).enqueue(request)
     }
+//
+//    fun toAllLinesActivity(v: View) {
+//        val intent = Intent(this@MainActivity, AllLinesActivity::class.java)
+//        startActivity(intent)
+//    }
 
-    fun toAllLinesActivity(v: View) {
-        val intent = Intent(this@MainActivity, AllLinesActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun toAboutActivity(v: View) {
-        val intent = Intent(this@MainActivity, AboutActivity::class.java)
-        startActivity(intent)
-    }
+//    private fun toAboutActivity(v: View) {
+//        val intent = Intent(this@MainActivity, AboutActivity::class.java)
+//        startActivity(intent)
+//    }
 
     //    private void addTestButtons(){
     //        Button b = new Button(this);

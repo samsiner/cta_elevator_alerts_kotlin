@@ -37,7 +37,7 @@ class NetworkWorker(context: Context, params: WorkerParameters) : Worker(context
             repository.buildStations()
             repository.buildAlerts()
             val currentAlerts = repository.mGetStationAlertIDs() as ArrayList<String>
-            NotificationPusher.createAlertNotifications(applicationContext, pastAlerts, currentAlerts)
+//            NotificationPusher.createAlertNotifications(applicationContext, pastAlerts, currentAlerts)
         } catch (e: Exception) {
             Log.d("NetworkWorker", "Failed to build")
             e.printStackTrace()

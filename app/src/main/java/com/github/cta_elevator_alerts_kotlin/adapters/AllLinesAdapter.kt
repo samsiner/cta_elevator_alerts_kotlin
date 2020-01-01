@@ -12,8 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.cta_elevator_alerts_kotlin.R
 
-import com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity
-import com.github.cta_elevator_alerts_kotlin.activities.SpecificLineActivity
+import com.github.cta_elevator_alerts_kotlin.databinding.FragmentAllLinesBinding
 import com.github.cta_elevator_alerts_kotlin.viewmodels.AllLinesViewModel
 
 /**
@@ -22,11 +21,10 @@ import com.github.cta_elevator_alerts_kotlin.viewmodels.AllLinesViewModel
  * @author Southport Developers (Sam Siner & Tyler Arndt)
  */
 
-class AllLinesAdapter(private val context: Context) : RecyclerView.Adapter<AllLinesAdapter.AllLinesViewHolder>() {
+class AllLinesAdapter(private val context: Context, val mAllLinesViewModel: AllLinesViewModel, val binding: FragmentAllLinesBinding) : RecyclerView.Adapter<AllLinesAdapter.AllLinesViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val mLines = arrayOf("Red Line", "Blue Line", "Brown Line", "Green Line", "Orange Line", "Pink Line", "Purple Line", "Yellow Line")
-    private val toolbarTextView: TextView = (context as Activity).findViewById(R.id.txt_toolbar)
-    private val mAllLinesViewModel: AllLinesViewModel? = (context as AllLinesActivity).allLinesViewModel
+//    private val toolbarTextView: TextView = (context as Activity).findViewById(R.id.txt_toolbar)
 
     inner class AllLinesViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         val allLinesTextView: TextView = itemView.findViewById(R.id.txt_all_lines)
@@ -49,16 +47,16 @@ class AllLinesAdapter(private val context: Context) : RecyclerView.Adapter<AllLi
         }
 
         (holder.allLinesTextView.parent as View).setOnClickListener {
-            val intent = Intent(context, SpecificLineActivity::class.java)
-            intent.putExtra("line", current)
-            intent.putExtra("fromFavorites", (context as Activity).intent.getBooleanExtra("fromFavorites", false))
-            intent.putExtra("nickname", context.intent.getStringExtra("nickname"))
-            context.startActivity(intent)
+//            val intent = Intent(context, SpecificLineActivity::class.java)
+//            intent.putExtra("line", current)
+//            intent.putExtra("fromFavorites", (context as Activity).intent.getBooleanExtra("fromFavorites", false))
+//            intent.putExtra("nickname", context.intent.getStringExtra("nickname"))
+//            context.startActivity(intent)
         }
     }
 
     override fun getItemCount(): Int = mLines.size
-    fun setToolbarTextView() = toolbarTextView.setText(R.string.all_lines)
+//    fun setToolbarTextView() = toolbarTextView.setText(R.string.all_lines)
 
     private fun setTrainIcon(imageView: ImageView, line: String) {
         when (line) {

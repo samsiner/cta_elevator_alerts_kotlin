@@ -40,12 +40,12 @@ class AllLinesFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val linesRecyclerView = binding.recyclerAllLines
-        val linesAdapter = AllLinesAdapter(activity!!)
-        linesAdapter.setToolbarTextView()
+        val linesAdapter = AllLinesAdapter(activity!!, viewModel, binding)
+//        linesAdapter.setToolbarTextView()
         linesRecyclerView.adapter = linesAdapter
         linesRecyclerView.layoutManager = LinearLayoutManager(activity!!)
 
-//        val about = findViewById<ImageView>(R.id.img_home_icon)
+        //        val about = findViewById<ImageView>(R.id.img_home_icon)
 //        about.visibility = View.INVISIBLE
 
         return binding.root

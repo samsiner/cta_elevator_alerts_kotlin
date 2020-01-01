@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
-import com.github.cta_elevator_alerts.R
-import com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity
-import com.github.cta_elevator_alerts_kotlin.activities.SpecificLineActivity
+import com.github.cta_elevator_alerts_kotlin.R
 
 /**
  * Adapter for alerts within SpecificLineActivity (RecyclerView)
@@ -33,23 +30,23 @@ class SpecificLineAlertsAdapter(private val context: Context, private val alertS
     }
 
     override fun onBindViewHolder(holder: SpecificLineAlertsViewHolder, position: Int) {
-        val currentStationID = alertStations[position]
-        val currentName = (context as SpecificLineActivity).getStationName(currentStationID)
-        val isFavorite = context.getIsFavorite(currentStationID)
-
-        holder.stationAlertTextView.text = currentName
-
-        (holder.stationAlertTextView.parent as View).setOnClickListener { v ->
-            val intent = Intent(context, DisplayAlertActivity::class.java)
-            intent.putExtra("stationID", currentStationID)
-            context.startActivity(intent)
-        }
-
-        if (isFavorite) {
-            holder.starIcon.visibility = View.VISIBLE
-        } else {
-            holder.starIcon.visibility = View.INVISIBLE
-        }
+//        val currentStationID = alertStations[position]
+//        val currentName = (context as SpecificLineActivity).getStationName(currentStationID)
+//        val isFavorite = context.getIsFavorite(currentStationID)
+//
+//        holder.stationAlertTextView.text = currentName
+//
+//        (holder.stationAlertTextView.parent as View).setOnClickListener { v ->
+//            val intent = Intent(context, DisplayAlertActivity::class.java)
+//            intent.putExtra("stationID", currentStationID)
+//            context.startActivity(intent)
+//        }
+//
+//        if (isFavorite) {
+//            holder.starIcon.visibility = View.VISIBLE
+//        } else {
+//            holder.starIcon.visibility = View.INVISIBLE
+//        }
     }
 
     override fun getItemCount(): Int {

@@ -1,6 +1,5 @@
 package com.github.cta_elevator_alerts_kotlin.fragments
 
-
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -13,14 +12,17 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Constraints
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.adapters.StationListAdapter
-import com.github.cta_elevator_alerts_kotlin.databinding.FragmentAllLinesBinding
 import com.github.cta_elevator_alerts_kotlin.databinding.FragmentTitleBinding
 import com.github.cta_elevator_alerts_kotlin.model.Station
-import com.github.cta_elevator_alerts_kotlin.viewmodels.AllLinesViewModel
+import com.github.cta_elevator_alerts_kotlin.utils.NetworkWorker
 import com.github.cta_elevator_alerts_kotlin.viewmodels.MainViewModel
 
 /**
@@ -39,7 +41,6 @@ class TitleFragment : Fragment() {
         )
 
         val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        binding.mainViewModel = viewModel
         binding.lifecycleOwner = this
 
 //        val about = binding.
@@ -49,19 +50,13 @@ class TitleFragment : Fragment() {
 //        val backArrow = findViewById<ImageView>(R.id.img_back_arrow)
 //        backArrow.visibility = View.INVISIBLE
 
-//        stationAlertsViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
         //Create adapter to display favorites
-        val favoritesRecyclerView = binding.recyclerFavoriteStations
-        val favoritesAdapter = StationListAdapter(activity!!)
-        favoritesRecyclerView.adapter = favoritesAdapter
-        favoritesRecyclerView.layoutManager = LinearLayoutManager(activity!!)
+        val favoritesAdapter = StationListAdapter()
+        binding.recyclerFavoriteStations.adapter = favoritesAdapter
 
         //Create adapter to display alerts
-        val alertsRecyclerView = binding.recyclerFavoriteStations
-        val alertsAdapter = StationListAdapter(activity!!)
-        alertsRecyclerView.adapter = alertsAdapter
-        alertsRecyclerView.layoutManager = LinearLayoutManager(activity!!)
+        val alertsAdapter = StationListAdapter()
+        binding.recyclerStationAlerts.adapter = alertsAdapter
 
         //Create SharedPreferences for last updated date/time
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity!!)
@@ -71,27 +66,31 @@ class TitleFragment : Fragment() {
 
         //        addTestButtons();
 
-        viewModel.stationAlerts.observe(this, Observer<List<Station>>{
-            alertsAdapter.updateStationList(it)
+        viewModel.stationAlerts.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                alertsAdapter.submitList(it)
 
-            //If no alerts
-            val tv = binding.noStationAlerts
-            if (it.isEmpty()) {
-                tv.visibility = View.VISIBLE
-            } else {
-                tv.visibility = View.GONE
+                //If no alerts
+                val tv = binding.noStationAlerts
+                if (it.isEmpty()) {
+                    tv.visibility = View.VISIBLE
+                } else {
+                    tv.visibility = View.GONE
+                }
             }
         })
 
-        viewModel.favorites.observe(this, Observer<List<Station>>{
-            favoritesAdapter.updateStationList(it)
+        viewModel.favorites.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                favoritesAdapter.submitList(it)
 
-            //If no favorites
-            val tv = binding.noFavoritesAdded
-            if (it.isEmpty()) {
-                tv.visibility = View.VISIBLE
-            } else {
-                tv.visibility = View.GONE
+                //If no alerts
+                val tv = binding.noFavoritesAdded
+                if (it.isEmpty()) {
+                    tv.visibility = View.VISIBLE
+                } else {
+                    tv.visibility = View.GONE
+                }
             }
         })
 
@@ -103,6 +102,13 @@ class TitleFragment : Fragment() {
             editor.apply()
         })
 
+        binding.btnToAllLines.setOnClickListener {
+            findNavController().navigate(
+                    TitleFragmentDirections
+                            .actionTitleFragmentToAllLinesFragment())
+        }
+
         return binding.root
     }
+
 }

@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
  */
 
 @Entity(tableName = "station_table")
-class Station(@field:PrimaryKey
+data class Station(@field:PrimaryKey
               val stationID: String) {
     var hasElevator: Boolean = false
     var hasElevatorAlert: Boolean = false

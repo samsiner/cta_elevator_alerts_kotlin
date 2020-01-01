@@ -27,10 +27,10 @@
             android:name="com.github.cta_elevator_alerts_kotlin.activities.SpecificLineActivity"
             android:label="@string/title_activity_specific_line"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity"
-            android:label="@string/title_activity_all_lines"
-            android:theme="@style/AppTheme.NoActionBar" />
+<!--        <activity-->
+<!--            android:name="com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity"-->
+<!--            android:label="@string/title_activity_all_lines"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name="com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity"
             android:label="@string/title_activity_display_alert"

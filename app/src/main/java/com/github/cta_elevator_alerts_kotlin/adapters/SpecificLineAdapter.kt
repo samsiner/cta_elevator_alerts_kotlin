@@ -12,10 +12,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
-import com.github.cta_elevator_alerts.R
 import com.github.cta_elevator_alerts_kotlin.R
-import com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity
-import com.github.cta_elevator_alerts_kotlin.activities.SpecificLineActivity
 import com.github.cta_elevator_alerts_kotlin.fragments.SpecificLineFragment
 
 /**
@@ -93,43 +90,43 @@ class SpecificLineAdapter(private val context: Context, private val lineStations
     }
 
     override fun onBindViewHolder(holder: SpecificLineAdapterViewHolder, position: Int) {
-        val currStationID = lineStations!![position]
-        val currStationName = (context as SpecificLineFragment).getStationName(currStationID)
-        val transparentColor = ContextCompat.getColor(context, R.color.colorTransparent)
-        val hasElevator = context.getHasElevator(currStationID)
-        val isFavorite = context.getIsFavorite(currStationID)
-
-        holder.setUI(toolbarTextView.text.toString(), holder.verticalBarTop, holder.verticalBarBottom, holder.circleDrawable)
-        if (position == 0) {
-            holder.verticalBarTop.setBackgroundColor(transparentColor)
-        }
-        if (position == lineStations.size - 1) {
-            holder.verticalBarBottom.setBackgroundColor(transparentColor)
-        }
-
-        holder.specificLineTextView.text = currStationName
-        holder.adaImageView.visibility = View.VISIBLE
-        if (!hasElevator) holder.adaImageView.visibility = View.INVISIBLE
-
-        holder.statusImageView.visibility = View.VISIBLE
-        holder.circle.visibility = View.VISIBLE
-        if (!context.getHasElevatorAlert(currStationID)) {
-            holder.statusImageView.visibility = View.INVISIBLE
-        } else {
-            holder.circle.visibility = View.INVISIBLE
-        }
-
-        if (isFavorite) {
-            holder.starIcon.visibility = View.VISIBLE
-        } else {
-            holder.starIcon.visibility = View.INVISIBLE
-        }
-
-        (holder.specificLineTextView.parent as View).setOnClickListener {
-            val intent = Intent(it.context, DisplayAlertActivity::class.java)
-            intent.putExtra("stationID", currStationID)
-            it.context.startActivity(intent)
-        }
+//        val currStationID = lineStations!![position]
+//        val currStationName = (context as SpecificLineFragment).getStationName(currStationID)
+//        val transparentColor = ContextCompat.getColor(context, R.color.colorTransparent)
+//        val hasElevator = context.getHasElevator(currStationID)
+//        val isFavorite = context.getIsFavorite(currStationID)
+//
+//        holder.setUI(toolbarTextView.text.toString(), holder.verticalBarTop, holder.verticalBarBottom, holder.circleDrawable)
+//        if (position == 0) {
+//            holder.verticalBarTop.setBackgroundColor(transparentColor)
+//        }
+//        if (position == lineStations.size - 1) {
+//            holder.verticalBarBottom.setBackgroundColor(transparentColor)
+//        }
+//
+//        holder.specificLineTextView.text = currStationName
+//        holder.adaImageView.visibility = View.VISIBLE
+//        if (!hasElevator) holder.adaImageView.visibility = View.INVISIBLE
+//
+//        holder.statusImageView.visibility = View.VISIBLE
+//        holder.circle.visibility = View.VISIBLE
+//        if (!context.getHasElevatorAlert(currStationID)) {
+//            holder.statusImageView.visibility = View.INVISIBLE
+//        } else {
+//            holder.circle.visibility = View.INVISIBLE
+//        }
+//
+//        if (isFavorite) {
+//            holder.starIcon.visibility = View.VISIBLE
+//        } else {
+//            holder.starIcon.visibility = View.INVISIBLE
+//        }
+//
+//        (holder.specificLineTextView.parent as View).setOnClickListener {
+//            val intent = Intent(it.context, DisplayAlertActivity::class.java)
+//            intent.putExtra("stationID", currStationID)
+//            it.context.startActivity(intent)
+//        }
     }
 
     override fun getItemCount(): Int {
