@@ -1,13 +1,11 @@
 package com.github.cta_elevator_alerts
 
 import com.github.cta_elevator_alerts_kotlin.model.Station
-
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 
 /**
  * Unit tests for model - Station (entity) class.

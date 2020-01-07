@@ -1,30 +1,21 @@
 package com.github.cta_elevator_alerts
 
 import android.util.Log
-
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.work.Configuration
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
+import androidx.work.*
 import androidx.work.impl.utils.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
-
 import com.github.cta_elevator_alerts_kotlin.activities.MainActivity
 import com.github.cta_elevator_alerts_kotlin.utils.NetworkWorker
-
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import java.util.concurrent.TimeUnit
-
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 
 /**
  * Instrumented tests for Worker.

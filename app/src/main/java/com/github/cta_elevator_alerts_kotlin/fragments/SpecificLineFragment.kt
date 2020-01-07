@@ -1,22 +1,19 @@
 package com.github.cta_elevator_alerts_kotlin.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineAdapter
 import com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineAlertsAdapter
-import com.github.cta_elevator_alerts_kotlin.databinding.FragmentAllLinesBinding
 import com.github.cta_elevator_alerts_kotlin.databinding.FragmentSpecificLineBinding
 import com.github.cta_elevator_alerts_kotlin.model.Station
-import com.github.cta_elevator_alerts_kotlin.viewmodels.AllLinesViewModel
 import com.github.cta_elevator_alerts_kotlin.viewmodels.SpecificLineViewModel
 
 /**

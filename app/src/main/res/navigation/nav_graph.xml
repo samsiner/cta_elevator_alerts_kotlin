@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/titleFragment">
+    app:startDestination="@id/allAlertsFragment">
 
     <fragment
         android:id="@+id/allLinesFragment"
@@ -27,14 +27,32 @@
         android:id="@+id/displayAlert"
         android:name="com.github.cta_elevator_alerts_kotlin.fragments.DisplayAlertFragment"
         android:label="fragment_display_alert"
-        tools:layout="@layout/fragment_display_alert" />
+        tools:layout="@layout/fragment_display_alert" >
+        <argument
+            android:name="stationID"
+            app:argType="string" />
+    </fragment>
     <fragment
-        android:id="@+id/titleFragment"
-        android:name="com.github.cta_elevator_alerts_kotlin.fragments.TitleFragment"
+        android:id="@+id/allAlertsFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.fragments.AllAlertsFragment"
         android:label="fragment_title"
-        tools:layout="@layout/fragment_title" >
+        tools:layout="@layout/fragment_all_alerts" >
         <action
-            android:id="@+id/action_titleFragment_to_allLinesFragment"
-            app:destination="@id/allLinesFragment" />
+            android:id="@+id/action_allAlertsFragment_to_displayAlert"
+            app:destination="@id/displayAlert" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.fragments.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/favoriteAlertsFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.fragments.FavoriteAlertsFragment"
+        android:label="fragment_favorite_alerts"
+        tools:layout="@layout/fragment_favorite_alerts" >
+        <action
+            android:id="@+id/action_favoriteAlertsFragment_to_displayAlert"
+            app:destination="@id/displayAlert" />
     </fragment>
 </navigation>

@@ -4,9 +4,7 @@ import android.view.View
 import android.view.View.*
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isInvisible
 import androidx.databinding.BindingAdapter
-import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.model.Station
 
 @BindingAdapter("stationName")
@@ -19,9 +17,19 @@ fun TextView.setStationName(item: Station?){
 @BindingAdapter("statusImage")
 fun ImageView.setStatusImage(item: Station?){
     item?.let {
-        when (item.hasElevatorAlert) {
-            true -> setImageResource(R.drawable.status_red)
-            else -> visibility = INVISIBLE
+        visibility = when (item.hasElevatorAlert) {
+            true -> VISIBLE
+            else -> INVISIBLE
+        }
+    }
+}
+
+@BindingAdapter("favoriteImage")
+fun ImageView.setFavoriteImage(item: Station?){
+    item?.let {
+        visibility = when (item.isFavorite) {
+            true -> VISIBLE
+            else -> INVISIBLE
         }
     }
 }

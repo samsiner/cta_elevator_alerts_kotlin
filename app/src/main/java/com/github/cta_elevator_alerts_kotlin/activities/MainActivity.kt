@@ -1,32 +1,19 @@
 package com.github.cta_elevator_alerts_kotlin.activities
 
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.OneTimeWorkRequest
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
-
-import com.github.cta_elevator_alerts_kotlin.adapters.StationListAdapter
-import com.github.cta_elevator_alerts_kotlin.model.Station
-import com.github.cta_elevator_alerts_kotlin.utils.NetworkWorker
 import com.github.cta_elevator_alerts_kotlin.R
+import com.github.cta_elevator_alerts_kotlin.utils.NetworkWorker
 import com.github.cta_elevator_alerts_kotlin.viewmodels.MainViewModel
-
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.concurrent.TimeUnit
 
 /**
@@ -39,7 +26,6 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
     lateinit var stationAlertsViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,24 +33,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        addSwipeRefresh()
+        //Set up bottom navigation
+        val bottomNav: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        val navController = findNavController(R.id.my_nav_host_fragment)
+        bottomNav.setupWithNavController(navController)
+
 //        addConnectionStatusObserver()
         addPeriodicWorker()
-        addOneTimeWorker()
     }
 
-    override fun onResume() {
-        super.onResume()
-        addOneTimeWorker()
-    }
-
-    private fun addSwipeRefresh() {
-        mSwipeRefreshLayout = findViewById(R.id.swipe_main_activity)
-        mSwipeRefreshLayout.setOnRefreshListener {
-            addOneTimeWorker()
-            mSwipeRefreshLayout.isRefreshing = false
-        }
-    }
+    override fun onSupportNavigateUp() =
+            findNavController(R.id.my_nav_host_fragment).navigateUp()
 
     private fun addConnectionStatusObserver() {
         stationAlertsViewModel.connectionStatus.observe(this, Observer<Boolean>{
@@ -88,27 +67,7 @@ class MainActivity : AppCompatActivity() {
         WorkManager.getInstance(this).enqueueUniquePeriodicWork("PeriodicWork", ExistingPeriodicWorkPolicy.KEEP, request)
     }
 
-    private fun addOneTimeWorker() {
-        val request = OneTimeWorkRequest.Builder(NetworkWorker::class.java)
-                .addTag("OneTimeWork")
-                .setConstraints(Constraints.Builder()
-                        .setRequiresBatteryNotLow(true)
-                        .setRequiresStorageNotLow(true)
-                        .build())
-                .build()
 
-        WorkManager.getInstance(this).enqueue(request)
-    }
-//
-//    fun toAllLinesActivity(v: View) {
-//        val intent = Intent(this@MainActivity, AllLinesActivity::class.java)
-//        startActivity(intent)
-//    }
-
-//    private fun toAboutActivity(v: View) {
-//        val intent = Intent(this@MainActivity, AboutActivity::class.java)
-//        startActivity(intent)
-//    }
 
     //    private void addTestButtons(){
     //        Button b = new Button(this);

@@ -1,15 +1,5 @@
 package com.github.cta_elevator_alerts_kotlin.activities
 
-import android.content.Intent
-import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
-
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-
 /**
  * AllLinesActivity displays all CTA L lines
  * so user can click on them to go to a specific line.

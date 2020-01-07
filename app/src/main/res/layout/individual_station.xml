@@ -6,11 +6,18 @@
         <variable
             name="station"
             type="com.github.cta_elevator_alerts_kotlin.model.Station" />
+        <variable
+            name="stationListener"
+            type="com.github.cta_elevator_alerts_kotlin.adapters.StationListener" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/card_spacing"
+        android:layout_marginTop="@dimen/card_spacing"
+        android:layout_marginRight="@dimen/card_spacing"
+        android:onClick="@{() -> stationListener.onClick(station)}">
 
         <RelativeLayout
             android:id="@+id/rl_individual_station"
@@ -102,6 +109,5 @@
                     app:yellow="@{station}"/>
             </LinearLayout>
         </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

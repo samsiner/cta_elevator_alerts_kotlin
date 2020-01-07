@@ -2,7 +2,6 @@ package com.github.cta_elevator_alerts_kotlin.adapters
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-
 import com.github.cta_elevator_alerts_kotlin.R
-import com.github.cta_elevator_alerts_kotlin.fragments.SpecificLineFragment
 
 /**
  * Adapter for all stations with SpecificLineActivity (RecyclerView)

@@ -18,32 +18,36 @@
         <activity
             android:name="com.github.cta_elevator_alerts_kotlin.activities.MainActivity"
             android:label="@string/app_name">
-        </activity>
-        <activity
-            android:name="com.github.cta_elevator_alerts_kotlin.activities.AboutActivity"
-            android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name="com.github.cta_elevator_alerts_kotlin.activities.SpecificLineActivity"
-            android:label="@string/title_activity_specific_line"
-            android:theme="@style/AppTheme.NoActionBar" />
-<!--        <activity-->
-<!--            android:name="com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity"-->
-<!--            android:label="@string/title_activity_all_lines"-->
-<!--            android:theme="@style/AppTheme.NoActionBar" />-->
-        <activity
-            android:name="com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity"
-            android:label="@string/title_activity_display_alert"
-            android:parentActivityName="com.github.cta_elevator_alerts_kotlin.activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.github.cta_elevator_alerts_kotlin.activities.SplashActivity"
-            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.github.cta_elevator_alerts_kotlin.activities.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar"/>
+<!--        <activity-->
+<!--            android:name="com.github.cta_elevator_alerts_kotlin.activities.SpecificLineActivity"-->
+<!--            android:label="@string/title_activity_specific_line"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+<!--        <activity-->
+<!--            android:name="com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity"-->
+<!--            android:label="@string/title_activity_all_lines"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+<!--        <activity-->
+<!--            android:name="com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity"-->
+<!--            android:label="@string/title_activity_display_alert"-->
+<!--            android:parentActivityName="com.github.cta_elevator_alerts_kotlin.activities.MainActivity"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+<!--        <activity-->
+<!--            android:name="com.github.cta_elevator_alerts_kotlin.activities.SplashActivity"-->
+<!--            android:theme="@style/SplashTheme">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <uses-library
             android:name="android.test.runner"
             android:required="false" />

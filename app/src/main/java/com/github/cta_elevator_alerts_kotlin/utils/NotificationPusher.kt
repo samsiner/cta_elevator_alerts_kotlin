@@ -1,23 +1,5 @@
 package com.github.cta_elevator_alerts_kotlin.utils
 
-import android.app.Application
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
-import android.content.Context
-import android.content.Intent
-import android.os.Build
-import android.util.Log
-
-import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
-
-import com.github.cta_elevator_alerts_kotlin.R
-import com.github.cta_elevator_alerts_kotlin.model.StationRepository
-
-import java.util.ArrayList
-
 /**
  * Pushes notification when station goes up or down.
  *

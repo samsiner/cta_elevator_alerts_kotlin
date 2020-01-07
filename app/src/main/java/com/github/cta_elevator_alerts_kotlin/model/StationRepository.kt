@@ -2,21 +2,15 @@ package com.github.cta_elevator_alerts_kotlin.model
 
 import android.app.Application
 import android.util.Log
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-
 import java.io.IOException
 import java.net.URL
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Date
-import java.util.Locale
-import java.util.Scanner
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -65,6 +59,10 @@ class StationRepository private constructor(application: Application) {
 
     fun mGetAllFavorites(): LiveData<List<Station>> {
         return mStationDao.allFavorites
+    }
+
+    fun isFavoriteLiveData(stationID: String): LiveData<Boolean>{
+        return mStationDao.getIsFavoriteLiveData(stationID)
     }
 
     fun mGetStationAlertIDs(): List<String> {

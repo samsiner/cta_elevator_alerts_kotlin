@@ -1,15 +1,18 @@
 package com.github.cta_elevator_alerts
 
 import android.content.Context
-
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.core.internal.deps.guava.collect.Iterables
+import androidx.test.espresso.intent.Intents.getIntents
 import androidx.test.espresso.intent.rule.IntentsTestRule
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.ext.truth.content.IntentSubject.assertThat
 import androidx.test.filters.LargeTest
-
 import com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity
 import com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity
 import com.github.cta_elevator_alerts_kotlin.activities.MainActivity
@@ -17,20 +20,13 @@ import com.github.cta_elevator_alerts_kotlin.model.Station
 import com.github.cta_elevator_alerts_kotlin.model.StationDao
 import com.github.cta_elevator_alerts_kotlin.model.StationRepository
 import com.github.cta_elevator_alerts_kotlin.model.StationRoomDatabase
-
 import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.intent.Intents.getIntents
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.truth.content.IntentSubject.assertThat
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 
 /**
  * Instrumented tests for MainActivity.

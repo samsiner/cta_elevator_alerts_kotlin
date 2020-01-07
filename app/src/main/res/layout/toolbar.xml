@@ -46,7 +46,4 @@
             android:onClick="toMainActivity"
             />
     </RelativeLayout>
-
-
-
 </androidx.appcompat.widget.Toolbar>

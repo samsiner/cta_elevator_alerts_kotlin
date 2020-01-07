@@ -6,10 +6,8 @@ import android.net.ConnectivityManager
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-
 import com.github.cta_elevator_alerts_kotlin.model.StationRepository
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Worker to update data from CTA website.

@@ -1,7 +1,6 @@
 package com.github.cta_elevator_alerts_kotlin.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

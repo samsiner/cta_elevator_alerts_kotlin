@@ -1,22 +1,5 @@
 package com.github.cta_elevator_alerts_kotlin.activities
 
-import android.content.Intent
-import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-
-import com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineAdapter
-import com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineAlertsAdapter
-import com.github.cta_elevator_alerts_kotlin.model.Station
-import com.github.cta_elevator_alerts_kotlin.R
-import com.github.cta_elevator_alerts_kotlin.viewmodels.SpecificLineViewModel
-
 /**
  * SpecificLineActivity displays all current elevator
  * outages at the top, then all stations in the line,

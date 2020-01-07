@@ -81,6 +81,9 @@ interface StationDao {
     @Query("SELECT hasElevator FROM station_table WHERE stationID = :stationID")
     fun getHasElevator(stationID: String): Boolean
 
+    @Query("SELECT isFavorite FROM station_table WHERE stationID = :stationID")
+    fun getIsFavoriteLiveData(stationID: String): LiveData<Boolean>
+
     @Query("UPDATE station_table SET hasElevator = 1 WHERE stationID = :stationID")
     fun setHasElevator(stationID: String)
 
