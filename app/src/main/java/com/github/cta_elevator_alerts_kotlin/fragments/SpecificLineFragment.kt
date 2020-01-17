@@ -1,6 +1,7 @@
 package com.github.cta_elevator_alerts_kotlin.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,9 @@ class SpecificLineFragment : Fragment() {
         val lineName = arguments.lineName
 
         val viewModel = ViewModelProviders.of(this).get(SpecificLineViewModel::class.java)
+        viewModel.buildLines()
         viewModel.line = lineName
+        Log.d("lineStations2", viewModel.line)
         binding.lifecycleOwner = this
 
         //Create adapter to display all alerts
@@ -58,7 +61,7 @@ class SpecificLineFragment : Fragment() {
 
         viewModel.allLineAlerts.observe(viewLifecycleOwner, Observer {
             it?.let {
-                specificLineAdapter.submitList(it)
+                specificLineAlertsAdapter.submitList(it)
 
                 //If no alerts
                 val heading = binding.tvElevatorAlerts

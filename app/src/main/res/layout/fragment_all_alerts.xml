@@ -38,8 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorPinkLine"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
                 <TextView
                     android:id="@+id/txt_update_alert_time"
                     android:layout_width="wrap_content"

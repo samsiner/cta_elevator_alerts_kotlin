@@ -15,7 +15,6 @@ import com.github.cta_elevator_alerts_kotlin.model.Line
  */
 
 class AllLinesAdapter(private val allLinesListener: LineListener): ListAdapter<Line, AllLinesAdapter.ViewHolder>(LineDiffCallback()) {
-
     class ViewHolder private constructor(val binding: AllLinesBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Line, lineListener: LineListener) {
             binding.line = item

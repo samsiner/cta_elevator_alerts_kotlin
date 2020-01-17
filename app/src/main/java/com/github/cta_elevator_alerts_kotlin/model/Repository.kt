@@ -262,12 +262,31 @@ class Repository private constructor(application: Application) {
 
     fun getStationsByLine(lineName: String): MutableLiveData<MutableList<Station>> {
         val newList: MutableList<Station> = mutableListOf()
+
         for (stationID in lineStationTable[lineName].orEmpty()){
-            newList.add(mDao.getStation(stationID))
+            newList.add(getStation(stationID))
         }
-        val newLiveDataList: MutableLiveData<MutableList<Station>> = MutableLiveData<MutableList<Station>>()
+        val newLiveDataList: MutableLiveData<MutableList<Station>> = MutableLiveData()
         newLiveDataList.value = newList
         return newLiveDataList
+    }
+
+    var newStation: Station = Station("")
+
+    private fun getStation(stationID: String): Station {
+        val thread = object : Thread() {
+            override fun run() {
+                newStation = mDao.getStation(stationID)
+            }
+        }
+        thread.start()
+        try {
+            thread.join()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        return newStation
     }
 
     fun isFavorite(stationID: String): Boolean {
@@ -288,8 +307,6 @@ class Repository private constructor(application: Application) {
 
     fun buildStations() {
         if (mDao.stationCount > 0) return
-
-        buildLines()
 
         val jsonstring = pullJSONFromWebService("https://data.cityofchicago.org/resource/8pix-ypme.json")
 
@@ -387,7 +404,7 @@ class Repository private constructor(application: Application) {
 
     }
 
-    private fun buildLines(){
+    fun buildLines(){
         insert(Line("Red Line"))
         insert(Line("Blue Line"))
         insert(Line("Brown Line"))
@@ -527,6 +544,7 @@ class Repository private constructor(application: Application) {
                     "Purple Line" -> lineAlertList = mDao.allRedLineAlertStations
                     "Yellow Line" -> lineAlertList = mDao.allRedLineAlertStations
                     else -> {
+                        lineAlertList = MutableLiveData<List<Station>>(listOf())
                     }
                 }
             }
