@@ -13,37 +13,40 @@ import androidx.room.Query
  */
 
 @Dao
-interface StationDao {
+interface Dao {
 
     @get:Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1")
     val allAlertStations: LiveData<List<Station>>
 
+    @get:Query("SELECT * FROM line_table")
+    val allLines: LiveData<List<Line>>
+
     @get:Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1")
     val allAlertStationIDs: List<String>
 
-    @get:Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1 AND red = 1")
-    val allRedLineAlertIDs: List<String>
+    @get:Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1 AND red = 1")
+    val allRedLineAlertStations: LiveData<List<Station>>
 
-    @get:Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1 AND blue = 1")
-    val allBlueLineAlertIDs: List<String>
+    @get:Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1 AND blue = 1")
+    val allBlueLineAlertStations: LiveData<List<Station>>
 
-    @get:Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1 AND brown = 1")
-    val allBrownLineAlertIDs: List<String>
+    @get:Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1 AND brown = 1")
+    val allBrownLineAlertStations: LiveData<List<Station>>
 
-    @get:Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1 AND green = 1")
-    val allGreenLineAlertIDs: List<String>
+    @get:Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1 AND green = 1")
+    val allGreenLineAlertStations: LiveData<List<Station>>
 
-    @get:Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1 AND orange = 1")
-    val allOrangeLineAlertIDs: List<String>
+    @get:Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1 AND orange = 1")
+    val allOrangeLineAlertStations: LiveData<List<Station>>
 
-    @get:Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1 AND pink = 1")
-    val allPinkLineAlertIDs: List<String>
+    @get:Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1 AND pink = 1")
+    val allPinkLineAlertStations: LiveData<List<Station>>
 
-    @get:Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1 AND purple = 1")
-    val allPurpleLineAlertIDs: List<String>
+    @get:Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1 AND purple = 1")
+    val allPurpleLineAlertStations: LiveData<List<Station>>
 
-    @get:Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1 AND yellow = 1")
-    val allYellowLineAlertIDs: List<String>
+    @get:Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1 AND yellow = 1")
+    val allYellowLineAlertStations: LiveData<List<Station>>
 
     @get:Query("SELECT * FROM station_table WHERE isFavorite = 1")
     val allFavorites: LiveData<List<Station>>
@@ -59,6 +62,9 @@ interface StationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(station: Station)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(line: Line)
 
     @Query("UPDATE station_table SET isFavorite = 1, nickname = NULL WHERE stationID = :id")
     fun addFavorite(id: String)

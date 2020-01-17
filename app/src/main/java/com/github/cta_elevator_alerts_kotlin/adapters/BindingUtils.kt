@@ -5,6 +5,8 @@ import android.view.View.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.github.cta_elevator_alerts_kotlin.R
+import com.github.cta_elevator_alerts_kotlin.model.Line
 import com.github.cta_elevator_alerts_kotlin.model.Station
 
 @BindingAdapter("stationName")
@@ -21,6 +23,39 @@ fun ImageView.setStatusImage(item: Station?){
             true -> VISIBLE
             else -> INVISIBLE
         }
+    }
+}
+
+@BindingAdapter("statusLine")
+fun ImageView.setLineImage(item: Line?){
+    item?.let {
+        visibility = when (item.hasElevatorAlert) {
+            true -> VISIBLE
+            else -> INVISIBLE
+        }
+    }
+}
+
+@BindingAdapter("lineIcon")
+fun ImageView.setLineIcon(item: Line?){
+    item?.let {
+        when (item.name) {
+            "Red Line" -> setImageResource(R.drawable.icon_redline)
+            "Blue Line" -> setImageResource(R.drawable.icon_blueline)
+            "Brown Line" -> setImageResource(R.drawable.icon_brownline)
+            "Green Line" -> setImageResource(R.drawable.icon_greenline)
+            "Orange Line" -> setImageResource(R.drawable.icon_orangeline)
+            "Pink Line" -> setImageResource(R.drawable.icon_pinkline)
+            "Purple Line" -> setImageResource(R.drawable.icon_purpleline)
+            "Yellow Line" -> setImageResource(R.drawable.icon_yellowline)
+        }
+    }
+}
+
+@BindingAdapter("lineText")
+fun TextView.setLineText(item: Line?){
+    item?.let {
+        text = item.name
     }
 }
 

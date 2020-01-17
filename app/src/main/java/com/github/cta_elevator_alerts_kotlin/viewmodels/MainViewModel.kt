@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 
 import com.github.cta_elevator_alerts_kotlin.model.Station
-import com.github.cta_elevator_alerts_kotlin.model.StationRepository
+import com.github.cta_elevator_alerts_kotlin.model.Repository
 
 /**
  * ViewModel between MainActivity and StationRepository
@@ -17,7 +17,7 @@ import com.github.cta_elevator_alerts_kotlin.model.StationRepository
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val mRepository: StationRepository? = StationRepository.getInstance(application)
+    private val mRepository: Repository? = Repository.getInstance(application)
 
     val stationAlerts: LiveData<List<Station>>
         get() = mRepository!!.mGetAllAlertStations()
@@ -31,14 +31,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun setConnectionStatus(b: Boolean) {
         mRepository!!.setConnectionStatus(b)
     }
-
-    fun getAllRoutes(stationID: String): BooleanArray {
-        return mRepository!!.mGetAllRoutes(stationID)
-    }
-
-    fun getHasElevatorAlert(stationID: String): Boolean {
-        return mRepository!!.mGetHasElevatorAlert(stationID)
-    }
+//
+//    fun getAllRoutes(stationID: String): BooleanArray {
+//        return mRepository!!.mGetAllRoutes(stationID)
+//    }
+//
+//    fun getHasElevatorAlert(stationID: String): Boolean {
+//        return mRepository!!.mGetHasElevatorAlert(stationID)
+//    }
 
 //    fun removeAlertKing() {
 //        mRepository!!.removeAlertKing()

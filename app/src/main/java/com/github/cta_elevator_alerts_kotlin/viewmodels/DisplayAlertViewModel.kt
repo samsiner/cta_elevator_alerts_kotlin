@@ -2,7 +2,7 @@ package com.github.cta_elevator_alerts_kotlin.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.github.cta_elevator_alerts_kotlin.model.StationRepository
+import com.github.cta_elevator_alerts_kotlin.model.Repository
 
 /**
  * ViewModel between DisplayAlertActivity and StationRepository
@@ -12,7 +12,7 @@ import com.github.cta_elevator_alerts_kotlin.model.StationRepository
 
 class DisplayAlertViewModel(application: Application) : AndroidViewModel(application) {
 
-    val mRepository = StationRepository.getInstance(application)
+    private val mRepository = Repository.getInstance(application)
 
     var stationID: String = ""
         private set

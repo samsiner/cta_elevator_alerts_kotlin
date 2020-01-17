@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.collections.HashMap
 
 /**
  * Repository to interact with Room database and
@@ -21,9 +22,9 @@ import java.util.concurrent.Executors
  * @author Southport Developers (Sam Siner & Tyler Arndt)
  */
 
-class StationRepository private constructor(application: Application) {
+class Repository private constructor(application: Application) {
 
-    private val mStationDao: StationDao
+    private val mDao: Dao
     private val executor: ExecutorService
     private val connectionStatusLD: MutableLiveData<Boolean>
     private val updateAlertsTimeLD: MutableLiveData<String>
@@ -42,11 +43,11 @@ class StationRepository private constructor(application: Application) {
     val updatedAlertsTime: LiveData<String>
         get() = updateAlertsTimeLD
 
-    private var lineAlertList: List<String>? = null
+    private lateinit var lineAlertList: LiveData<List<Station>>
 
     init {
-        val db = StationRoomDatabase.getDatabase(application)
-        mStationDao = db!!.stationDao()
+        val db = MyDatabase.getDatabase(application)
+        mDao = db!!.stationDao()
         updateAlertsTimeLD = MutableLiveData()
         connectionStatusLD = MutableLiveData()
         stationCountLD = MutableLiveData()
@@ -54,15 +55,19 @@ class StationRepository private constructor(application: Application) {
     }
 
     fun mGetAllAlertStations(): LiveData<List<Station>> {
-        return mStationDao.allAlertStations
+        return mDao.allAlertStations
     }
 
     fun mGetAllFavorites(): LiveData<List<Station>> {
-        return mStationDao.allFavorites
+        return mDao.allFavorites
+    }
+
+    fun getAllLines(): LiveData<List<Line>> {
+        return mDao.allLines
     }
 
     fun isFavoriteLiveData(stationID: String): LiveData<Boolean>{
-        return mStationDao.getIsFavoriteLiveData(stationID)
+        return mDao.getIsFavoriteLiveData(stationID)
     }
 
     fun mGetStationAlertIDs(): List<String> {
@@ -70,7 +75,7 @@ class StationRepository private constructor(application: Application) {
 
         val thread = object : Thread() {
             override fun run() {
-                list2.addAll(mStationDao.allAlertStationIDs)
+                list2.addAll(mDao.allAlertStationIDs)
             }
         }
         thread.start()
@@ -91,14 +96,14 @@ class StationRepository private constructor(application: Application) {
         val b = BooleanArray(8)
         val thread = object : Thread() {
             override fun run() {
-                b[0] = mStationDao.getRed(stationID)
-                b[1] = mStationDao.getBlue(stationID)
-                b[2] = mStationDao.getBrown(stationID)
-                b[3] = mStationDao.getGreen(stationID)
-                b[4] = mStationDao.getOrange(stationID)
-                b[5] = mStationDao.getPink(stationID)
-                b[6] = mStationDao.getPurple(stationID)
-                b[7] = mStationDao.getYellow(stationID)
+                b[0] = mDao.getRed(stationID)
+                b[1] = mDao.getBlue(stationID)
+                b[2] = mDao.getBrown(stationID)
+                b[3] = mDao.getGreen(stationID)
+                b[4] = mDao.getOrange(stationID)
+                b[5] = mDao.getPink(stationID)
+                b[6] = mDao.getPurple(stationID)
+                b[7] = mDao.getYellow(stationID)
             }
         }
         thread.start()
@@ -114,7 +119,7 @@ class StationRepository private constructor(application: Application) {
     fun mGetStationName(stationID: String): String? {
         val thread = object : Thread() {
             override fun run() {
-                s = mStationDao.getName(stationID)
+                s = mDao.getName(stationID)
             }
         }
         thread.start()
@@ -130,7 +135,7 @@ class StationRepository private constructor(application: Application) {
     private fun insert(station: Station) {
         val thread = object : Thread() {
             override fun run() {
-                mStationDao.insert(station)
+                mDao.insert(station)
             }
         }
         thread.start()
@@ -139,13 +144,26 @@ class StationRepository private constructor(application: Application) {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
+    }
 
+    private fun insert(line: Line) {
+        val thread = object : Thread() {
+            override fun run() {
+                mDao.insert(line)
+            }
+        }
+        thread.start()
+        try {
+            thread.join()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
     }
 
     fun mGetHasElevator(stationID: String): Boolean {
         val thread = object : Thread() {
             override fun run() {
-                hasElevator = mStationDao.getHasElevator(stationID)
+                hasElevator = mDao.getHasElevator(stationID)
             }
         }
         thread.start()
@@ -161,7 +179,7 @@ class StationRepository private constructor(application: Application) {
     fun mGetHasElevatorAlert(stationID: String): Boolean {
         val thread = object : Thread() {
             override fun run() {
-                hasElevatorAlert = mStationDao.getHasElevatorAlert(stationID)
+                hasElevatorAlert = mDao.getHasElevatorAlert(stationID)
             }
         }
         thread.start()
@@ -190,11 +208,11 @@ class StationRepository private constructor(application: Application) {
 
         val thread = object : Thread() {
             override fun run() {
-                list2.add(0, mStationDao.getName(stationID))
-                val shortDesc = mStationDao.getShortDescription(stationID)
+                list2.add(0, mDao.getName(stationID))
+                val shortDesc = mDao.getShortDescription(stationID)
 
                 if (shortDesc != null)
-                    list2.add(1, mStationDao.getShortDescription(stationID))
+                    list2.add(1, mDao.getShortDescription(stationID))
                 else
                     list2.add(1, "")
             }
@@ -210,13 +228,13 @@ class StationRepository private constructor(application: Application) {
     }
 
     fun addFavorite(stationID: String) {
-        executor.execute { mStationDao.addFavorite(stationID) }
+        executor.execute { mDao.addFavorite(stationID) }
     }
 
     fun removeFavorite(stationID: String) {
         val thread = object : Thread() {
             override fun run() {
-                mStationDao.removeFavorite(stationID)
+                mDao.removeFavorite(stationID)
             }
         }
         thread.start()
@@ -228,10 +246,34 @@ class StationRepository private constructor(application: Application) {
 
     }
 
+    //Hardcoded order of stations from CTA
+    var lineStationTable: HashMap<String, List<String>> = HashMap()
+
+    private fun setLineStationIDs() {
+        lineStationTable["Red Line"] = listOf("40900", "41190", "40100", "41300", "40760", "40880", "41380", "40340", "41200", "40770", "40540", "40080", "41420", "41320", "41220", "40650", "40630", "41450", "40330", "41660", "41090", "40560", "41490", "41400", "41000", "40190", "41230", "41170", "40910", "40990", "40240", "41430", "40450")
+        lineStationTable["Blue Line"] = listOf("40890", "40820", "40230", "40750", "41280", "41330", "40550", "41240", "40060", "41020", "40570", "40670", "40590", "40320", "41410", "40490", "40380", "40370", "40790", "40070", "41340", "40430", "40350", "40470", "40810", "40220", "40250", "40920", "40970", "40010", "40180", "40980", "40390")
+        lineStationTable["Brown Line"] = listOf("41290", "41180", "40870", "41010", "41480", "40090", "41500", "41460", "41440", "41310", "40360", "41320", "41210", "40530", "41220", "40660", "40800", "40710", "40460", "40730", "40040", "40160", "40850", "40680", "41700", "40260", "40380")
+        lineStationTable["Green Line"] = listOf("40020", "41350", "40610", "41260", "40280", "40700", "40480", "40030", "41670", "41070", "41360", "40170", "41510", "41160", "40380", "40260", "41700", "40680", "41400", "41690", "41120", "40300", "41270", "41080", "40130", "40510", "41140", "40720", "40940", "40290")
+        lineStationTable["Orange Line"] = listOf("40930", "40960", "41150", "40310", "40120", "41060", "41130", "41400", "40850", "40160", "40040", "40730", "40380", "40260", "41700", "40680")
+        lineStationTable["Pink Line"] = listOf("40580", "40420", "40600", "40150", "40780", "41040", "40440", "40740", "40210", "40830", "41030", "40170", "41510", "41160", "40380", "40260", "41700", "40680", "40850", "40160", "40040", "40730")
+        lineStationTable["Purple Line"] = listOf("41050", "41250", "40400", "40520", "40050", "40690", "40270", "40840", "40900", "40540", "41320", "41210", "40530", "41220", "40660", "40800", "40710", "40460", "40380", "40260", "41700", "40680", "40850", "40160", "40040", "40730")
+        lineStationTable["Yellow Line"] = listOf("40140", "41680", "40900")
+    }
+
+    fun getStationsByLine(lineName: String): MutableLiveData<MutableList<Station>> {
+        val newList: MutableList<Station> = mutableListOf()
+        for (stationID in lineStationTable[lineName].orEmpty()){
+            newList.add(mDao.getStation(stationID))
+        }
+        val newLiveDataList: MutableLiveData<MutableList<Station>> = MutableLiveData<MutableList<Station>>()
+        newLiveDataList.value = newList
+        return newLiveDataList
+    }
+
     fun isFavorite(stationID: String): Boolean {
         val thread = object : Thread() {
             override fun run() {
-                isFavorite = mStationDao.isFavoriteStation(stationID)
+                isFavorite = mDao.isFavoriteStation(stationID)
             }
         }
         thread.start()
@@ -245,7 +287,9 @@ class StationRepository private constructor(application: Application) {
     }
 
     fun buildStations() {
-        if (mStationDao.stationCount > 0) return
+        if (mDao.stationCount > 0) return
+
+        buildLines()
 
         val jsonstring = pullJSONFromWebService("https://data.cityofchicago.org/resource/8pix-ypme.json")
 
@@ -271,7 +315,7 @@ class StationRepository private constructor(application: Application) {
                 val purple = java.lang.Boolean.parseBoolean(obj.getString("p")) || java.lang.Boolean.parseBoolean(obj.getString("pexp"))
                 val yellow = java.lang.Boolean.parseBoolean(obj.getString("y"))
 
-                val station = mStationDao.getStation(mapID)
+                val station = mDao.getStation(mapID)
 
                 if (station == null) {
                     val newStation = Station(mapID)
@@ -306,41 +350,54 @@ class StationRepository private constructor(application: Application) {
                     }
 
                     insert(newStation)
-                    mStationDao.updateName(mapID, stationName)
+                    mDao.updateName(mapID, stationName)
                 }
 
                 //Set routes that come to this station
-                if (ada) mStationDao.setHasElevator(mapID)
+                if (ada) mDao.setHasElevator(mapID)
                 if (red) {
-                    mStationDao.setRedTrue(mapID)
+                    mDao.setRedTrue(mapID)
                 }
                 if (blue) {
-                    mStationDao.setBlueTrue(mapID)
+                    mDao.setBlueTrue(mapID)
                 }
                 if (brown) {
-                    mStationDao.setBrownTrue(mapID)
+                    mDao.setBrownTrue(mapID)
                 }
                 if (green) {
-                    mStationDao.setGreenTrue(mapID)
+                    mDao.setGreenTrue(mapID)
                 }
                 if (orange) {
-                    mStationDao.setOrangeTrue(mapID)
+                    mDao.setOrangeTrue(mapID)
                 }
                 if (pink) {
-                    mStationDao.setPinkTrue(mapID)
+                    mDao.setPinkTrue(mapID)
                 }
                 if (purple) {
-                    mStationDao.setPurpleTrue(mapID)
+                    mDao.setPurpleTrue(mapID)
                 }
                 if (yellow) {
-                    mStationDao.setYellowTrue(mapID)
+                    mDao.setYellowTrue(mapID)
                 }
             }
-            stationCountLD.postValue(mStationDao.stationCount)
+            stationCountLD.postValue(mDao.stationCount)
         } catch (e: JSONException) {
             connectionStatusLD.postValue(false)
         }
 
+    }
+
+    private fun buildLines(){
+        insert(Line("Red Line"))
+        insert(Line("Blue Line"))
+        insert(Line("Brown Line"))
+        insert(Line("Green Line"))
+        insert(Line("Orange Line"))
+        insert(Line("Pink Line"))
+        insert(Line("Purple Line"))
+        insert(Line("Yellow Line"))
+
+        setLineStationIDs()
     }
 
     fun buildAlerts() {
@@ -351,7 +408,7 @@ class StationRepository private constructor(application: Application) {
         if (jsonstring == "NO INTERNET") return
 
         val currentAlerts = ArrayList<String>() //For multiple alerts
-        val beforeStationsOut = ArrayList(mStationDao.allAlertStationIDs)
+        val beforeStationsOut = ArrayList(mDao.allAlertStationIDs)
 
         try {
             val outer = JSONObject(jsonstring)
@@ -387,12 +444,12 @@ class StationRepository private constructor(application: Application) {
                         var shortDesc = alert.getString("ShortDescription")
                         if (currentAlerts.contains(id)) {
                             shortDesc += "\n\n"
-                            shortDesc += mStationDao.getShortDescription(id)
+                            shortDesc += mDao.getShortDescription(id)
                         } else {
                             currentAlerts.add(id)
                         }
 
-                        mStationDao.setAlert(id, shortDesc)
+                        mDao.setAlert(id, shortDesc)
                         break
                     }
                 }
@@ -404,7 +461,7 @@ class StationRepository private constructor(application: Application) {
         }
 
         for (id in beforeStationsOut) {
-            mStationDao.removeAlert(id)
+            mDao.removeAlert(id)
         }
 
         val dateFormat = SimpleDateFormat("'Last updated:\n'MMMM' 'dd', 'yyyy' at 'h:mm a", Locale.US)
@@ -415,7 +472,7 @@ class StationRepository private constructor(application: Application) {
     fun removeAlertKing() {
         val thread = object : Thread() {
             override fun run() {
-                mStationDao.removeAlert("41140")
+                mDao.removeAlert("41140")
             }
         }
         thread.start()
@@ -430,7 +487,7 @@ class StationRepository private constructor(application: Application) {
     fun addAlertHoward() {
         val thread = object : Thread() {
             override fun run() {
-                mStationDao.setAlert("40900", "Elevator is DOWN - TEST!")
+                mDao.setAlert("40900", "Elevator is DOWN - TEST!")
             }
         }
         thread.start()
@@ -457,21 +514,18 @@ class StationRepository private constructor(application: Application) {
         return sb.toString()
     }
 
-    fun getAllLineAlerts(line: String): List<String>? {
+    fun getAllLineAlerts(line: String): LiveData<List<Station>> {
         val thread = object : Thread() {
             override fun run() {
                 when (line) {
-                    "Red Line" -> {
-                        lineAlertList = mStationDao.allRedLineAlertIDs
-                        Log.d("red line alerts: ", lineAlertList!!.toString())
-                    }
-                    "Blue Line" -> lineAlertList = mStationDao.allBlueLineAlertIDs
-                    "Brown Line" -> lineAlertList = mStationDao.allBrownLineAlertIDs
-                    "Green Line" -> lineAlertList = mStationDao.allGreenLineAlertIDs
-                    "Orange Line" -> lineAlertList = mStationDao.allOrangeLineAlertIDs
-                    "Pink Line" -> lineAlertList = mStationDao.allPinkLineAlertIDs
-                    "Purple Line" -> lineAlertList = mStationDao.allPurpleLineAlertIDs
-                    "Yellow Line" -> lineAlertList = mStationDao.allYellowLineAlertIDs
+                    "Red Line" -> lineAlertList = mDao.allRedLineAlertStations
+                    "Blue Line" -> lineAlertList = mDao.allRedLineAlertStations
+                    "Brown Line" -> lineAlertList = mDao.allRedLineAlertStations
+                    "Green Line" -> lineAlertList = mDao.allRedLineAlertStations
+                    "Orange Line" -> lineAlertList = mDao.allRedLineAlertStations
+                    "Pink Line" -> lineAlertList = mDao.allRedLineAlertStations
+                    "Purple Line" -> lineAlertList = mDao.allRedLineAlertStations
+                    "Yellow Line" -> lineAlertList = mDao.allRedLineAlertStations
                     else -> {
                     }
                 }
@@ -489,13 +543,13 @@ class StationRepository private constructor(application: Application) {
 
     companion object {
         @Volatile
-        var INSTANCE: StationRepository? = null
+        var INSTANCE: Repository? = null
 
-        fun getInstance(application: Application): StationRepository? {
+        fun getInstance(application: Application): Repository? {
             if (INSTANCE == null) {
-                synchronized(StationRepository::class.java) {
+                synchronized(Repository::class.java) {
                     if (INSTANCE == null) {
-                        INSTANCE = StationRepository(application)
+                        INSTANCE = Repository(application)
                     }
                 }
             }

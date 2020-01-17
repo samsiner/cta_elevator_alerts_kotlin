@@ -12,17 +12,15 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_all"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="com.github.cta_elevator_alerts_kotlin.fragments.AllAlertsFragment">
+        android:layout_height="match_parent"
+        android:background="@color/colorPinkLine">
 
             <LinearLayout style="@style/ActivityStyle">
                 <TextView
                     android:text="@string/title_all_alerts"
+                    android:layout_gravity="center_horizontal"
+                    tools:text="@string/title_all_alerts"
+                    android:background="@color/colorPinkLine"
                     style="@style/SubHeaderText"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -30,7 +28,7 @@
                     android:id="@+id/noStationAlerts"
                     android:text="@string/no_current_alerts"
                     android:textSize="18sp"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorPrimaryDark"
                     android:layout_gravity="center"
                     android:textStyle="italic"
                     android:visibility="gone"/>
@@ -39,7 +37,7 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/main_activity_containers"
+                    android:background="@color/colorPinkLine"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     />
                 <TextView
@@ -47,12 +45,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textStyle="italic"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"/>
             </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
 <!--        <RelativeLayout-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent"-->

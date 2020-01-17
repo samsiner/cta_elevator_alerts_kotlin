@@ -96,5 +96,4 @@ class AllAlertsFragment : Fragment() {
 
         WorkManager.getInstance(activity!!).enqueue(request)
     }
-
 }

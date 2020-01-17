@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.cta_elevator_alerts_kotlin.R
+import com.github.cta_elevator_alerts_kotlin.databinding.SpecificLineAlertStationBinding
+import com.github.cta_elevator_alerts_kotlin.model.Station
 
 /**
  * Adapter for alerts within SpecificLineActivity (RecyclerView)
@@ -15,20 +19,49 @@ import com.github.cta_elevator_alerts_kotlin.R
  * @author Southport Developers (Sam Siner & Tyler Arndt)
  */
 
-class SpecificLineAlertsAdapter(private val context: Context, private val alertStations: List<String>) : RecyclerView.Adapter<SpecificLineAlertsAdapter.SpecificLineAlertsViewHolder>() {
-    private val mInflater: LayoutInflater = LayoutInflater.from(context)
+class SpecificLineAlertsAdapter(private val specificLineAlertListener: SpecificLineAlertListener): ListAdapter<Station, SpecificLineAlertsAdapter.ViewHolder>(SpecificLineAlertStationDiffCallback()) {
 
-    inner class SpecificLineAlertsViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal val stationAlertTextView: TextView = itemView.findViewById(R.id.txt_specific_line_alert_station)
-        internal val starIcon: ImageView = itemView.findViewById(R.id.img_star_icon)
+    class ViewHolder private constructor(val binding: SpecificLineAlertStationBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Station, specificLineAlertListener: SpecificLineAlertListener){
+            binding.station = item
+            binding.specificLineAlertListener = specificLineAlertListener
+            binding.executePendingBindings()
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflator = LayoutInflater.from(parent.context)
+                val binding = SpecificLineAlertStationBinding.inflate(layoutInflator, parent, false)
+                return ViewHolder(binding)
+            }
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpecificLineAlertsViewHolder {
-        val itemView = mInflater.inflate(R.layout.specific_line_alert_station, parent, false)
-        return SpecificLineAlertsViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: SpecificLineAlertsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position), specificLineAlertListener)
+    }
+}
+
+class SpecificLineAlertStationDiffCallback : DiffUtil.ItemCallback<Station>(){
+    override fun areItemsTheSame(oldItem: Station, newItem: Station): Boolean {
+        return oldItem.stationID == newItem.stationID
+    }
+
+    override fun areContentsTheSame(oldItem: Station, newItem: Station): Boolean {
+        return oldItem == newItem
+    }
+}
+
+class SpecificLineAlertListener(val clickListener: (stationID: String) -> Unit){
+    fun onClick(station: Station) = clickListener(station.stationID)
+}
+
+
+//    override fun onBindViewHolder(holder: SpecificLineAlertsViewHolder, position: Int) {
 //        val currentStationID = alertStations[position]
 //        val currentName = (context as SpecificLineActivity).getStationName(currentStationID)
 //        val isFavorite = context.getIsFavorite(currentStationID)
@@ -46,9 +79,3 @@ class SpecificLineAlertsAdapter(private val context: Context, private val alertS
 //        } else {
 //            holder.starIcon.visibility = View.INVISIBLE
 //        }
-    }
-
-    override fun getItemCount(): Int {
-        return alertStations.size
-    }
-}

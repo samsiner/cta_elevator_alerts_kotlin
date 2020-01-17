@@ -6,7 +6,7 @@ import android.net.ConnectivityManager
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.github.cta_elevator_alerts_kotlin.model.StationRepository
+import com.github.cta_elevator_alerts_kotlin.model.Repository
 import java.util.*
 
 /**
@@ -17,7 +17,7 @@ import java.util.*
 
 class NetworkWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
-    private val repository: StationRepository? = StationRepository.getInstance(applicationContext as Application)
+    private val repository: Repository? = Repository.getInstance(applicationContext as Application)
 
     override fun doWork(): Result {
         //Check for connection first

@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.findNavController
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.adapters.AllLinesAdapter
+import com.github.cta_elevator_alerts_kotlin.adapters.LineListener
 import com.github.cta_elevator_alerts_kotlin.databinding.FragmentAllLinesBinding
-import com.github.cta_elevator_alerts_kotlin.viewmodels.AllLinesViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -29,18 +28,17 @@ class AllLinesFragment : Fragment() {
                 false
         )
 
-        val viewModel = ViewModelProviders.of(this).get(AllLinesViewModel::class.java)
-        binding.allLinesViewModel = viewModel
         binding.lifecycleOwner = this
 
-        val linesRecyclerView = binding.recyclerAllLines
-        val linesAdapter = AllLinesAdapter(activity!!, viewModel, binding)
-//        linesAdapter.setToolbarTextView()
-        linesRecyclerView.adapter = linesAdapter
-        linesRecyclerView.layoutManager = LinearLayoutManager(activity!!)
+        //Create adapter to display all alerts
+        val allLinesAdapter = AllLinesAdapter(LineListener { name ->
+            findNavController().navigate(
+                    AllLinesFragmentDirections.actionAllLinesFragmentToSpecificLineFragment(name)
+            )
+        })
+        binding.recyclerAllLines.adapter = allLinesAdapter
 
-        //        val about = findViewById<ImageView>(R.id.img_home_icon)
-//        about.visibility = View.INVISIBLE
+//        linesAdapter.setToolbarTextView()
 
         return binding.root
     }

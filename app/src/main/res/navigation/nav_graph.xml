@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_specificLineFragment_to_displayAlert"
             app:destination="@id/displayAlert" />
+        <argument
+            android:name="lineName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/displayAlert"
