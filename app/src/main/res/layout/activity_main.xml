@@ -8,6 +8,13 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/chicago_train_dark_50"
+            android:contentDescription="@string/content_description_train"/>
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"

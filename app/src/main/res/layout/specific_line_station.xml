@@ -7,6 +7,15 @@
             name="station"
             type="com.github.cta_elevator_alerts_kotlin.model.Station" />
         <variable
+            name="lineName"
+            type="String" />
+        <variable
+            name="position"
+            type="Integer" />
+        <variable
+            name="totalPositions"
+            type="Integer" />
+        <variable
             name="specificLineListener"
             type="com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineListener" />
     </data>
@@ -26,7 +35,8 @@
                 android:layout_width="30dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/accessible"
-                android:contentDescription="@string/content_description_accessible_icon" />
+                android:contentDescription="@string/content_description_accessible_icon"
+                app:statusAda="@{station}"/>
 
             <RelativeLayout
                 android:id="@+id/relative_line_graphic"
@@ -39,13 +49,18 @@
                     android:id="@+id/view_vertical_bar_top"
                     style="@style/stationLineLine"
                     android:background="@color/colorRedLine"
-                    android:layout_alignParentTop="true" />
+                    android:layout_alignParentTop="true"
+                    app:setColor="@{lineName}"
+                    app:topPosition="@{position}"/>
 
                 <View
                     android:id="@+id/view_vertical_bar_bottom"
                     style="@style/stationLineLine"
                     android:background="@color/colorRedLine"
-                    android:layout_alignParentBottom="true" />
+                    android:layout_alignParentBottom="true"
+                    app:setColor="@{lineName}"
+                    app:bottomPosition="@{position}"
+                    app:totalPositions="@{totalPositions}"/>
 
                 <View
                     android:id="@+id/view_circle"
@@ -55,14 +70,16 @@
                     android:layout_marginRight="15dp"
                     android:background="@drawable/circle"
                     android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerHorizontal="true"
+                    app:setCircleStroke="@{lineName}"/>
 
                 <ImageView
                     android:id="@+id/img_status"
                     style="@style/StatusImage"
                     android:layout_centerVertical="true"
                     android:src="@drawable/status_red"
-                    android:contentDescription="@string/image_elevator_out" />
+                    android:contentDescription="@string/image_elevator_out"
+                    app:statusImage="@{station}"/>
                 <!--android:layout_height="19dp"-->
                 <!--android:layout_width="19dp"-->
 
@@ -75,13 +92,15 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/relative_line_graphic"
-                android:layout_toRightOf="@+id/relative_line_graphic" />
+                android:layout_toRightOf="@+id/relative_line_graphic"
+                app:stationName="@{station}"/>
 
             <ImageView
                 android:id="@+id/img_star_icon"
                 style="@style/icon_small_star"
                 android:layout_toLeftOf="@id/img_right"
-                android:layout_toStartOf="@id/img_right" />
+                android:layout_toStartOf="@id/img_right"
+                app:favoriteImage="@{station}"/>
 
             <ImageView
                 android:id="@+id/img_right"

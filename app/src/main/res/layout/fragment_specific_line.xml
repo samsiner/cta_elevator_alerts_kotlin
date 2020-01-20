@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 style="@style/SubHeaderText"
                 android:text="@string/elevator_alerts"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorWhite"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -31,6 +31,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 />
 
             <TextView
@@ -39,7 +40,7 @@
                 android:layout_height="wrap_content"
                 style="@style/SubHeaderText"
                 android:text="@string/all_stations"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorWhite"
                 android:layout_marginTop="20dp"
                 />
 
@@ -48,6 +49,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 />
         </LinearLayout>
 

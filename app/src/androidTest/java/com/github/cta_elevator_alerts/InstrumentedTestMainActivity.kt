@@ -16,10 +16,10 @@ import androidx.test.filters.LargeTest
 import com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity
 import com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity
 import com.github.cta_elevator_alerts_kotlin.activities.MainActivity
-import com.github.cta_elevator_alerts_kotlin.model.Station
 import com.github.cta_elevator_alerts_kotlin.model.Dao
-import com.github.cta_elevator_alerts_kotlin.model.Repository
 import com.github.cta_elevator_alerts_kotlin.model.MyDatabase
+import com.github.cta_elevator_alerts_kotlin.model.Repository
+import com.github.cta_elevator_alerts_kotlin.model.Station
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

@@ -12,54 +12,39 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_all"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPinkLine">
+        android:layout_height="match_parent">
 
-            <LinearLayout style="@style/ActivityStyle">
-                <TextView
-                    android:text="@string/title_all_alerts"
-                    android:layout_gravity="center_horizontal"
-                    tools:text="@string/title_all_alerts"
-                    android:background="@color/colorPinkLine"
-                    style="@style/SubHeaderText"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/noStationAlerts"
-                    android:text="@string/no_current_alerts"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_gravity="center"
-                    android:textStyle="italic"
-                    android:visibility="gone"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_station_alerts"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPinkLine"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-                <TextView
-                    android:id="@+id/txt_update_alert_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="italic"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"/>
-            </LinearLayout>
-<!--        <RelativeLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:fitsSystemWindows="true"-->
-<!--            android:orientation="vertical">-->
-<!--            <ImageView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:scaleType="centerCrop"-->
-<!--                android:src="@drawable/chicago_train_dark_50"-->
-<!--                android:contentDescription="@string/content_description_train"/>-->
-<!--        </RelativeLayout>-->
+        <LinearLayout style="@style/ActivityStyle">
+            <TextView
+                android:text="@string/title_all_alerts"
+                android:layout_gravity="center_horizontal"
+                tools:text="@string/title_all_alerts"
+                style="@style/SubHeaderText"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/noStationAlerts"
+                android:text="@string/no_current_alerts"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center"
+                android:textStyle="italic"
+                android:visibility="gone"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_station_alerts"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            <TextView
+                android:id="@+id/txt_update_alert_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/colorWhite"
+                android:textStyle="italic"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"/>
+        </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

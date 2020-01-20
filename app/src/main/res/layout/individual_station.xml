@@ -17,13 +17,14 @@
         android:layout_marginLeft="@dimen/card_spacing"
         android:layout_marginTop="@dimen/card_spacing"
         android:layout_marginRight="@dimen/card_spacing"
+        android:alpha="0.5"
         android:onClick="@{() -> stationListener.onClick(station)}">
 
         <RelativeLayout
             android:id="@+id/rl_individual_station"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/border_bottom">
+            android:alpha="0.5">
 
             <ImageView
                 android:id="@+id/station_status_image"

@@ -29,7 +29,8 @@
                 android:layout_width="30dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/accessible"
-                android:contentDescription="@string/content_description_accessible_icon"/>
+                android:contentDescription="@string/content_description_accessible_icon"
+                app:statusAda="@{station}"/>
 
             <ImageView
                 android:id="@+id/img_alert_station"
@@ -38,7 +39,8 @@
                 android:layout_toEndOf="@+id/img_ada"
                 android:layout_toRightOf="@+id/img_ada"
                 android:src="@drawable/status_red"
-                android:contentDescription="@string/image_elevator_out" />
+                android:contentDescription="@string/image_elevator_out"
+                app:statusImage="@{station}"/>
 
             <TextView
                 android:id="@+id/txt_specific_line_alert_station"
@@ -47,13 +49,15 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/img_alert_station"
                 android:layout_toRightOf="@id/img_alert_station"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                app:stationName="@{station}"/>
 
             <ImageView
                 android:id="@+id/img_star_icon"
                 style="@style/icon_small_star"
                 android:layout_toLeftOf="@id/img_right_arrow"
-                android:layout_toStartOf="@id/img_right_arrow" />
+                android:layout_toStartOf="@id/img_right_arrow"
+                app:favoriteImage="@{station}"/>
 
             <ImageView
                 android:id="@+id/img_right_arrow"

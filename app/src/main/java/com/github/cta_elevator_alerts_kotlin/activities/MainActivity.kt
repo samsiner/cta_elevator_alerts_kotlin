@@ -38,7 +38,8 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.my_nav_host_fragment)
         bottomNav.setupWithNavController(navController)
 
-//        addConnectionStatusObserver()
+        stationAlertsViewModel = MainViewModel(application)
+        addConnectionStatusObserver()
         addPeriodicWorker()
     }
 

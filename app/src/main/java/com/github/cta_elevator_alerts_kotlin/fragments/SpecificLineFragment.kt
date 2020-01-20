@@ -10,15 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineAdapter
 import com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineAlertListener
 import com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineAlertsAdapter
 import com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineListener
 import com.github.cta_elevator_alerts_kotlin.databinding.FragmentSpecificLineBinding
-import com.github.cta_elevator_alerts_kotlin.model.Station
-import com.github.cta_elevator_alerts_kotlin.viewmodels.MainViewModel
 import com.github.cta_elevator_alerts_kotlin.viewmodels.SpecificLineViewModel
 
 /**
@@ -39,8 +36,7 @@ class SpecificLineFragment : Fragment() {
 
         val viewModel = ViewModelProviders.of(this).get(SpecificLineViewModel::class.java)
         viewModel.buildLines()
-        viewModel.line = lineName
-        Log.d("lineStations2", viewModel.line)
+        viewModel.lineName = lineName
         binding.lifecycleOwner = this
 
         //Create adapter to display all alerts
@@ -52,7 +48,7 @@ class SpecificLineFragment : Fragment() {
         binding.recyclerSpecificLineAlertStations.adapter = specificLineAlertsAdapter
 
         //Create adapter to display all alerts
-        val specificLineAdapter = SpecificLineAdapter(SpecificLineListener { stationID ->
+        val specificLineAdapter = SpecificLineAdapter(viewModel.lineName, SpecificLineListener { stationID ->
             findNavController().navigate(
                     SpecificLineFragmentDirections.actionSpecificLineFragmentToDisplayAlert(stationID)
             )
@@ -61,6 +57,7 @@ class SpecificLineFragment : Fragment() {
 
         viewModel.allLineAlerts.observe(viewLifecycleOwner, Observer {
             it?.let {
+                Log.d("specificline", it.toString())
                 specificLineAlertsAdapter.submitList(it)
 
                 //If no alerts
@@ -68,11 +65,11 @@ class SpecificLineFragment : Fragment() {
                 val alertsRV = binding.recyclerSpecificLineAlertStations
 
                 if (it.isEmpty()) {
-                    heading.visibility = View.VISIBLE
-                    alertsRV.visibility = View.VISIBLE
-                } else {
                     heading.visibility = View.GONE
                     alertsRV.visibility = View.GONE
+                } else {
+                    heading.visibility = View.VISIBLE
+                    alertsRV.visibility = View.VISIBLE
                 }
             }
         })
@@ -87,10 +84,4 @@ class SpecificLineFragment : Fragment() {
 
         return binding.root
     }
-
-//        viewModel.favorites.observe(this, Observer<List<Station>>{
-//            lineAlertsAdapter.notifyDataSetChanged()
-//            specificLineAdapter.notifyDataSetChanged()
-//        })
-
 }

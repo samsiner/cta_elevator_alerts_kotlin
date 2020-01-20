@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.github.cta_elevator_alerts_kotlin.model.Line
 
 import com.github.cta_elevator_alerts_kotlin.model.Station
 import com.github.cta_elevator_alerts_kotlin.model.Repository
@@ -17,7 +18,8 @@ import com.github.cta_elevator_alerts_kotlin.model.Repository
 
 class SpecificLineViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: Repository? = Repository.getInstance(application)
-    var line: String = ""
+
+    var lineName: String = ""
         set(value) {
             field = value
             lineStations = repository?.getStationsByLine(value) ?: MutableLiveData(mutableListOf())
@@ -28,14 +30,9 @@ class SpecificLineViewModel(application: Application) : AndroidViewModel(applica
         get() = repository!!.mGetAllFavorites()
 
     val allLineAlerts: LiveData<List<Station>>
-        get() = repository!!.getAllLineAlerts(line)
+        get() = repository!!.getAllLineAlerts(lineName)
 
     fun buildLines() {
         repository?.buildLines()
     }
-
-//        fun getStationName(stationID: String): String? = repository!!.mGetStationName(stationID)
-//    fun getHasElevator(stationID: String): Boolean = repository!!.mGetHasElevator(stationID)
-//    fun getIsFavorite(stationID: String): Boolean = repository!!.isFavorite(stationID)
-//    fun getHasElevatorAlert(stationID: String): Boolean = repository!!.mGetHasElevatorAlert(stationID)
 }

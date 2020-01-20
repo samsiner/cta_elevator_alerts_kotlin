@@ -532,31 +532,43 @@ class Repository private constructor(application: Application) {
     }
 
     fun getAllLineAlerts(line: String): LiveData<List<Station>> {
-        val thread = object : Thread() {
-            override fun run() {
-                when (line) {
-                    "Red Line" -> lineAlertList = mDao.allRedLineAlertStations
-                    "Blue Line" -> lineAlertList = mDao.allRedLineAlertStations
-                    "Brown Line" -> lineAlertList = mDao.allRedLineAlertStations
-                    "Green Line" -> lineAlertList = mDao.allRedLineAlertStations
-                    "Orange Line" -> lineAlertList = mDao.allRedLineAlertStations
-                    "Pink Line" -> lineAlertList = mDao.allRedLineAlertStations
-                    "Purple Line" -> lineAlertList = mDao.allRedLineAlertStations
-                    "Yellow Line" -> lineAlertList = mDao.allRedLineAlertStations
-                    else -> {
-                        lineAlertList = MutableLiveData<List<Station>>(listOf())
-                    }
-                }
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
+//        val thread = object : Thread() {
+//            override fun run() {
+//                when (line) {
+//                    "Red Line" -> lineAlertList = mDao.allRedLineAlertStations
+//                    "Blue Line" -> lineAlertList = mDao.allRedLineAlertStations
+//                    "Brown Line" -> lineAlertList = mDao.allRedLineAlertStations
+//                    "Green Line" -> lineAlertList = mDao.allRedLineAlertStations
+//                    "Orange Line" -> lineAlertList = mDao.allRedLineAlertStations
+//                    "Pink Line" -> lineAlertList = mDao.allRedLineAlertStations
+//                    "Purple Line" -> lineAlertList = mDao.allRedLineAlertStations
+//                    "Yellow Line" -> lineAlertList = mDao.allRedLineAlertStations
+//                    else -> {
+//                        lineAlertList = MutableLiveData<List<Station>>(listOf())
+//                    }
+//                }
+//            }
+//        }
+//        thread.start()
+//        try {
+//            thread.join()
+//        } catch (e: InterruptedException) {
+//            e.printStackTrace()
+//        }
 
-        return lineAlertList
+//        return lineAlertList
+        Log.d("repositoryline", line)
+        return when (line) {
+            "Red Line" -> mDao.allRedLineAlertStations
+            "Blue Line" -> mDao.allBlueLineAlertStations
+            "Brown Line" -> mDao.allBrownLineAlertStations
+            "Green Line" -> mDao.allGreenLineAlertStations
+            "Orange Line" -> mDao.allOrangeLineAlertStations
+            "Pink Line" -> mDao.allPinkLineAlertStations
+            "Purple Line" -> mDao.allPurpleLineAlertStations
+            "Yellow Line" -> mDao.allYellowLineAlertStations
+            else -> MutableLiveData<List<Station>>(listOf())
+        }
     }
 
     companion object {
