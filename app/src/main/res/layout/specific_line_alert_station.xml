@@ -1,55 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <data>
+        <variable
+            name="station"
+            type="com.github.cta_elevator_alerts_kotlin.model.Station" />
+        <variable
+            name="specificLineAlertListener"
+            type="com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineAlertListener" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/border_bottom"
-        tools:ignore="RtlSymmetry">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> specificLineAlertListener.onClick(station)}">
 
-        <ImageView
-            android:id="@+id/img_ada"
-            android:layout_height="30dp"
-            android:layout_width="30dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/accessible"
-            android:contentDescription="@string/content_description_accessible_icon" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/border_bottom"
+            tools:ignore="RtlSymmetry">
 
-        <ImageView
-            android:id="@+id/img_alert_station"
-            style="@style/StatusImage"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/img_ada"
-            android:layout_toRightOf="@+id/img_ada"
-            android:src="@drawable/status_red"
-            android:contentDescription="@string/image_elevator_out"/>
+            <ImageView
+                android:id="@+id/img_ada"
+                android:layout_height="30dp"
+                android:layout_width="30dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/accessible"
+                android:contentDescription="@string/content_description_accessible_icon"
+                app:statusAda="@{station}"/>
 
-        <TextView
-            android:id="@+id/txt_specific_line_alert_station"
-            style="@style/StationName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/img_alert_station"
-            android:layout_toRightOf="@id/img_alert_station"
-            android:layout_centerVertical="true"/>
+            <ImageView
+                android:id="@+id/img_alert_station"
+                style="@style/StatusImage"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/img_ada"
+                android:layout_toRightOf="@+id/img_ada"
+                android:src="@drawable/status_red"
+                android:contentDescription="@string/image_elevator_out"
+                app:statusImage="@{station}"/>
 
-        <ImageView
-            android:id="@+id/img_star_icon"
-            android:contentDescription="@string/star_icon"
-            style="@style/icon_small_star"
-            android:layout_toLeftOf="@id/img_right_arrow"
-            android:layout_toStartOf="@id/img_right_arrow"
-            />
+            <TextView
+                android:id="@+id/txt_specific_line_alert_station"
+                style="@style/StationName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img_alert_station"
+                android:layout_toRightOf="@id/img_alert_station"
+                android:layout_centerVertical="true"
+                app:stationName="@{station}"/>
 
-        <ImageView
-            android:id="@+id/img_right_arrow"
-            style="@style/rightArrow"
-            android:contentDescription="@string/content_description_right_arrow"/>
+            <ImageView
+                android:id="@+id/img_star_icon"
+                style="@style/icon_small_star"
+                android:layout_toLeftOf="@id/img_right_arrow"
+                android:layout_toStartOf="@id/img_right_arrow"
+                app:favoriteImage="@{station}"/>
 
-    </RelativeLayout>
-
-</androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/img_right_arrow"
+                style="@style/rightArrow"
+                android:contentDescription="@string/content_description_right_arrow" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -4,11 +4,13 @@
     <string name="app_name">ELEVATE</string>
     <string name="title_activity_display_alert">Alert Details</string>
     <string name="title_favorites">Favorites</string>
+    <string name="favorite_alerts">Favorite Alerts</string>
     <string name="all_lines">All Lines</string>
     <string name="view_all_lines">View All Lines</string>
     <string name="no_favorites_added">Click View All Lines button to add your favorite stations.</string>
     <string name="no_current_alerts">No current elevator alerts!</string>
     <string name="title_all_alerts">All Elevator Alerts</string>
+    <string name="title_all_alerts_short">All Alerts</string>
     <string name="title_activity_all_lines">All Train Lines</string>
     <string name="image_elevator_out">Elevator Out Status</string>
     <string name="status">Elevator Status</string>
@@ -24,6 +26,7 @@
     <string name="content_status">Elevator status</string>
     <string name="back_arrow">Back arrow</string>
     <string name="about">About the App</string>
+    <string name="about_short">About the App</string>
     <string name="contact_email"><a href="mailto:southportdevelopers@gmail.com?subject=Elevate%20App">southportdevelopers@gmail.com</a></string>
     <string name="privacy_policy_link"><a href="https://sites.google.com/view/elevateappprivacypolicy/home">Privacy Policy</a></string>
     <string name="title_activity_about">AboutActivity</string>
@@ -35,6 +38,9 @@
 
     </string>
     <string name="star_icon">Star Icon</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--<string name="lines">lines</string>-->
     <!--<string name="info">info</string>-->

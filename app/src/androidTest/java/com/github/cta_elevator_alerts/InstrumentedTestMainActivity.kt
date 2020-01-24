@@ -1,37 +1,32 @@
 package com.github.cta_elevator_alerts
 
 import android.content.Context
-import android.content.Intent
-
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.core.internal.deps.guava.collect.Iterables
+import androidx.test.espresso.intent.Intents.getIntents
 import androidx.test.espresso.intent.rule.IntentsTestRule
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.ext.truth.content.IntentSubject.assertThat
 import androidx.test.filters.LargeTest
-
-import com.github.cta_elevator_alerts.activities.AllLinesActivity
-import com.github.cta_elevator_alerts.activities.DisplayAlertActivity
-import com.github.cta_elevator_alerts.activities.MainActivity
-import com.github.cta_elevator_alerts.model.Station
-import com.github.cta_elevator_alerts.model.StationDao
-import com.github.cta_elevator_alerts.model.StationRepository
-import com.github.cta_elevator_alerts.model.StationRoomDatabase
-
+import com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity
+import com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity
+import com.github.cta_elevator_alerts_kotlin.activities.MainActivity
+import com.github.cta_elevator_alerts_kotlin.model.Dao
+import com.github.cta_elevator_alerts_kotlin.model.MyDatabase
+import com.github.cta_elevator_alerts_kotlin.model.Repository
+import com.github.cta_elevator_alerts_kotlin.model.Station
 import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.intent.Intents.getIntents
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.truth.content.IntentSubject.assertThat
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 
 /**
  * Instrumented tests for MainActivity.
@@ -40,9 +35,9 @@ import org.junit.Assert.assertTrue
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class InstrumentedTestMainActivity {
-    private var stationDao: StationDao? = null
-    private var db: StationRoomDatabase? = null
-    private var repository: StationRepository? = null
+    private var dao: Dao? = null
+    private var db: MyDatabase? = null
+    private var repository: Repository? = null
 
     @Rule
     val mActivityRule = IntentsTestRule(
@@ -51,20 +46,20 @@ class InstrumentedTestMainActivity {
     @Before
     fun createDatabase() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, StationRoomDatabase::class.java).build()
-        stationDao = db!!.dao
-        repository = StationRepository.getInstance(mActivityRule.activity.application)
+        db = Room.inMemoryDatabaseBuilder(context, MyDatabase::class.java).build()
+        dao = db!!.dao
+        repository = Repository.getInstance(mActivityRule.activity.application)
 
         //Create and add sample station
         val station = Station("40900")
-        stationDao!!.insert(station)
-        stationDao!!.updateName("40900", "Howard")
-        stationDao!!.setRedTrue("40900")
-        stationDao!!.setPurpleTrue("40900")
-        stationDao!!.setYellowTrue("40900")
-        stationDao!!.addFavorite("40900")
-        stationDao!!.setHasElevator("40900")
-        stationDao!!.setAlert("40900", "short description")
+        dao!!.insert(station)
+        dao!!.updateName("40900", "Howard")
+        dao!!.setRedTrue("40900")
+        dao!!.setPurpleTrue("40900")
+        dao!!.setYellowTrue("40900")
+        dao!!.addFavorite("40900")
+        dao!!.setHasElevator("40900")
+        dao!!.setAlert("40900", "short description")
     }
 
     @Test
@@ -93,11 +88,11 @@ class InstrumentedTestMainActivity {
 
     @Test
     fun checkDatabaseAndDao() {
-        assertEquals(stationDao!!.getName("40900"), "Howard")
-        assertTrue(stationDao!!.getHasElevator("40900"))
-        assertTrue(stationDao!!.getRed("40900"))
-        assertTrue(stationDao!!.getPurple("40900"))
-        assertTrue(stationDao!!.getYellow("40900"))
+        assertEquals(dao!!.getName("40900"), "Howard")
+        assertTrue(dao!!.getHasElevator("40900"))
+        assertTrue(dao!!.getRed("40900"))
+        assertTrue(dao!!.getPurple("40900"))
+        assertTrue(dao!!.getYellow("40900"))
     }
 
     @Test

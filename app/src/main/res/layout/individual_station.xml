@@ -1,88 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
-        android:id="@+id/rl_individual_station"
+    <data>
+        <variable
+            name="station"
+            type="com.github.cta_elevator_alerts_kotlin.model.Station" />
+        <variable
+            name="stationListener"
+            type="com.github.cta_elevator_alerts_kotlin.adapters.StationListener" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/border_bottom">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/card_spacing"
+        android:layout_marginTop="@dimen/card_spacing"
+        android:layout_marginRight="@dimen/card_spacing"
+        android:onClick="@{() -> stationListener.onClick(station)}">
 
-        <ImageView
-            android:id="@+id/img_individual_station"
-            style="@style/StatusImage"
-            android:layout_centerVertical="true"
-            android:background="@drawable/status_red"
-            android:contentDescription="@string/status"/>
-
-        <TextView
-            android:id="@+id/txt_individual_station"
-            style="@style/StationName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/img_individual_station"
-            android:layout_toRightOf="@id/img_individual_station"
-            android:layout_centerVertical="true"
-            />
-
-        <ImageView
-            android:id="@+id/img_star_icon"
-            android:contentDescription="@string/star_icon"
-            style="@style/icon_small_star"
-            android:layout_toLeftOf="@id/img_right_arrow"
-            android:layout_toStartOf="@id/img_right_arrow"
-            />
-
-        <ImageView
-            android:id="@+id/img_right_arrow"
-            style="@style/rightArrow"
-            android:contentDescription="@string/content_description_right_arrow"
-            />
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/rl_individual_station"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:orientation="horizontal"
-            android:layout_below="@+id/txt_individual_station"
-            android:layout_toRightOf="@id/img_individual_station"
-            android:layout_toEndOf="@+id/img_individual_station"
-            android:layout_toLeftOf="@id/img_right_arrow"
-            android:layout_toStartOf="@id/img_right_arrow"
-            android:weightSum="6"
-            android:layout_marginTop="6dp"
-            >
-            <View
-                android:id="@+id/line_0"
-                style="@style/LineBar"
-                />
+            android:layout_height="60dp"
+            android:background="@drawable/border_bottom">
 
-            <View
-                android:id="@+id/line_1"
-                style="@style/LineBar"
-                />
+            <ImageView
+                android:id="@+id/station_status_image"
+                style="@style/StatusImage"
+                android:layout_centerVertical="true"
+                android:background="@drawable/status_red"
+                android:contentDescription="@string/status"
+                app:statusImage="@{station}"/>
 
-            <View
-                android:id="@+id/line_2"
-                style="@style/LineBar"
-                />
+            <TextView
+                android:id="@+id/station_name_text"
+                style="@style/StationName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/station_status_image"
+                android:layout_toRightOf="@id/station_status_image"
+                android:layout_centerVertical="true"
+                app:stationName="@{station}"/>
 
-            <View
-                android:id="@+id/line_3"
-                style="@style/LineBar"
-                />
+            <ImageView
+                android:id="@+id/img_star_icon"
+                android:contentDescription="@string/star_icon"
+                style="@style/icon_small_star"
+                android:layout_toLeftOf="@id/img_right_arrow"
+                android:layout_toStartOf="@id/img_right_arrow" />
 
-            <View
-                android:id="@+id/line_4"
-                style="@style/LineBar"
-                />
+            <ImageView
+                android:id="@+id/img_right_arrow"
+                style="@style/rightArrow"
+                android:contentDescription="@string/content_description_right_arrow" />
 
-            <View
-                android:id="@+id/line_5"
-                style="@style/LineBar"
-                />
-        </LinearLayout>
-    </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:orientation="horizontal"
+                android:layout_below="@+id/station_name_text"
+                android:layout_toRightOf="@id/station_status_image"
+                android:layout_toEndOf="@+id/station_status_image"
+                android:layout_toLeftOf="@id/img_right_arrow"
+                android:layout_toStartOf="@id/img_right_arrow"
+                android:weightSum="6"
+                android:layout_marginTop="6dp">
 
-</androidx.cardview.widget.CardView>
+                <View
+                    android:id="@+id/red"
+                    style="@style/LineBar"
+                    android:background="@color/colorRedLine"
+                    app:red="@{station}"/>
+                <View
+                    android:id="@+id/blue"
+                    style="@style/LineBar"
+                    android:background="@color/colorBlueLine"
+                    app:blue="@{station}"/>
+                <View
+                    android:id="@+id/brown"
+                    style="@style/LineBar"
+                    android:background="@color/colorBrownLine"
+                    app:brown="@{station}"/>
+                <View
+                    android:id="@+id/green"
+                    style="@style/LineBar"
+                    android:background="@color/colorGreenLine"
+                    app:green="@{station}"/>
+                <View
+                    android:id="@+id/orange"
+                    style="@style/LineBar"
+                    android:background="@color/colorOrangeLine"
+                    app:orange="@{station}"/>
+                <View
+                    android:id="@+id/pink"
+                    style="@style/LineBar"
+                    android:background="@color/colorPinkLine"
+                    app:pink="@{station}"/>
+                <View
+                    android:id="@+id/purple"
+                    style="@style/LineBar"
+                    android:background="@color/colorPurpleLine"
+                    app:purple="@{station}"/>
+                <View
+                    android:id="@+id/yellow"
+                    style="@style/LineBar"
+                    android:background="@color/colorYellowLine"
+                    app:yellow="@{station}"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

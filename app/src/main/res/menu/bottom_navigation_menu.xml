@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/allAlertsFragment"
+        android:icon="@drawable/home_icon"
+        android:title="@string/title_all_alerts_short" />
+
+    <item
+        android:id="@+id/favoriteAlertsFragment"
+        android:icon="@drawable/star_icon_full"
+        android:title="@string/favorite_alerts" />
+
+    <item
+        android:id="@+id/allLinesFragment"
+        android:icon="@drawable/icon_redline"
+        android:title="@string/all_lines" />
+
+    <item
+        android:id="@+id/aboutFragment"
+        android:icon="@drawable/icon_info"
+        android:title="@string/about_short" />
+</menu>
