@@ -1,20 +1,11 @@
 package com.github.cta_elevator_alerts_kotlin.ui
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
 import com.github.cta_elevator_alerts_kotlin.R
-import com.github.cta_elevator_alerts_kotlin.work.NetworkWorker
-import com.github.cta_elevator_alerts_kotlin.viewmodels.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.util.concurrent.TimeUnit
 
 /**
  * MainActivity displays favorite stations and their

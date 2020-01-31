@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -17,7 +16,7 @@ import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.databinding.AllLinesBinding
 import com.github.cta_elevator_alerts_kotlin.databinding.FragmentAllLinesBinding
 import com.github.cta_elevator_alerts_kotlin.domain.Line
-import com.github.cta_elevator_alerts_kotlin.viewmodels.AllLinesViewModel
+import com.github.cta_elevator_alerts_kotlin.viewmodel.AllLinesViewModel
 
 /**
  * A simple [Fragment] subclass.

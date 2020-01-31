@@ -14,8 +14,7 @@ data class Station(
         val purple: Boolean,
         val yellow: Boolean,
         val name: String,
-        val shortDescription: String,
-        val nickname: String)
+        val alertDescription: String)
 
 data class Line(
         val name: String,

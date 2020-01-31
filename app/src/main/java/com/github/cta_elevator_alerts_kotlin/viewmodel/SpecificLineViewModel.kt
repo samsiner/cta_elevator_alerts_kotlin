@@ -1,12 +1,13 @@
-package com.github.cta_elevator_alerts_kotlin.viewmodels
+package com.github.cta_elevator_alerts_kotlin.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.github.cta_elevator_alerts_kotlin.database.getDatabase
 
 import com.github.cta_elevator_alerts_kotlin.domain.Station
-import com.github.cta_elevator_alerts_kotlin.repository.Repository
+import com.github.cta_elevator_alerts_kotlin.repository.AlertsRepository
 
 /**
  * ViewModel between SpecificLineActivity and StationRepository
@@ -15,22 +16,21 @@ import com.github.cta_elevator_alerts_kotlin.repository.Repository
  */
 
 class SpecificLineViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: Repository? = Repository.getInstance(application)
 
+    private val database = getDatabase(application)
+    private val alertsRepository = AlertsRepository(database)
+
+    //TODO: Figure out a different way to do this
     var lineName: String = ""
         set(value) {
             field = value
-            lineStations = repository?.getStationsByLine(value) ?: MutableLiveData(mutableListOf())
+            lineStations = alertsRepository.getStationsByLine(value)
         }
     lateinit var lineStations: MutableLiveData<MutableList<Station>>
 
-    val favorites: LiveData<List<Station>>
-        get() = repository!!.mGetAllFavorites()
-
-    val allLineAlerts: LiveData<List<Station>>
-        get() = repository!!.getAllLineAlerts(lineName)
+    val allLineAlerts = alertsRepository.getAllLineAlerts(lineName)
 
     fun buildLines() {
-        repository?.buildLines()
+        alertsRepository.buildLines()
     }
 }

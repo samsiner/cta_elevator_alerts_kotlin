@@ -1,8 +1,9 @@
-package com.github.cta_elevator_alerts_kotlin.viewmodels
+package com.github.cta_elevator_alerts_kotlin.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.github.cta_elevator_alerts_kotlin.repository.Repository
+import com.github.cta_elevator_alerts_kotlin.database.getDatabase
+import com.github.cta_elevator_alerts_kotlin.repository.AlertsRepository
 
 /**
  * ViewModel between DisplayAlertActivity and StationRepository
@@ -12,7 +13,8 @@ import com.github.cta_elevator_alerts_kotlin.repository.Repository
 
 class DisplayAlertViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val mRepository = Repository.getInstance(application)
+    private val database = getDatabase(application)
+    private val alertsRepository = AlertsRepository(database)
 
     var stationID: String = ""
         private set
@@ -28,22 +30,22 @@ class DisplayAlertViewModel(application: Application) : AndroidViewModel(applica
         private set
 
     fun updateStationInfo(stationID: String) {
-        val arrList = mRepository!!.getAlertDetails(stationID)
+        val arrList = alertsRepository.getAlertDetails(stationID)
 
         this.stationID = stationID
 
-        isFavorite = mRepository.isFavorite(stationID)
+        isFavorite = alertsRepository.isFavorite(stationID)
         stationName = arrList[0]
         shortDesc = arrList[1]
-        hasElevator = mRepository.mGetHasElevator(stationID)
-        hasAlert = mRepository.mGetHasElevatorAlert(stationID)
+        hasElevator = alertsRepository.mGetHasElevator(stationID)
+        hasAlert = alertsRepository.mGetHasElevatorAlert(stationID)
     }
 
     fun removeFavorite(){
-        mRepository!!.removeFavorite(stationID)
+        alertsRepository.removeFavorite(stationID)
     }
 
     fun addFavorite(){
-        mRepository!!.addFavorite(stationID)
+        alertsRepository.addFavorite(stationID)
     }
 }

@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.databinding.FragmentDisplayAlertBinding
-import com.github.cta_elevator_alerts_kotlin.viewmodels.DisplayAlertViewModel
+import com.github.cta_elevator_alerts_kotlin.viewmodel.DisplayAlertViewModel
 
 /**
  * A simple [Fragment] subclass.
  */
 class DisplayAlertFragment : Fragment() {
+
+    //TODO: Fix the OnClicks and more!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

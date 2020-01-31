@@ -18,7 +18,7 @@ import com.github.cta_elevator_alerts_kotlin.databinding.FragmentSpecificLineBin
 import com.github.cta_elevator_alerts_kotlin.databinding.SpecificLineAlertStationBinding
 import com.github.cta_elevator_alerts_kotlin.databinding.SpecificLineStationBinding
 import com.github.cta_elevator_alerts_kotlin.domain.Station
-import com.github.cta_elevator_alerts_kotlin.viewmodels.SpecificLineViewModel
+import com.github.cta_elevator_alerts_kotlin.viewmodel.SpecificLineViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -38,6 +38,7 @@ class SpecificLineFragment : Fragment() {
 
         val viewModel = ViewModelProvider(this).get(SpecificLineViewModel::class.java)
 
+        //TODO: Build lines with separate worker, not in repository
         viewModel.buildLines()
         viewModel.lineName = lineName
         binding.lifecycleOwner = this

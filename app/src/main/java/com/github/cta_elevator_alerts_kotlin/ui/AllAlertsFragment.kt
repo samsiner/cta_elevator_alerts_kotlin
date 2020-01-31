@@ -1,7 +1,6 @@
 package com.github.cta_elevator_alerts_kotlin.ui
 
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,8 @@ import com.github.cta_elevator_alerts_kotlin.databinding.FragmentAllAlertsBindin
 import com.github.cta_elevator_alerts_kotlin.databinding.IndividualStationBinding
 import com.github.cta_elevator_alerts_kotlin.domain.Station
 import com.github.cta_elevator_alerts_kotlin.work.NetworkWorker
-import com.github.cta_elevator_alerts_kotlin.viewmodels.MainViewModel
+import com.github.cta_elevator_alerts_kotlin.viewmodel.AllAlertsViewModel
+import com.github.cta_elevator_alerts_kotlin.work.RefreshAlertsWorker
 
 /**
  * A simple [Fragment] subclass.
@@ -39,11 +39,12 @@ class AllAlertsFragment : Fragment() {
         )
 
         binding.swipeRefreshAll.setOnRefreshListener {
-            addOneTimeWorker()
+//            addOneTimeWorker()
+            //TODO: Add OneTimeWorker
             binding.swipeRefreshAll.isRefreshing = false
         }
 
-        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(AllAlertsViewModel::class.java)
 
         binding.lifecycleOwner = this
 
@@ -55,15 +56,15 @@ class AllAlertsFragment : Fragment() {
         })
         binding.recyclerStationAlerts.adapter = alertsAdapter
 
-        //Create SharedPreferences for last updated date/time
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity!!)
-        val tvAlertsTime = binding.txtUpdateAlertTime
-        val time = sharedPreferences.getString("LastUpdatedTime", "")
-        if (time != null && time != "") tvAlertsTime.text = time
+//        //Create SharedPreferences for last updated date/time
+//        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity!!)
+//        val tvAlertsTime = binding.txtUpdateAlertTime
+//        val time = sharedPreferences.getString("LastUpdatedTime", "")
+//        if (time != null && time != "") tvAlertsTime.text = time
 
         //        addTestButtons();
 
-        viewModel.stationAlerts.observe(viewLifecycleOwner, Observer {
+        viewModel.allAlertStations.observe(viewLifecycleOwner, Observer {
             it?.let {
                 alertsAdapter.submitList(it)
 
@@ -77,20 +78,16 @@ class AllAlertsFragment : Fragment() {
             }
         })
 
-        viewModel.updateAlertsTime.observe(viewLifecycleOwner, Observer<String>{
-            tvAlertsTime.text = it
-
-            val editor = sharedPreferences.edit()
-            editor.putString("LastUpdatedTime", it)
-            editor.apply()
+        viewModel.lastUpdatedTime.observe(viewLifecycleOwner, Observer<String>{
+            binding.txtUpdateAlertTime.text = it
         })
 
-        addOneTimeWorker()
+//        addOneTimeWorker()
         return binding.root
     }
 
     private fun addOneTimeWorker() {
-        val request = OneTimeWorkRequest.Builder(NetworkWorker::class.java)
+        val request = OneTimeWorkRequest.Builder(RefreshAlertsWorker::class.java)
                 .addTag("OneTimeWork")
                 .setConstraints(Constraints.Builder()
                         .setRequiresBatteryNotLow(true)
@@ -101,7 +98,6 @@ class AllAlertsFragment : Fragment() {
         WorkManager.getInstance(activity!!).enqueue(request)
     }
 }
-
 
 class StationListAdapter(private val stationListener: StationListener): ListAdapter<Station, StationListAdapter.ViewHolder>(StationDiffCallback()) {
 

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="mainViewModel"
-            type="com.github.cta_elevator_alerts_kotlin.viewmodels.MainViewModel" />
+            type="com.github.cta_elevator_alerts_kotlin.viewmodel.AllAlertsViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

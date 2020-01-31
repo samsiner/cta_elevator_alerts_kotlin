@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.github.cta_elevator_alerts_kotlin.R
-import com.github.cta_elevator_alerts_kotlin.database.Line
-import com.github.cta_elevator_alerts_kotlin.database.Station
+import com.github.cta_elevator_alerts_kotlin.domain.Line
+import com.github.cta_elevator_alerts_kotlin.domain.Station
 
 @BindingAdapter("stationName")
 fun TextView.setStationName(item: Station?){

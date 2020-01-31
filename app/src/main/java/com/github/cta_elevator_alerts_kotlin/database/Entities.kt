@@ -1,5 +1,6 @@
 package com.github.cta_elevator_alerts_kotlin.database
 
+import androidx.lifecycle.Transformations.map
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.github.cta_elevator_alerts_kotlin.domain.Line
@@ -27,8 +28,7 @@ data class DatabaseStation constructor(
         val purple: Boolean,
         val yellow: Boolean,
         val name: String,
-        val shortDescription: String,
-        val nickname: String)
+        val alertDescription: String)
 
 fun List<DatabaseStation>.asStationDomainModel(): List<Station>{
     return map{
@@ -46,10 +46,10 @@ fun List<DatabaseStation>.asStationDomainModel(): List<Station>{
                 purple = it.purple,
                 yellow = it.yellow,
                 name = it.name,
-                shortDescription = it.shortDescription,
-                nickname = it.nickname)
+                alertDescription = it.alertDescription)
     }
 }
+
 
 //TODO Add functionality to update hasAlert
 @Entity(tableName = "line_table")
@@ -58,10 +58,19 @@ data class DatabaseLine(
         val name: String,
         val hasElevatorAlert: Boolean)
 
-fun List<DatabaseLine>.asListDomainModel(): List<Line>{
+fun List<DatabaseLine>.asLineDomainModel(): List<Line>{
     return map{
         Line(
                 name = it.name,
                 hasElevatorAlert = it.hasElevatorAlert)
     }
 }
+
+@Entity(tableName = "last_updated_table")
+data class DatabaseLastUpdatedTime(
+        //Use a key of 1 to store and access last updated time
+        @PrimaryKey
+        val timeKey: Int,
+        val timeValue: String)
+
+

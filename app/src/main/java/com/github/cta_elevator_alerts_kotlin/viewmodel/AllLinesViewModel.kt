@@ -1,11 +1,12 @@
-package com.github.cta_elevator_alerts_kotlin.viewmodels
+package com.github.cta_elevator_alerts_kotlin.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.github.cta_elevator_alerts_kotlin.database.getDatabase
 import com.github.cta_elevator_alerts_kotlin.domain.Line
 
-import com.github.cta_elevator_alerts_kotlin.repository.Repository
+import com.github.cta_elevator_alerts_kotlin.repository.AlertsRepository
 
 /**
  * ViewModel between SpecificLineActivity and StationRepository
@@ -15,10 +16,10 @@ import com.github.cta_elevator_alerts_kotlin.repository.Repository
 
 class AllLinesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository: Repository? = Repository.getInstance(application)
+    private val database = getDatabase(application)
+    private val alertsRepository = AlertsRepository(database)
 
-    val lines: LiveData<List<Line>>
-        get() = repository!!.getAllLines()
+    val lines = alertsRepository.lines
 
 //    val allLineAlerts: LiveData<List<Station>>
 //        get() = repository!!.getAllLineAlerts(line)

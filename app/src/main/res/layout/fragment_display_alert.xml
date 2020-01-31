@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.github.cta_elevator_alerts_kotlin.viewmodels.DisplayAlertViewModel" />
+            type="com.github.cta_elevator_alerts_kotlin.viewmodel.DisplayAlertViewModel" />
     </data>
 
     <LinearLayout

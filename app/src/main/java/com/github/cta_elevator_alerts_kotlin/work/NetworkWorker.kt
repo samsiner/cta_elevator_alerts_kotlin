@@ -6,7 +6,7 @@ import android.net.ConnectivityManager
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.github.cta_elevator_alerts_kotlin.repository.Repository
+import com.github.cta_elevator_alerts_kotlin.repository.AlertsRepository
 import java.util.*
 
 /**
@@ -17,7 +17,7 @@ import java.util.*
 
 class NetworkWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
-    private val repository: Repository? = Repository.getInstance(applicationContext as Application)
+//    private val alertsRepository: AlertsRepository? = AlertsRepository.getInstance(applicationContext as Application)
 
     override fun doWork(): Result {
         //Check for connection first
@@ -25,16 +25,16 @@ class NetworkWorker(context: Context, params: WorkerParameters) : Worker(context
         val activeNetwork = cm.activeNetworkInfo
         if (activeNetwork == null || !activeNetwork.isConnected) {
             Log.d("NetworkWorker", "Not connected")
-            repository!!.setConnectionStatus(false)
+//            alertsRepository!!.setConnectionStatus(false)
             return Result.failure()
         }
 
         try {
             Log.d("NetworkWorker", "Building Stations and Alerts")
-            val pastAlerts = repository!!.mGetStationAlertIDs() as ArrayList<String>
-            repository.buildStations()
-            repository.buildAlerts()
-            val currentAlerts = repository.mGetStationAlertIDs() as ArrayList<String>
+//            val pastAlerts = alertsRepository!!.mGetStationAlertIDs() as ArrayList<String>
+//            alertsRepository.buildStations()
+//            alertsRepository.buildAlerts()
+//            val currentAlerts = alertsRepository.mGetStationAlertIDs() as ArrayList<String>
 //            NotificationPusher.createAlertNotifications(applicationContext, pastAlerts, currentAlerts)
         } catch (e: Exception) {
             Log.d("NetworkWorker", "Failed to build")

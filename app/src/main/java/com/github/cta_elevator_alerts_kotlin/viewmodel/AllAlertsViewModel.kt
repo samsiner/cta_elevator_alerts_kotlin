@@ -1,12 +1,13 @@
-package com.github.cta_elevator_alerts_kotlin.viewmodels
+package com.github.cta_elevator_alerts_kotlin.viewmodel
 
 import android.app.Application
 
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.github.cta_elevator_alerts_kotlin.database.getDatabase
 
 import com.github.cta_elevator_alerts_kotlin.domain.Station
-import com.github.cta_elevator_alerts_kotlin.repository.Repository
+import com.github.cta_elevator_alerts_kotlin.repository.AlertsRepository
 
 /**
  * ViewModel between MainActivity and StationRepository
@@ -15,22 +16,20 @@ import com.github.cta_elevator_alerts_kotlin.repository.Repository
  * @author Southport Developers (Sam Siner & Tyler Arndt)
  */
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class AllAlertsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val mRepository: Repository? = Repository.getInstance(application)
+    private val database = getDatabase(application)
+    private val alertsRepository = AlertsRepository(database)
 
-    val stationAlerts: LiveData<List<Station>>
-        get() = mRepository!!.mGetAllAlertStations()
-    val favorites: LiveData<List<Station>>
-        get() = mRepository!!.mGetAllFavorites()
-    val updateAlertsTime: LiveData<String>
-        get() = mRepository!!.updatedAlertsTime
-    val connectionStatus: LiveData<Boolean>
-        get() = mRepository!!.connectionStatus
+    val allAlertStations = alertsRepository.alertStations
+    val lastUpdatedTime = alertsRepository.lastUpdatedTime
 
-    fun setConnectionStatus(b: Boolean) {
-        mRepository!!.setConnectionStatus(b)
-    }
+//    val connectionStatus: LiveData<Boolean>
+//        get() = mAlertsRepository!!.connectionStatus
+
+//    fun setConnectionStatus(b: Boolean) {
+//        mAlertsRepository!!.setConnectionStatus(b)
+//    }
 //
 //    fun getAllRoutes(stationID: String): BooleanArray {
 //        return mRepository!!.mGetAllRoutes(stationID)
