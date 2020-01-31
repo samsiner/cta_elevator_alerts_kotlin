@@ -1,7 +1,6 @@
 package com.github.cta_elevator_alerts
 
 import android.content.Context
-import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -15,11 +14,10 @@ import androidx.test.ext.truth.content.IntentSubject.assertThat
 import androidx.test.filters.LargeTest
 import com.github.cta_elevator_alerts_kotlin.activities.AllLinesActivity
 import com.github.cta_elevator_alerts_kotlin.activities.DisplayAlertActivity
-import com.github.cta_elevator_alerts_kotlin.activities.MainActivity
-import com.github.cta_elevator_alerts_kotlin.model.Dao
-import com.github.cta_elevator_alerts_kotlin.model.MyDatabase
-import com.github.cta_elevator_alerts_kotlin.model.Repository
-import com.github.cta_elevator_alerts_kotlin.model.Station
+import com.github.cta_elevator_alerts_kotlin.ui.MainActivity
+import com.github.cta_elevator_alerts_kotlin.database.AlertsDao
+import com.github.cta_elevator_alerts_kotlin.repository.Repository
+import com.github.cta_elevator_alerts_kotlin.database.Station
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -35,8 +33,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class InstrumentedTestMainActivity {
-    private var dao: Dao? = null
-    private var db: MyDatabase? = null
+    private var alertsDao: AlertsDao? = null
+    private var db: com.github.cta_elevator_alerts_kotlin.database.Room? = null
     private var repository: Repository? = null
 
     @Rule
@@ -46,20 +44,20 @@ class InstrumentedTestMainActivity {
     @Before
     fun createDatabase() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, MyDatabase::class.java).build()
-        dao = db!!.dao
+        db = Room.inMemoryDatabaseBuilder(context, Room::class.java).build()
+        alertsDao = db!!.dao
         repository = Repository.getInstance(mActivityRule.activity.application)
 
         //Create and add sample station
         val station = Station("40900")
-        dao!!.insert(station)
-        dao!!.updateName("40900", "Howard")
-        dao!!.setRedTrue("40900")
-        dao!!.setPurpleTrue("40900")
-        dao!!.setYellowTrue("40900")
-        dao!!.addFavorite("40900")
-        dao!!.setHasElevator("40900")
-        dao!!.setAlert("40900", "short description")
+        alertsDao!!.insert(station)
+        alertsDao!!.updateName("40900", "Howard")
+        alertsDao!!.setRedTrue("40900")
+        alertsDao!!.setPurpleTrue("40900")
+        alertsDao!!.setYellowTrue("40900")
+        alertsDao!!.addFavorite("40900")
+        alertsDao!!.setHasElevator("40900")
+        alertsDao!!.setAlert("40900", "short description")
     }
 
     @Test
@@ -88,11 +86,11 @@ class InstrumentedTestMainActivity {
 
     @Test
     fun checkDatabaseAndDao() {
-        assertEquals(dao!!.getName("40900"), "Howard")
-        assertTrue(dao!!.getHasElevator("40900"))
-        assertTrue(dao!!.getRed("40900"))
-        assertTrue(dao!!.getPurple("40900"))
-        assertTrue(dao!!.getYellow("40900"))
+        assertEquals(alertsDao!!.getName("40900"), "Howard")
+        assertTrue(alertsDao!!.getHasElevator("40900"))
+        assertTrue(alertsDao!!.getRed("40900"))
+        assertTrue(alertsDao!!.getPurple("40900"))
+        assertTrue(alertsDao!!.getYellow("40900"))
     }
 
     @Test

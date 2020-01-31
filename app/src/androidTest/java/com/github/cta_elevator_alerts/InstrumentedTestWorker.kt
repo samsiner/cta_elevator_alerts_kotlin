@@ -7,8 +7,8 @@ import androidx.test.filters.LargeTest
 import androidx.work.*
 import androidx.work.impl.utils.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
-import com.github.cta_elevator_alerts_kotlin.activities.MainActivity
-import com.github.cta_elevator_alerts_kotlin.utils.NetworkWorker
+import com.github.cta_elevator_alerts_kotlin.ui.MainActivity
+import com.github.cta_elevator_alerts_kotlin.work.NetworkWorker
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before

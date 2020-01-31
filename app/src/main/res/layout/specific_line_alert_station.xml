@@ -6,10 +6,10 @@
     <data>
         <variable
             name="station"
-            type="com.github.cta_elevator_alerts_kotlin.model.Station" />
+            type="com.github.cta_elevator_alerts_kotlin.domain.Station" />
         <variable
             name="specificLineAlertListener"
-            type="com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineAlertListener" />
+            type="com.github.cta_elevator_alerts_kotlin.ui.SpecificLineAlertListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

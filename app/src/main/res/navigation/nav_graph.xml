@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/allLinesFragment"
-        android:name="com.github.cta_elevator_alerts_kotlin.fragments.AllLinesFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.ui.AllLinesFragment"
         android:label="fragment_all_lines"
         tools:layout="@layout/fragment_all_lines" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/specificLineFragment"
-        android:name="com.github.cta_elevator_alerts_kotlin.fragments.SpecificLineFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.ui.SpecificLineFragment"
         android:label="fragment_specific_line"
         tools:layout="@layout/fragment_specific_line" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/displayAlert"
-        android:name="com.github.cta_elevator_alerts_kotlin.fragments.DisplayAlertFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.ui.DisplayAlertFragment"
         android:label="fragment_display_alert"
         tools:layout="@layout/fragment_display_alert" >
         <argument
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/allAlertsFragment"
-        android:name="com.github.cta_elevator_alerts_kotlin.fragments.AllAlertsFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.ui.AllAlertsFragment"
         android:label="fragment_title"
         tools:layout="@layout/fragment_all_alerts" >
         <action
@@ -46,12 +46,12 @@
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.github.cta_elevator_alerts_kotlin.fragments.AboutFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.ui.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/favoriteAlertsFragment"
-        android:name="com.github.cta_elevator_alerts_kotlin.fragments.FavoriteAlertsFragment"
+        android:name="com.github.cta_elevator_alerts_kotlin.ui.FavoriteAlertsFragment"
         android:label="fragment_favorite_alerts"
         tools:layout="@layout/fragment_favorite_alerts" >
         <action

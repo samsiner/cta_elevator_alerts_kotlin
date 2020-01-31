@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts_kotlin.fragments
+package com.github.cta_elevator_alerts_kotlin.ui
 
 
 import android.os.Bundle

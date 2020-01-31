@@ -2,7 +2,7 @@ package com.github.cta_elevator_alerts_kotlin.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.github.cta_elevator_alerts_kotlin.model.Repository
+import com.github.cta_elevator_alerts_kotlin.repository.Repository
 
 /**
  * ViewModel between DisplayAlertActivity and StationRepository

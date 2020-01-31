@@ -1,14 +1,12 @@
 package com.github.cta_elevator_alerts_kotlin.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.cta_elevator_alerts_kotlin.model.Line
 
-import com.github.cta_elevator_alerts_kotlin.model.Station
-import com.github.cta_elevator_alerts_kotlin.model.Repository
+import com.github.cta_elevator_alerts_kotlin.domain.Station
+import com.github.cta_elevator_alerts_kotlin.repository.Repository
 
 /**
  * ViewModel between SpecificLineActivity and StationRepository

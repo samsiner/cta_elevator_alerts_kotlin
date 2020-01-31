@@ -5,10 +5,10 @@
         <data>
                 <variable
                     name="line"
-                    type="com.github.cta_elevator_alerts_kotlin.model.Line" />
+                    type="com.github.cta_elevator_alerts_kotlin.domain.Line" />
                 <variable
                     name="lineListener"
-                    type="com.github.cta_elevator_alerts_kotlin.adapters.LineListener" />
+                    type="com.github.cta_elevator_alerts_kotlin.ui.LineListener" />
         </data>
 
         <com.google.android.material.card.MaterialCardView

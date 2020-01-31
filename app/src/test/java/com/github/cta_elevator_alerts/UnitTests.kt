@@ -1,6 +1,6 @@
 package com.github.cta_elevator_alerts
 
-import com.github.cta_elevator_alerts_kotlin.model.Station
+import com.github.cta_elevator_alerts_kotlin.database.Station
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test

@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts_kotlin.model
+package com.github.cta_elevator_alerts_kotlin.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -13,7 +13,7 @@ import androidx.room.Query
  */
 
 @Dao
-interface Dao {
+interface AlertsDao {
 
     @get:Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1")
     val allAlertStations: LiveData<List<Station>>

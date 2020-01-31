@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts_kotlin.fragments
+package com.github.cta_elevator_alerts_kotlin.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.databinding.FragmentDisplayAlertBinding
 import com.github.cta_elevator_alerts_kotlin.viewmodels.DisplayAlertViewModel
@@ -29,7 +29,8 @@ class DisplayAlertFragment : Fragment() {
         val arguments = DisplayAlertFragmentArgs.fromBundle(arguments!!)
         val stationID = arguments.stationID
 
-        val viewModel = ViewModelProviders.of(this).get(DisplayAlertViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(DisplayAlertViewModel::class.java)
+
         viewModel.updateStationInfo(stationID)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this

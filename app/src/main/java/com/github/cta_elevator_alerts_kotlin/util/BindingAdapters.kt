@@ -1,4 +1,4 @@
-package com.github.cta_elevator_alerts_kotlin.adapters
+package com.github.cta_elevator_alerts_kotlin.util
 
 import android.graphics.drawable.GradientDrawable
 import android.view.View
@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.github.cta_elevator_alerts_kotlin.R
-import com.github.cta_elevator_alerts_kotlin.model.Line
-import com.github.cta_elevator_alerts_kotlin.model.Station
+import com.github.cta_elevator_alerts_kotlin.database.Line
+import com.github.cta_elevator_alerts_kotlin.database.Station
 
 @BindingAdapter("stationName")
 fun TextView.setStationName(item: Station?){
