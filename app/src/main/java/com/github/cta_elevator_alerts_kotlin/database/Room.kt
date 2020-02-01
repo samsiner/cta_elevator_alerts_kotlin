@@ -51,6 +51,30 @@ interface AlertsDao {
     @Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1")
     fun allAlertStationIDs(): List<String>
 
+    @Query("SELECT * FROM station_table WHERE :name = 1")
+    fun getAllStationsByLine(name: String): LiveData<List<DatabaseStation>>
+
+    @Query("SELECT * FROM station_table WHERE blue = 1")
+    fun allBlueLineStations(): LiveData<List<DatabaseStation>>
+
+    @Query("SELECT * FROM station_table WHERE brown = 1")
+    fun allBrownLineStations(): LiveData<List<DatabaseStation>>
+
+    @Query("SELECT * FROM station_table WHERE green = 1")
+    fun allGreenLineStations(): LiveData<List<DatabaseStation>>
+
+    @Query("SELECT * FROM station_table WHERE orange = 1")
+    fun allOrangeLineStations(): LiveData<List<DatabaseStation>>
+
+    @Query("SELECT * FROM station_table WHERE pink = 1")
+    fun allPinkLineStations(): LiveData<List<DatabaseStation>>
+
+    @Query("SELECT * FROM station_table WHERE purple = 1")
+    fun allPurpleLineStations(): LiveData<List<DatabaseStation>>
+
+    @Query("SELECT * FROM station_table WHERE yellow = 1")
+    fun allYellowLineStations(): LiveData<List<DatabaseStation>>
+
     @Query("SELECT * FROM station_table WHERE hasElevatorAlert = 1 AND red = 1")
     fun allRedLineAlertStations(): LiveData<List<DatabaseStation>>
 

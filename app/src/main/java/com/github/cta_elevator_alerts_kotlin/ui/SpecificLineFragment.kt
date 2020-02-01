@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -19,11 +20,13 @@ import com.github.cta_elevator_alerts_kotlin.databinding.SpecificLineAlertStatio
 import com.github.cta_elevator_alerts_kotlin.databinding.SpecificLineStationBinding
 import com.github.cta_elevator_alerts_kotlin.domain.Station
 import com.github.cta_elevator_alerts_kotlin.viewmodel.SpecificLineViewModel
+import com.github.cta_elevator_alerts_kotlin.viewmodel.SpecificLineViewModelFactory
 
 /**
  * A simple [Fragment] subclass.
  */
 class SpecificLineFragment : Fragment() {
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate view and obtain an instance of the binding class
@@ -36,11 +39,13 @@ class SpecificLineFragment : Fragment() {
         val arguments = SpecificLineFragmentArgs.fromBundle(arguments!!)
         val lineName = arguments.lineName
 
-        val viewModel = ViewModelProvider(this).get(SpecificLineViewModel::class.java)
+        //Create ViewModel and initialize line name at construction
+        val application = requireNotNull(this.activity).application
+        val viewModelFactory = SpecificLineViewModelFactory(application, lineName)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(SpecificLineViewModel::class.java)
 
         //TODO: Build lines with separate worker, not in repository
         viewModel.buildLines()
-        viewModel.lineName = lineName
         binding.lifecycleOwner = this
 
         //Create adapter to display all alerts
@@ -78,7 +83,7 @@ class SpecificLineFragment : Fragment() {
             }
         })
 
-        viewModel.lineStations.observe(viewLifecycleOwner, Observer {
+        viewModel.stationsByLine.observe(viewLifecycleOwner, Observer {
             it?.let {
                 specificLineAdapter.submitList(it)
             }

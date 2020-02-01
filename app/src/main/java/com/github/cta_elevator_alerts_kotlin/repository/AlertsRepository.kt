@@ -31,10 +31,6 @@ import kotlin.collections.HashMap
 
 class AlertsRepository(private val database: AlertsDatabase) {
 
-    val stations: LiveData<List<Station>> = Transformations.map(database.alertsDao.getAllStations()){
-        it.asStationDomainModel()
-    }
-
     val lines: LiveData<List<Line>> = Transformations.map(database.alertsDao.getAllLines()){
         it.asLineDomainModel()
     }
@@ -47,11 +43,15 @@ class AlertsRepository(private val database: AlertsDatabase) {
         it.asStationDomainModel()
     }
 
+    fun stationsByLine(name: String): LiveData<List<Station>> = Transformations.map(database.alertsDao.getAllStationsByLine(name)){
+        it.asStationDomainModel()
+    }
+
     val lastUpdatedTime = database.alertsDao.getLastUpdatedTime()
 
     suspend fun buildAllStations(){
         withContext(Dispatchers.IO){
-            val allStations = StationNetwork.stations.getAllStations().await()
+            val allStations = StationNetwork.stations.getAllStations()
             database.alertsDao.insertAll(*allStations.asDatabaseModel())
         }
     }

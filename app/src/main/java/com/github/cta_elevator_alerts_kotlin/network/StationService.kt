@@ -13,7 +13,7 @@ import retrofit2.http.GET
  */
 interface StationService {
     @GET("8pix-ypme.json")
-    fun getAllStations(): Deferred<NetworkStationContainer>
+    suspend fun getAllStations(): NetworkStationContainer
 }
 
 /**

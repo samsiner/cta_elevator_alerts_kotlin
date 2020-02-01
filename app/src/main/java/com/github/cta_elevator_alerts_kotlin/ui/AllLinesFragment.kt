@@ -95,7 +95,9 @@ class LineDiffCallback : DiffUtil.ItemCallback<Line>(){
     }
 
     override fun areContentsTheSame(oldItem: Line, newItem: Line): Boolean {
-        return oldItem == newItem
+        return oldItem.name == newItem.name &&
+                oldItem.hasElevatorAlert == newItem.hasElevatorAlert &&
+                oldItem.stationIDs == newItem.stationIDs
     }
 }
 

@@ -18,4 +18,5 @@ data class Station(
 
 data class Line(
         val name: String,
-        val hasElevatorAlert: Boolean)
+        val hasElevatorAlert: Boolean,
+        val stationIDs: List<String>)
