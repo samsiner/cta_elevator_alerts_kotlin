@@ -25,6 +25,9 @@
         <argument
             android:name="lineName"
             app:argType="string" />
+        <argument
+            android:name="lineID"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/displayAlert"

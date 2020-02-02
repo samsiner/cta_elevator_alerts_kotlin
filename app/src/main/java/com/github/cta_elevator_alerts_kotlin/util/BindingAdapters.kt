@@ -28,16 +28,15 @@ fun ImageView.setStatusImage(item: Station?){
     }
 }
 
+//TODO: figure this out
 @BindingAdapter("statusLine")
 fun ImageView.setLineImage(item: Line?){
-    item?.let {
-        visibility = when (item.name) {
-
-
-            true -> VISIBLE
-            else -> INVISIBLE
-        }
-    }
+//    item?.let {
+//        visibility = when (item.hasElevatorAlert) {
+//            true -> VISIBLE
+//            else -> INVISIBLE
+//        }
+//    }
 }
 
 @BindingAdapter("lineIcon")

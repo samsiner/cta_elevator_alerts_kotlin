@@ -17,6 +17,5 @@ data class Station(
         val alertDescription: String)
 
 data class Line(
-        val name: String,
-        val hasElevatorAlert: Boolean,
-        val stationIDs: List<String>)
+        val id: String,
+        val name: String)

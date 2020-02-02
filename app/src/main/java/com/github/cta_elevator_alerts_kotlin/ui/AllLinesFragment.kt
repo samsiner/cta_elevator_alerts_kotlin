@@ -39,9 +39,9 @@ class AllLinesFragment : Fragment() {
         binding.lifecycleOwner = this
 
         //Create adapter to display all alerts
-        val allLinesAdapter = AllLinesAdapter(LineListener { lineName ->
+        val allLinesAdapter = AllLinesAdapter(LineListener { lineID, lineName ->
             findNavController().navigate(
-                    AllLinesFragmentDirections.actionAllLinesFragmentToSpecificLineFragment(lineName)
+                    AllLinesFragmentDirections.actionAllLinesFragmentToSpecificLineFragment(lineID, lineName)
             )
         })
         binding.recyclerAllLines.adapter = allLinesAdapter
@@ -95,12 +95,10 @@ class LineDiffCallback : DiffUtil.ItemCallback<Line>(){
     }
 
     override fun areContentsTheSame(oldItem: Line, newItem: Line): Boolean {
-        return oldItem.name == newItem.name &&
-                oldItem.hasElevatorAlert == newItem.hasElevatorAlert &&
-                oldItem.stationIDs == newItem.stationIDs
+        return oldItem == newItem
     }
 }
 
-class LineListener(val clickListener: (name: String) -> Unit){
-    fun onClick(line: Line) = clickListener(line.name)
+class LineListener(val clickListener: (id: String, name: String) -> Unit){
+    fun onClick(line: Line) = clickListener(line.id, line.name)
 }

@@ -56,14 +56,6 @@ class AllAlertsFragment : Fragment() {
         })
         binding.recyclerStationAlerts.adapter = alertsAdapter
 
-//        //Create SharedPreferences for last updated date/time
-//        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity!!)
-//        val tvAlertsTime = binding.txtUpdateAlertTime
-//        val time = sharedPreferences.getString("LastUpdatedTime", "")
-//        if (time != null && time != "") tvAlertsTime.text = time
-
-        //        addTestButtons();
-
         viewModel.allAlertStations.observe(viewLifecycleOwner, Observer {
             it?.let {
                 alertsAdapter.submitList(it)
@@ -82,20 +74,14 @@ class AllAlertsFragment : Fragment() {
             binding.txtUpdateAlertTime.text = it
         })
 
-//        addOneTimeWorker()
         return binding.root
     }
 
     private fun addOneTimeWorker() {
-        val request = OneTimeWorkRequest.Builder(RefreshAlertsWorker::class.java)
-                .addTag("OneTimeWork")
-                .setConstraints(Constraints.Builder()
-                        .setRequiresBatteryNotLow(true)
-                        .setRequiresStorageNotLow(true)
-                        .build())
-                .build()
-
-        WorkManager.getInstance(activity!!).enqueue(request)
+//        val oneTimeAlertRequest = OneTimeWorkRequest.Builder(RefreshAlertsWorker::class.java)
+//                .build()
+//
+//        WorkManager.getInstance(this.context!!).enqueue(oneTimeAlertRequest)
     }
 }
 

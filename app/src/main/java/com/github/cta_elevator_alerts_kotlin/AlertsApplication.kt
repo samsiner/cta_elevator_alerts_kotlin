@@ -2,6 +2,7 @@ package com.github.cta_elevator_alerts_kotlin
 
 import android.app.Application
 import androidx.work.*
+import com.github.cta_elevator_alerts_kotlin.work.BuildLinesWorker
 import com.github.cta_elevator_alerts_kotlin.work.BuildStationsWorker
 import com.github.cta_elevator_alerts_kotlin.work.RefreshAlertsWorker
 import kotlinx.coroutines.CoroutineScope
@@ -26,15 +27,24 @@ class AlertsApplication : Application() {
         super.onCreate()
 
         applicationScope.launch {
-            buildStationsAndAlerts()
+            buildLinesStationsAndAlerts()
         }
     }
 
-    private fun buildStationsAndAlerts(){
+    private fun buildLinesStationsAndAlerts(){
+        addLinesWorker()
         addStationsOneTimeWorker()
         addAlertsOneTimeWorker()
         addStationsPeriodicWorker()
         addAlertsPeriodicWorker()
+    }
+
+    //Build all lines immediately
+    private fun addLinesWorker() {
+        val oneTimeLinesRequest = OneTimeWorkRequest.Builder(BuildLinesWorker::class.java)
+                .build()
+
+        WorkManager.getInstance(this).enqueue(oneTimeLinesRequest)
     }
 
     //Build all stations immediately

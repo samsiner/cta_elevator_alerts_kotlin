@@ -37,15 +37,14 @@ class SpecificLineFragment : Fragment() {
                 false
         )
         val arguments = SpecificLineFragmentArgs.fromBundle(arguments!!)
+        val lineID = arguments.lineID
         val lineName = arguments.lineName
 
         //Create ViewModel and initialize line name at construction
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = SpecificLineViewModelFactory(application, lineName)
+        val viewModelFactory = SpecificLineViewModelFactory(application, lineID, lineName)
         val viewModel = ViewModelProvider(this, viewModelFactory).get(SpecificLineViewModel::class.java)
 
-        //TODO: Build lines with separate worker, not in repository
-        viewModel.buildLines()
         binding.lifecycleOwner = this
 
         //Create adapter to display all alerts
@@ -64,9 +63,8 @@ class SpecificLineFragment : Fragment() {
         })
         binding.recyclerSpecificLine.adapter = specificLineAdapter
 
-        viewModel.allLineAlerts.observe(viewLifecycleOwner, Observer {
+        viewModel.stationsByLineWithAlerts.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("specificline", it.toString())
                 specificLineAlertsAdapter.submitList(it)
 
                 //If no alerts
