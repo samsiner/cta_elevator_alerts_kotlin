@@ -2,7 +2,6 @@ package com.github.cta_elevator_alerts_kotlin.ui
 
 
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,23 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import androidx.work.Constraints
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.databinding.FragmentFavoriteAlertsBinding
-import com.github.cta_elevator_alerts_kotlin.databinding.IndividualStationBinding
-import com.github.cta_elevator_alerts_kotlin.domain.Station
-import com.github.cta_elevator_alerts_kotlin.work.NetworkWorker
-import com.github.cta_elevator_alerts_kotlin.viewmodel.AllAlertsViewModel
 import com.github.cta_elevator_alerts_kotlin.viewmodel.FavoriteAlertsViewModel
-import com.github.cta_elevator_alerts_kotlin.work.RefreshAlertsWorker
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.

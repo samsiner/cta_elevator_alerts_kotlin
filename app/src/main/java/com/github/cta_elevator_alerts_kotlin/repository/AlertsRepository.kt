@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import kotlin.collections.HashMap
 
 /**
  * Repository to interact with Room database and
@@ -68,6 +67,7 @@ class AlertsRepository(private val database: AlertsDatabase) {
     suspend fun buildAllStations(){
         withContext(Dispatchers.IO){
             val allStations = StationNetwork.stations.getAllStations()
+            Log.d("NetworkStations", allStations.get(0).station_name)
             database.alertsDao.insertAll(*allStations.asDatabaseModel())
         }
     }

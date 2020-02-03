@@ -1,6 +1,7 @@
 package com.github.cta_elevator_alerts_kotlin.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.github.cta_elevator_alerts_kotlin.database.getDatabase
 
@@ -32,6 +33,7 @@ class SpecificLineViewModel(application: Application, lineID: String, val lineNa
     //Sort list by station order
     val stationsByLine = Transformations.map(alertsRepository.stationsByLine(lineID)){stationList ->
             stationList.map { station ->
+                Log.d("stationsByLine", station.name)
                 Pair(station, lineStationIDsInOrder.indexOf(station.stationID))}
                     .sortedWith(compareBy{stationPair -> stationPair.second})
                     .map {

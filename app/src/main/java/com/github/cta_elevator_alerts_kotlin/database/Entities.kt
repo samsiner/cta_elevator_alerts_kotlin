@@ -1,5 +1,6 @@
 package com.github.cta_elevator_alerts_kotlin.database
 
+import android.util.Log
 import androidx.lifecycle.Transformations.map
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -31,6 +32,7 @@ data class DatabaseStation constructor(
         val alertDescription: String)
 
 fun List<DatabaseStation>.asStationDomainModel(): List<Station>{
+    if (this.isNotEmpty()) Log.d("DatabaseStations", this.get(0).name)
     return map{
         Station(
                 stationID = it.stationID,
