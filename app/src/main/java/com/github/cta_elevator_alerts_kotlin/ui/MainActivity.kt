@@ -1,6 +1,7 @@
 package com.github.cta_elevator_alerts_kotlin.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -27,10 +28,6 @@ class MainActivity : AppCompatActivity() {
         val bottomNav: BottomNavigationView = findViewById(R.id.bottom_navigation)
         val navController = findNavController(R.id.my_nav_host_fragment)
         bottomNav.setupWithNavController(navController)
-
-//        stationAlertsViewModel = MainViewModel(application)
-//        addConnectionStatusObserver()
-//        addPeriodicWorker()
     }
 
 //    override fun onSupportNavigateUp() =

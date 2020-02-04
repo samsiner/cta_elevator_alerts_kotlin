@@ -9,19 +9,20 @@
         android:name="com.github.cta_elevator_alerts_kotlin.ui.AllLinesFragment"
         android:label="fragment_all_lines"
         tools:layout="@layout/fragment_all_lines" >
-        <action app:destination="@id/specificLineFragment" />
+        <action
+            android:id="@+id/action_allLinesFragment_to_specificLineFragment"
+            app:destination="@id/specificLineFragment" />
     </fragment>
     <fragment
         android:id="@+id/specificLineFragment"
         android:name="com.github.cta_elevator_alerts_kotlin.ui.SpecificLineFragment"
         android:label="fragment_specific_line"
         tools:layout="@layout/fragment_specific_line" >
-        <action app:destination="@id/displayAlert" />
+        <action
+            android:id="@+id/action_specificLineFragment_to_displayAlertFragment"
+            app:destination="@id/displayAlert" />
         <argument
             android:name="lineName"
-            app:argType="string" />
-        <argument
-            android:name="lineID"
             app:argType="string" />
     </fragment>
     <fragment
@@ -38,7 +39,9 @@
         android:name="com.github.cta_elevator_alerts_kotlin.ui.AllAlertsFragment"
         android:label="fragment_title"
         tools:layout="@layout/fragment_all_alerts" >
-        <action app:destination="@id/displayAlert" />
+        <action
+            android:id="@+id/action_allAlertsFragment_to_displayAlertFragment"
+            app:destination="@id/displayAlert" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -50,6 +53,8 @@
         android:name="com.github.cta_elevator_alerts_kotlin.ui.FavoriteAlertsFragment"
         android:label="fragment_favorite_alerts"
         tools:layout="@layout/fragment_favorite_alerts" >
-        <action app:destination="@id/displayAlert" />
+        <action
+            android:id="@+id/action_favoriteAlertsFragment_to_displayAlertFragment"
+            app:destination="@id/displayAlert" />
     </fragment>
 </navigation>

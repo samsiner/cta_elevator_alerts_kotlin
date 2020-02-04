@@ -46,7 +46,7 @@ class AllAlertsFragment : Fragment() {
         //Create adapter to display all alerts
         val alertsAdapter = StationListAdapter(StationListener { stationID ->
             findNavController().navigate(
-                    AllAlertsFragmentDirections.actionAllAlertsFragmentToDisplayAlert(stationID)
+                    AllAlertsFragmentDirections.actionAllAlertsFragmentToDisplayAlertFragment(stationID)
             )
         })
         binding.recyclerStationAlerts.adapter = alertsAdapter

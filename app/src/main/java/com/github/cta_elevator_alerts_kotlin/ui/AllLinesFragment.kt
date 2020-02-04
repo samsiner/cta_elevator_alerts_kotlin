@@ -1,6 +1,7 @@
 package com.github.cta_elevator_alerts_kotlin.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,9 +40,9 @@ class AllLinesFragment : Fragment() {
         binding.lifecycleOwner = this
 
         //Create adapter to display all alerts
-        val allLinesAdapter = AllLinesAdapter(LineListener { lineID, lineName ->
+        val allLinesAdapter = AllLinesAdapter(LineListener {lineName ->
             findNavController().navigate(
-                    AllLinesFragmentDirections.actionAllLinesFragmentToSpecificLineFragment(lineID, lineName)
+                    AllLinesFragmentDirections.actionAllLinesFragmentToSpecificLineFragment(lineName)
             )
         })
         binding.recyclerAllLines.adapter = allLinesAdapter
@@ -99,6 +100,6 @@ class LineDiffCallback : DiffUtil.ItemCallback<Line>(){
     }
 }
 
-class LineListener(val clickListener: (id: String, name: String) -> Unit){
-    fun onClick(line: Line) = clickListener(line.id, line.name)
+class LineListener(val clickListener: (name: String) -> Unit){
+    fun onClick(line: Line) = clickListener(line.name)
 }

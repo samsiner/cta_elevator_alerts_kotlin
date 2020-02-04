@@ -37,12 +37,12 @@ class SpecificLineFragment : Fragment() {
                 false
         )
         val arguments = SpecificLineFragmentArgs.fromBundle(arguments!!)
-        val lineID = arguments.lineID
         val lineName = arguments.lineName
+        Log.d("lineName", lineName)
 
         //Create ViewModel and initialize line name at construction
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = SpecificLineViewModelFactory(application, lineID, lineName)
+        val viewModelFactory = SpecificLineViewModelFactory(application, lineName)
         val viewModel = ViewModelProvider(this, viewModelFactory).get(SpecificLineViewModel::class.java)
 
         binding.lifecycleOwner = this
@@ -50,15 +50,15 @@ class SpecificLineFragment : Fragment() {
         //Create adapter to display all alerts
         val specificLineAlertsAdapter = SpecificLineAlertsAdapter(SpecificLineAlertListener { stationID ->
             findNavController().navigate(
-                    SpecificLineFragmentDirections.actionSpecificLineFragmentToDisplayAlert(stationID)
+                    SpecificLineFragmentDirections.actionSpecificLineFragmentToDisplayAlertFragment(stationID)
             )
         })
         binding.recyclerSpecificLineAlertStations.adapter = specificLineAlertsAdapter
 
-        //Create adapter to display all alerts
+        //Create adapter to display all line stations
         val specificLineAdapter = SpecificLineAdapter(viewModel.lineName, SpecificLineListener { stationID ->
             findNavController().navigate(
-                    SpecificLineFragmentDirections.actionSpecificLineFragmentToDisplayAlert(stationID)
+                    SpecificLineFragmentDirections.actionSpecificLineFragmentToDisplayAlertFragment(stationID)
             )
         })
         binding.recyclerSpecificLine.adapter = specificLineAdapter
@@ -83,6 +83,8 @@ class SpecificLineFragment : Fragment() {
 
         viewModel.stationsByLine.observe(viewLifecycleOwner, Observer {
             it?.let {
+                Log.d("specificLineObserve", it.size.toString())
+                Log.d("specificLineObserve2", it[0].toString())
                 specificLineAdapter.submitList(it)
             }
         })
@@ -98,6 +100,7 @@ class SpecificLineAdapter(private val lineName: String, private val specificLine
     class ViewHolder private constructor(val binding: SpecificLineStationBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(station: Station, count: Int, lineName: String, specificLineListener: SpecificLineListener){
             binding.station = station
+            Log.d("SpecificLineStation", station.name)
             binding.lineName = lineName
             binding.position = adapterPosition
             binding.totalPositions = count

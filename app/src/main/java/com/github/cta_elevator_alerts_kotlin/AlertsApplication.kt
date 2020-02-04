@@ -94,7 +94,7 @@ class AlertsApplication : Application() {
                 .build()
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-                "AlertsPeriodicWork",
+                RefreshAlertsWorker.WORK_NAME,
                 ExistingPeriodicWorkPolicy.KEEP,
                 repeatingRequest)
     }

@@ -51,7 +51,7 @@ class FavoriteAlertsFragment : Fragment() {
         //Create adapter to display favorites
         val favoritesAdapter = StationListAdapter(StationListener { stationID ->
             findNavController().navigate(
-                    FavoriteAlertsFragmentDirections.actionFavoriteAlertsFragmentToDisplayAlert(stationID)
+                    FavoriteAlertsFragmentDirections.actionFavoriteAlertsFragmentToDisplayAlertFragment(stationID)
             )
         })
         binding.recyclerFavoriteStations.adapter = favoritesAdapter

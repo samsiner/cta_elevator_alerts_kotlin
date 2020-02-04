@@ -42,7 +42,20 @@ class AlertsRepository(private val database: AlertsDatabase) {
         it.asStationDomainModel()
     }
 
-    fun stationsByLine(name: String): LiveData<List<Station>> = Transformations.map(database.alertsDao.getAllStationsByLine(name)){
+    fun stationsByLine(name: String): LiveData<List<Station>> = Transformations.map(
+            when (name){
+                "Red Line" -> database.alertsDao.allRedLineStations()
+                "Blue Line" -> database.alertsDao.allBlueLineStations()
+                "Brown Line" -> database.alertsDao.allBrownLineStations()
+                "Green Line" -> database.alertsDao.allGreenLineStations()
+                "Orange Line" -> database.alertsDao.allOrangeLineStations()
+                "Pink Line" -> database.alertsDao.allPinkLineStations()
+                "Purple Line" -> database.alertsDao.allPurpleLineStations()
+                "Yellow Line" -> database.alertsDao.allYellowLineStations()
+                else -> database.alertsDao.allRedLineStations()
+            }
+            ){
+        Log.d("mapRepo", it?.get(0)?.name)
         it.asStationDomainModel()
     }
 
@@ -63,11 +76,11 @@ class AlertsRepository(private val database: AlertsDatabase) {
         }
     }
 
-
     suspend fun buildAllStations(){
         withContext(Dispatchers.IO){
             val allStations = StationNetwork.stations.getAllStations()
-            Log.d("NetworkStations", allStations.get(0).station_name)
+            Log.d("NetworkStations", allStations[0].station_name)
+            Log.d("NetworkStations2", allStations.asDatabaseModel().size.toString())
             database.alertsDao.insertAll(*allStations.asDatabaseModel())
         }
     }
