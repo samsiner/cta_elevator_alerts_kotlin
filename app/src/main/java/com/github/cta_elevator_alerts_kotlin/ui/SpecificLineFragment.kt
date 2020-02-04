@@ -38,7 +38,6 @@ class SpecificLineFragment : Fragment() {
         )
         val arguments = SpecificLineFragmentArgs.fromBundle(arguments!!)
         val lineName = arguments.lineName
-        Log.d("lineName", lineName)
 
         //Create ViewModel and initialize line name at construction
         val application = requireNotNull(this.activity).application
@@ -83,8 +82,6 @@ class SpecificLineFragment : Fragment() {
 
         viewModel.stationsByLine.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("specificLineObserve", it.size.toString())
-                Log.d("specificLineObserve2", it[0].toString())
                 specificLineAdapter.submitList(it)
             }
         })
@@ -100,7 +97,6 @@ class SpecificLineAdapter(private val lineName: String, private val specificLine
     class ViewHolder private constructor(val binding: SpecificLineStationBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(station: Station, count: Int, lineName: String, specificLineListener: SpecificLineListener){
             binding.station = station
-            Log.d("SpecificLineStation", station.name)
             binding.lineName = lineName
             binding.position = adapterPosition
             binding.totalPositions = count

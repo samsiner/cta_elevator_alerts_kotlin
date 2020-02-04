@@ -19,6 +19,9 @@
     <string name="content_status">Elevator status</string>
     <string name="back_arrow">Back arrow</string>
     <string name="about">About the App</string>
+    <string name="no_alerts">All elevators at this station are working properly.</string>
+    <string name="no_elevators">There are no elevators at this station.</string>
+    <string name="no_elevators_header">No elevators!</string>
     <string name="about_short">About the App</string>
     <string name="contact_email"><a href="mailto:southportdevelopers@gmail.com?subject=Elevate%20App">southportdevelopers@gmail.com</a></string>
     <string name="privacy_policy_link"><a href="https://sites.google.com/view/elevateappprivacypolicy/home">Privacy Policy</a></string>
@@ -28,5 +31,4 @@
         development jobs - hire them please!\n\nYou will receive a push notification if the status of an elevator changes at one of your saved stations. Data provided by CTA.\n\nSubmit feature requests, bug reports,
         and other comments: </string>
     <string name="star_icon">Star Icon</string>
-
 </resources>

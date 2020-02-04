@@ -213,3 +213,31 @@ fun View.setYellow(item: Station?){
         }
     }
 }
+
+@BindingAdapter("setFavoriteIcon")
+fun ImageView.setFavoriteIcon(item: Station?){
+    item?.let {
+        if (!item.hasElevator) visibility = GONE
+        else if (item.isFavorite) setImageResource(R.drawable.star_icon_full)
+        else setImageResource(R.drawable.star_icon_empty)
+    }
+}
+
+
+@BindingAdapter("setAlertDescriptionText")
+fun TextView.setAlertDescriptionText(item: Station?){
+    item?.let {
+        if (!item.hasElevator) setText(R.string.no_elevators)
+        else if (!item.hasElevatorAlert) setText(R.string.no_alerts)
+        else text = item.alertDescription
+    }
+}
+
+@BindingAdapter("setFavoriteText")
+fun TextView.setFavoriteText(item: Station?){
+    item?.let {
+        if (!item.hasElevator) setText(R.string.no_elevators_header)
+            else if (item.isFavorite) setText(R.string.added_to_favorites)
+            else setText(R.string.add_to_favorites)
+        }
+    }

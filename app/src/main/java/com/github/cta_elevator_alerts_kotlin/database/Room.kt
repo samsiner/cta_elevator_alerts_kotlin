@@ -120,17 +120,17 @@ interface AlertsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(line: DatabaseLine)
 
-    @Query("UPDATE station_table SET isFavorite = 1 WHERE stationID = :id")
-    fun addFavorite(id: String)
+    @Query("UPDATE station_table SET isFavorite = :isFavorite WHERE stationID = :id")
+    fun updateFavorite(id: String, isFavorite: Boolean)
 
-    @Query("UPDATE station_table SET isFavorite = 0 WHERE stationID = :id")
-    fun removeFavorite(id: String)
+//    @Query("UPDATE station_table SET isFavorite = 0 WHERE stationID = :id")
+//    fun removeFavorite(id: String)
 
     @Query("UPDATE station_table SET name = :name WHERE stationID = :stationID")
     fun updateName(stationID: String, name: String)
 
     @Query("SELECT * FROM station_table WHERE stationID = :stationID")
-    fun getStation(stationID: String): DatabaseStation
+    fun getStation(stationID: String): LiveData<DatabaseStation>
 
     @Query("SELECT name FROM station_table WHERE stationID = :stationID")
     fun getName(stationID: String): String

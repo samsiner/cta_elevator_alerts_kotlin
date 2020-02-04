@@ -14,9 +14,4 @@
         android:id="@+id/allLinesFragment"
         android:icon="@drawable/icon_redline"
         android:title="@string/all_lines" />
-
-    <item
-        android:id="@+id/aboutFragment"
-        android:icon="@drawable/icon_info"
-        android:title="@string/about_short" />
 </menu>

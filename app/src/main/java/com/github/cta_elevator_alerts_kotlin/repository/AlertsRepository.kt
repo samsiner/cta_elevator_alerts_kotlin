@@ -42,20 +42,23 @@ class AlertsRepository(private val database: AlertsDatabase) {
         it.asStationDomainModel()
     }
 
-    fun stationsByLine(name: String): LiveData<List<Station>> = Transformations.map(
-            when (name){
-                "Red Line" -> database.alertsDao.allRedLineStations()
-                "Blue Line" -> database.alertsDao.allBlueLineStations()
-                "Brown Line" -> database.alertsDao.allBrownLineStations()
-                "Green Line" -> database.alertsDao.allGreenLineStations()
-                "Orange Line" -> database.alertsDao.allOrangeLineStations()
-                "Pink Line" -> database.alertsDao.allPinkLineStations()
-                "Purple Line" -> database.alertsDao.allPurpleLineStations()
-                "Yellow Line" -> database.alertsDao.allYellowLineStations()
-                else -> database.alertsDao.allRedLineStations()
-            }
-            ){
-        Log.d("mapRepo", it?.get(0)?.name)
+    fun getStationById(stationID: String): LiveData<Station> = Transformations.map(database.alertsDao.getStation(stationID)) {
+        it.asStationDomainModel()
+    }
+
+    fun getStationsByLine(name: String): LiveData<List<Station>> = Transformations.map(
+        when (name){
+            "Red Line" -> database.alertsDao.allRedLineStations()
+            "Blue Line" -> database.alertsDao.allBlueLineStations()
+            "Brown Line" -> database.alertsDao.allBrownLineStations()
+            "Green Line" -> database.alertsDao.allGreenLineStations()
+            "Orange Line" -> database.alertsDao.allOrangeLineStations()
+            "Pink Line" -> database.alertsDao.allPinkLineStations()
+            "Purple Line" -> database.alertsDao.allPurpleLineStations()
+            "Yellow Line" -> database.alertsDao.allYellowLineStations()
+            else -> database.alertsDao.allRedLineStations()
+        }
+    ){
         it.asStationDomainModel()
     }
 
@@ -64,14 +67,14 @@ class AlertsRepository(private val database: AlertsDatabase) {
     suspend fun buildAllLines(){
         withContext(Dispatchers.IO) {
             database.alertsDao.insertAll(
-                    DatabaseLine("red", "Red Line"),
-                    DatabaseLine("blue", "Blue Line"),
-                    DatabaseLine("brn", "Brown Line"),
-                    DatabaseLine("g", "Green Line"),
-                    DatabaseLine("o", "Orange Line"),
-                    DatabaseLine("pnk", "Pink Line"),
-                    DatabaseLine("p", "Purple Line"),
-                    DatabaseLine("y", "Yellow Line")
+                DatabaseLine("red", "Red Line"),
+                DatabaseLine("blue", "Blue Line"),
+                DatabaseLine("brn", "Brown Line"),
+                DatabaseLine("g", "Green Line"),
+                DatabaseLine("o", "Orange Line"),
+                DatabaseLine("pnk", "Pink Line"),
+                DatabaseLine("p", "Purple Line"),
+                DatabaseLine("y", "Yellow Line")
             )
         }
     }
@@ -79,9 +82,16 @@ class AlertsRepository(private val database: AlertsDatabase) {
     suspend fun buildAllStations(){
         withContext(Dispatchers.IO){
             val allStations = StationNetwork.stations.getAllStations()
-            Log.d("NetworkStations", allStations[0].station_name)
-            Log.d("NetworkStations2", allStations.asDatabaseModel().size.toString())
             database.alertsDao.insertAll(*allStations.asDatabaseModel())
+        }
+    }
+
+    suspend fun switchFavorite(stationID: String){
+        withContext(Dispatchers.IO){
+            val isFavorite = database.alertsDao.isFavoriteStation(stationID)
+            val hasElevator = database.alertsDao.getHasElevator(stationID)
+            if (isFavorite && hasElevator) database.alertsDao.updateFavorite(stationID, false)
+            else if (hasElevator) database.alertsDao.updateFavorite(stationID, true)
         }
     }
 
@@ -96,20 +106,11 @@ class AlertsRepository(private val database: AlertsDatabase) {
     private val updateAlertsTimeLD: MutableLiveData<String>
     private val stationCountLD: MutableLiveData<Int>
 
-    private var s: String? = null
-
     private var hasElevator = false
 
     private var hasElevatorAlert = false
 
     private var isFavorite = false
-
-    val connectionStatus: LiveData<Boolean>
-        get() = connectionStatusLD
-    val updatedAlertsTime: LiveData<String>
-        get() = updateAlertsTimeLD
-
-    private lateinit var lineAlertList: LiveData<List<Station>>
 
     init {
         updateAlertsTimeLD = MutableLiveData()
@@ -118,56 +119,10 @@ class AlertsRepository(private val database: AlertsDatabase) {
         executor = Executors.newFixedThreadPool(4)
     }
 
-//    fun mGetAllAlertStations(): LiveData<List<Station>> {
-//        return mAlertsDao.allAlertStations
-//    }
-//
-//    fun mGetAllFavorites(): LiveData<List<Station>> {
-//        return mAlertsDao.allFavorites
-//    }
-//
-//    fun getAllLines(): LiveData<List<Line>> {
-//        return mAlertsDao.allLines
-//    }
-//
-//    fun isFavoriteLiveData(stationID: String): LiveData<Boolean>{
-//        return mAlertsDao.getIsFavoriteLiveData(stationID)
-//    }
-
-    fun mGetStationAlertIDs(): List<String> {
-        val list2 = ArrayList<String>()
-
-        val thread = object : Thread() {
-            override fun run() {
-                list2.addAll(database.alertsDao.allAlertStationIDs())
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-
-        return list2
-    }
-
-    fun setConnectionStatus(b: Boolean) {
-        connectionStatusLD.postValue(b)
-    }
-
-//    fun mGetAllRoutes(stationID: String): BooleanArray {
-//        val b = BooleanArray(8)
+//    fun mGetHasElevator(stationID: String): Boolean {
 //        val thread = object : Thread() {
 //            override fun run() {
-//                b[0] = mAlertsDao.getRed(stationID)
-//                b[1] = mAlertsDao.getBlue(stationID)
-//                b[2] = mAlertsDao.getBrown(stationID)
-//                b[3] = mAlertsDao.getGreen(stationID)
-//                b[4] = mAlertsDao.getOrange(stationID)
-//                b[5] = mAlertsDao.getPink(stationID)
-//                b[6] = mAlertsDao.getPurple(stationID)
-//                b[7] = mAlertsDao.getYellow(stationID)
+//                hasElevator = database.alertsDao.getHasElevator(stationID)
 //            }
 //        }
 //        thread.start()
@@ -177,13 +132,13 @@ class AlertsRepository(private val database: AlertsDatabase) {
 //            e.printStackTrace()
 //        }
 //
-//        return b
+//        return hasElevator
 //    }
 //
-//    fun mGetStationName(stationID: String): String? {
+//    fun mGetHasElevatorAlert(stationID: String): Boolean {
 //        val thread = object : Thread() {
 //            override fun run() {
-//                s = mAlertsDao.getName(stationID)
+//                hasElevatorAlert = database.alertsDao.getHasElevatorAlert(stationID)
 //            }
 //        }
 //        thread.start()
@@ -193,68 +148,8 @@ class AlertsRepository(private val database: AlertsDatabase) {
 //            e.printStackTrace()
 //        }
 //
-//        return s
+//        return hasElevatorAlert
 //    }
-
-    private fun insert(station: DatabaseStation) {
-        val thread = object : Thread() {
-            override fun run() {
-                database.alertsDao.insert(station)
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun insert(line: DatabaseLine) {
-        val thread = object : Thread() {
-            override fun run() {
-                database.alertsDao.insert(line)
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-    }
-
-    fun mGetHasElevator(stationID: String): Boolean {
-        val thread = object : Thread() {
-            override fun run() {
-                hasElevator = database.alertsDao.getHasElevator(stationID)
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-
-        return hasElevator
-    }
-
-    fun mGetHasElevatorAlert(stationID: String): Boolean {
-        val thread = object : Thread() {
-            override fun run() {
-                hasElevatorAlert = database.alertsDao.getHasElevatorAlert(stationID)
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-
-        return hasElevatorAlert
-    }
 
     //    private String convertDateTime(String s){
     //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd'T'HH:mm:ss", Locale.US);
@@ -266,55 +161,19 @@ class AlertsRepository(private val database: AlertsDatabase) {
     //            return s;
     //        }
     //    }
-
-    fun getAlertDetails(stationID: String): List<String> {
-        val list2 = ArrayList<String>()
-
-        val thread = object : Thread() {
-            override fun run() {
-                list2.add(0, database.alertsDao.getName(stationID))
-                val shortDesc = database.alertsDao.getShortDescription(stationID)
-
-                if (shortDesc != null)
-                    list2.add(1, database.alertsDao.getShortDescription(stationID))
-                else
-                    list2.add(1, "")
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-
-        return list2
-    }
-
-    fun addFavorite(stationID: String) {
-        executor.execute { database.alertsDao.addFavorite(stationID) }
-    }
-
-    fun removeFavorite(stationID: String) {
-        val thread = object : Thread() {
-            override fun run() {
-                database.alertsDao.removeFavorite(stationID)
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-
-    }
-
-
-//    private fun getStation(stationID: String): DatabaseStation {
+//
+//    fun getAlertDetails(stationID: String): List<String> {
+//        val list2 = ArrayList<String>()
+//
 //        val thread = object : Thread() {
 //            override fun run() {
-//                newStation = database.alertsDao.getStation(stationID)
+//                list2.add(0, database.alertsDao.getName(stationID))
+//                val shortDesc = database.alertsDao.getShortDescription(stationID)
+//
+//                if (shortDesc != null)
+//                    list2.add(1, database.alertsDao.getShortDescription(stationID))
+//                else
+//                    list2.add(1, "")
 //            }
 //        }
 //        thread.start()
@@ -324,7 +183,26 @@ class AlertsRepository(private val database: AlertsDatabase) {
 //            e.printStackTrace()
 //        }
 //
-//        return newStation
+//        return list2
+//    }
+//
+////    fun addFavorite(stationID: String) {
+//        executor.execute { database.alertsDao.addFavorite(stationID) }
+//    }
+//
+//    fun removeFavorite(stationID: String) {
+//        val thread = object : Thread() {
+//            override fun run() {
+//                database.alertsDao.removeFavorite(stationID)
+//            }
+//        }
+//        thread.start()
+//        try {
+//            thread.join()
+//        } catch (e: InterruptedException) {
+//            e.printStackTrace()
+//        }
+//
 //    }
 
     fun isFavorite(stationID: String): Boolean {
@@ -342,106 +220,6 @@ class AlertsRepository(private val database: AlertsDatabase) {
 
         return isFavorite
     }
-//
-//    fun buildStations() {
-//        if (database.alertsDao.stationCount() > 0) return
-//
-//        val jsonstring = pullJSONFromWebService("https://data.cityofchicago.org/resource/8pix-ypme.json")
-//
-//        try {
-//            val arr = JSONArray(jsonstring)
-//
-//            for (i in 0 until arr.length()) {
-//                val obj = arr.get(i) as JSONObject
-//                val mapID = obj.getString("map_id")
-//                var ada = java.lang.Boolean.parseBoolean(obj.getString("ada"))
-//
-//                //fix incorrect data for Quincy/Wells
-//                if (mapID == "40040") {
-//                    ada = true
-//                }
-//
-//                val red = java.lang.Boolean.parseBoolean(obj.getString("red"))
-//                val blue = java.lang.Boolean.parseBoolean(obj.getString("blue"))
-//                val brown = java.lang.Boolean.parseBoolean(obj.getString("brn"))
-//                val green = java.lang.Boolean.parseBoolean(obj.getString("g"))
-//                val orange = java.lang.Boolean.parseBoolean(obj.getString("o"))
-//                val pink = java.lang.Boolean.parseBoolean(obj.getString("pnk"))
-//                val purple = java.lang.Boolean.parseBoolean(obj.getString("p")) || java.lang.Boolean.parseBoolean(obj.getString("pexp"))
-//                val yellow = java.lang.Boolean.parseBoolean(obj.getString("y"))
-//
-//                val station = database.alertsDao.getStation(mapID)
-//
-//                if (station == null) {
-//                    val newStation = Station(mapID)
-//                    var stationName: String
-//                    try {
-//                        stationName = obj.getString("station_name")
-//                    } catch (e: JSONException) {
-//                        stationName = ""
-//                    }
-//
-//                    //name length is too long for this station
-//                    if (mapID == "40850") {
-//                        stationName = "Harold Wash. Library"
-//                    }
-//                    if (mapID == "40670") {
-//                        stationName = "Western (O'Hare)"
-//                    }
-//                    if (mapID == "40220") {
-//                        stationName = "Western (Forest Pk)"
-//                    }
-//                    if (mapID == "40750") {
-//                        stationName = "Harlem (O'Hare)"
-//                    }
-//                    if (mapID == "40980") {
-//                        stationName = "Harlem (Forest Pk)"
-//                    }
-//                    if (mapID == "40810") {
-//                        stationName = "IL Med. District"
-//                    }
-//                    if (mapID == "41690") {
-//                        stationName = "Cermak-McCorm. Pl."
-//                    }
-//
-//                    insert(newStation)
-//                    database.alertsDao.updateName(mapID, stationName)
-//                }
-//
-//                //Set routes that come to this station
-//                if (ada) database.alertsDao.setHasElevator(mapID)
-//                if (red) {
-//                    database.alertsDao.setRedTrue(mapID)
-//                }
-//                if (blue) {
-//                    database.alertsDao.setBlueTrue(mapID)
-//                }
-//                if (brown) {
-//                    database.alertsDao.setBrownTrue(mapID)
-//                }
-//                if (green) {
-//                    mAlertsDao.setGreenTrue(mapID)
-//                }
-//                if (orange) {
-//                    mAlertsDao.setOrangeTrue(mapID)
-//                }
-//                if (pink) {
-//                    mAlertsDao.setPinkTrue(mapID)
-//                }
-//                if (purple) {
-//                    mAlertsDao.setPurpleTrue(mapID)
-//                }
-//                if (yellow) {
-//                    mAlertsDao.setYellowTrue(mapID)
-//                }
-//            }
-//            stationCountLD.postValue(mAlertsDao.stationCount)
-//        } catch (e: JSONException) {
-//            connectionStatusLD.postValue(false)
-//        }
-//    }
-
-
 
     fun buildAlerts() {
         val jsonstring = pullJSONFromWebService("https://lapi.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON")
@@ -512,36 +290,6 @@ class AlertsRepository(private val database: AlertsDatabase) {
         updateAlertsTimeLD.postValue(dateFormat.format(date))
     }
 
-    fun removeAlertKing() {
-        val thread = object : Thread() {
-            override fun run() {
-                database.alertsDao.removeAlert("41140")
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-
-    }
-
-    fun addAlertHoward() {
-        val thread = object : Thread() {
-            override fun run() {
-                database.alertsDao.setAlert("40900", "Elevator is DOWN - TEST!")
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-
-    }
-
     private fun pullJSONFromWebService(url: String): String {
         val sb = StringBuilder()
         try {
@@ -596,20 +344,4 @@ class AlertsRepository(private val database: AlertsDatabase) {
             else -> MutableLiveData<List<DatabaseStation>>(listOf())
         }
     }
-
-//    companion object {
-//        @Volatile
-//        var INSTANCE: AlertsRepository? = null
-//
-//        fun getInstance(application: Application): AlertsRepository? {
-//            if (INSTANCE == null) {
-//                synchronized(AlertsRepository::class.java) {
-//                    if (INSTANCE == null) {
-//                        INSTANCE = AlertsRepository(application)
-//                    }
-//                }
-//            }
-//            return INSTANCE
-//        }
-//    }
 }

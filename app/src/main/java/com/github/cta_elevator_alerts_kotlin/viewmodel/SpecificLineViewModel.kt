@@ -31,39 +31,20 @@ class SpecificLineViewModel(application: Application, val lineName: String) : An
     }
 
     //Sort list by station order
-    val stationsByLine = Transformations.map(alertsRepository.stationsByLine(lineName)){stationList ->
-        Log.d("test1", stationList[0].name)
-        Log.d("test1a", stationList[0].stationID)
-        Log.d("test1b", lineName)
-//        Log.d("test 1b", lineStationIDsInOrder[0])
-
+    val stationsByLine = Transformations.map(alertsRepository.getStationsByLine(lineName)){stationList ->
         stationList.map {
-                if (it.stationID.equals(stationList[0].stationID)) Log.d("test2", it.name)
-                Pair(it, lineStationIDsInOrder.indexOf(it.stationID))
-
-            }
-                    .sortedWith(compareBy{
-                            Log.d("test3", it.first.name + " " + it.second.toString())
-
-                        it.second
-                    })
-                    .map {
-                        if (it.first.stationID.equals(stationList[0].stationID)) Log.d("test4", it.second.toString())
-                        it.first
-                    }
+                Pair(it, lineStationIDsInOrder.indexOf(it.stationID))}
+                    .sortedWith(compareBy{ it.second })
+                    .map {it.first}
     }
 
     //Sort list by station order, only with elevator alerts
-    val stationsByLineWithAlerts = Transformations.map(alertsRepository.stationsByLine(lineName)){stationList ->
-        stationList.map { station ->
-            Pair(station, lineStationIDsInOrder.indexOf(station.stationID))}
-                .sortedWith(compareBy{stationPair -> stationPair.second})
-                .map {
-                    stationPair -> stationPair.first
-                }
-                .filter { station ->
-                    station.hasElevatorAlert
-                }
+    val stationsByLineWithAlerts = Transformations.map(alertsRepository.getStationsByLine(lineName)){stationList ->
+        stationList.map {
+            Pair(it, lineStationIDsInOrder.indexOf(it.stationID))}
+                .sortedWith(compareBy{it.second})
+                .map {it.first}
+                .filter { it.hasElevatorAlert }
     }
 }
 

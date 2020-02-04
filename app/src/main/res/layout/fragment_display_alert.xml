@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -9,7 +11,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
         style="@style/ActivityStyle">
 
         <RelativeLayout
@@ -19,7 +22,8 @@
             android:gravity="center_horizontal"
             android:paddingBottom="30dp"
             android:paddingTop="30dp"
-            android:background="@drawable/border_bottom">
+            android:background="@drawable/border_bottom"
+            android:onClick="@{() -> viewModel.switchFavorite()}">
 
             <ImageView
                 android:id="@+id/img_star_icon"
@@ -31,24 +35,29 @@
                 android:focusable="true"
                 android:layout_marginRight="20dp"
                 android:layout_marginEnd="20dp"
-                android:contentDescription="@string/favorite_icon"/>
+                android:contentDescription="@string/favorite_icon"
+                app:setFavoriteIcon="@{viewModel.station}"
+                android:onClick="@{() -> viewModel.switchFavorite()}"/>
 
             <TextView
                 android:id="@+id/favorited_text"
-                android:text="@string/add_to_favorites"
+                tools:text="@string/add_to_favorites"
                 style="@style/StationAlertBold"
                 android:textColor="#F5C84E"
                 android:layout_width="wrap_content"
                 android:layout_toEndOf="@id/img_star_icon"
                 android:layout_toRightOf="@id/img_star_icon"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                app:setFavoriteText="@{viewModel.station}"
+                android:onClick="@{() -> viewModel.switchFavorite()}"/>
         </RelativeLayout>
 
         <TextView
             android:id="@+id/txt_alert_shortDesc"
             android:layout_marginTop="25dp"
             android:lineSpacingExtra="6dp"
-            android:text="@{viewModel.shortDesc}"
-            style="@style/StationAlertRegular" />
+            tools:text="@string/no_alerts"
+            style="@style/StationAlertRegular"
+            app:setAlertDescriptionText="@{viewModel.station}"/>
     </LinearLayout>
 </layout>

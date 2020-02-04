@@ -12,11 +12,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.databinding.FragmentAllAlertsBinding
 import com.github.cta_elevator_alerts_kotlin.databinding.IndividualStationBinding
 import com.github.cta_elevator_alerts_kotlin.domain.Station
 import com.github.cta_elevator_alerts_kotlin.viewmodel.AllAlertsViewModel
+import com.github.cta_elevator_alerts_kotlin.work.RefreshAlertsWorker
 
 /**
  * A simple [Fragment] subclass.
@@ -34,7 +37,7 @@ class AllAlertsFragment : Fragment() {
         )
 
         binding.swipeRefreshAll.setOnRefreshListener {
-//            addOneTimeWorker()
+            addOneTimeWorker()
             //TODO: Add OneTimeWorker
             binding.swipeRefreshAll.isRefreshing = false
         }
@@ -73,10 +76,10 @@ class AllAlertsFragment : Fragment() {
     }
 
     private fun addOneTimeWorker() {
-//        val oneTimeAlertRequest = OneTimeWorkRequest.Builder(RefreshAlertsWorker::class.java)
-//                .build()
-//
-//        WorkManager.getInstance(this.context!!).enqueue(oneTimeAlertRequest)
+        val oneTimeAlertRequest = OneTimeWorkRequest.Builder(RefreshAlertsWorker::class.java)
+                .build()
+
+        WorkManager.getInstance(this.context!!).enqueue(oneTimeAlertRequest)
     }
 }
 

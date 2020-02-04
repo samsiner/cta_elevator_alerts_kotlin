@@ -32,7 +32,6 @@ data class DatabaseStation constructor(
         val alertDescription: String)
 
 fun List<DatabaseStation>.asStationDomainModel(): List<Station>{
-    if (this.isNotEmpty()) Log.d("DatabaseStations", this.get(0).name)
     return map{
         Station(
                 stationID = it.stationID,
@@ -50,6 +49,24 @@ fun List<DatabaseStation>.asStationDomainModel(): List<Station>{
                 name = it.name,
                 alertDescription = it.alertDescription)
     }
+}
+
+fun DatabaseStation.asStationDomainModel(): Station {
+    return Station(
+        stationID = this.stationID,
+        hasElevator = this.hasElevator,
+        hasElevatorAlert = this.hasElevatorAlert,
+        isFavorite = this.isFavorite,
+        red = this.red,
+        blue = this.blue,
+        brown = this.brown,
+        green = this.green,
+        orange = this.orange,
+        pink = this.pink,
+        purple = this.purple,
+        yellow = this.yellow,
+        name = this.name,
+        alertDescription = this.alertDescription)
 }
 
 @Entity(tableName = "line_table")
