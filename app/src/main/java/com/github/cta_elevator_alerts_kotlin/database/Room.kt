@@ -51,6 +51,12 @@ interface AlertsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg lines: DatabaseLine)
 
+    @Query("UPDATE station_table SET hasElevatorAlert = 1")
+    fun removeAllAlerts()
+
+    @Query("UPDATE station_table SET hasElevatorAlert = 1 AND alertDescription = :desc WHERE stationID = :stationID")
+    fun addAlert(stationID: String, desc: String)
+
     @Query("SELECT stationID FROM station_table WHERE hasElevatorAlert = 1")
     fun allAlertStationIDs(): List<String>
 

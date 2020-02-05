@@ -23,8 +23,6 @@ private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
 
-
-
 /**
  * Main entry point for network access. Call like `Network.devbytes.getPlaylist()`
  */

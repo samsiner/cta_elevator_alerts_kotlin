@@ -1,12 +1,12 @@
 package com.github.cta_elevator_alerts_kotlin.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.github.cta_elevator_alerts_kotlin.database.*
 import com.github.cta_elevator_alerts_kotlin.domain.Line
 import com.github.cta_elevator_alerts_kotlin.domain.Station
+import com.github.cta_elevator_alerts_kotlin.network.AlertNetwork
 import com.github.cta_elevator_alerts_kotlin.network.StationNetwork
 import com.github.cta_elevator_alerts_kotlin.network.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +18,6 @@ import java.io.IOException
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 /**
  * Repository to interact with Room database and
@@ -86,6 +84,17 @@ class AlertsRepository(private val database: AlertsDatabase) {
         }
     }
 
+    suspend fun refreshAllAlerts(){
+        withContext(Dispatchers.IO){
+            val allAlerts = AlertNetwork.alerts.getAllAlerts()
+            database.alertsDao.removeAllAlerts()
+
+            for (alert in allAlerts.CTAAlerts.alerts.asDatabaseModel()){
+                database.alertsDao.addAlert(alert.first, alert.second)
+            }
+        }
+    }
+
     suspend fun switchFavorite(stationID: String){
         withContext(Dispatchers.IO){
             val isFavorite = database.alertsDao.isFavoriteStation(stationID)
@@ -95,29 +104,14 @@ class AlertsRepository(private val database: AlertsDatabase) {
         }
     }
 
-    suspend fun refreshAllAlerts(){
-        withContext(Dispatchers.IO){
-            buildAlerts()
+    suspend fun getAllAlertStationIDs(): List<String> {
+        return withContext(Dispatchers.IO){
+            database.alertsDao.allAlertStationIDs()
         }
     }
 
-    private val executor: ExecutorService
-    private val connectionStatusLD: MutableLiveData<Boolean>
-    private val updateAlertsTimeLD: MutableLiveData<String>
-    private val stationCountLD: MutableLiveData<Int>
-
-    private var hasElevator = false
-
-    private var hasElevatorAlert = false
-
-    private var isFavorite = false
-
-    init {
-        updateAlertsTimeLD = MutableLiveData()
-        connectionStatusLD = MutableLiveData()
-        stationCountLD = MutableLiveData()
-        executor = Executors.newFixedThreadPool(4)
-    }
+    private val connectionStatusLD: MutableLiveData<Boolean> = MutableLiveData()
+    private val updateAlertsTimeLD: MutableLiveData<String> = MutableLiveData()
 
 //    fun mGetHasElevator(stationID: String): Boolean {
 //        val thread = object : Thread() {
@@ -205,21 +199,21 @@ class AlertsRepository(private val database: AlertsDatabase) {
 //
 //    }
 
-    fun isFavorite(stationID: String): Boolean {
-        val thread = object : Thread() {
-            override fun run() {
-                isFavorite = database.alertsDao.isFavoriteStation(stationID)
-            }
-        }
-        thread.start()
-        try {
-            thread.join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-
-        return isFavorite
-    }
+//    fun isFavorite(stationID: String): Boolean {
+//        val thread = object : Thread() {
+//            override fun run() {
+//                isFavorite = database.alertsDao.isFavoriteStation(stationID)
+//            }
+//        }
+//        thread.start()
+//        try {
+//            thread.join()
+//        } catch (e: InterruptedException) {
+//            e.printStackTrace()
+//        }
+//
+//        return isFavorite
+//    }
 
     fun buildAlerts() {
         val jsonstring = pullJSONFromWebService("https://lapi.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON")
@@ -305,43 +299,42 @@ class AlertsRepository(private val database: AlertsDatabase) {
         return sb.toString()
     }
 
-    fun getAllLineAlerts(line: String): LiveData<List<DatabaseStation>> {
-//        val thread = object : Thread() {
-//            override fun run() {
-//                when (line) {
-//                    "Red Line" -> lineAlertList = mDao.allRedLineAlertStations
-//                    "Blue Line" -> lineAlertList = mDao.allRedLineAlertStations
-//                    "Brown Line" -> lineAlertList = mDao.allRedLineAlertStations
-//                    "Green Line" -> lineAlertList = mDao.allRedLineAlertStations
-//                    "Orange Line" -> lineAlertList = mDao.allRedLineAlertStations
-//                    "Pink Line" -> lineAlertList = mDao.allRedLineAlertStations
-//                    "Purple Line" -> lineAlertList = mDao.allRedLineAlertStations
-//                    "Yellow Line" -> lineAlertList = mDao.allRedLineAlertStations
-//                    else -> {
-//                        lineAlertList = MutableLiveData<List<Station>>(listOf())
-//                    }
-//                }
-//            }
+//    fun getAllLineAlerts(line: String): LiveData<List<DatabaseStation>> {
+////        val thread = object : Thread() {
+////            override fun run() {
+////                when (line) {
+////                    "Red Line" -> lineAlertList = mDao.allRedLineAlertStations
+////                    "Blue Line" -> lineAlertList = mDao.allRedLineAlertStations
+////                    "Brown Line" -> lineAlertList = mDao.allRedLineAlertStations
+////                    "Green Line" -> lineAlertList = mDao.allRedLineAlertStations
+////                    "Orange Line" -> lineAlertList = mDao.allRedLineAlertStations
+////                    "Pink Line" -> lineAlertList = mDao.allRedLineAlertStations
+////                    "Purple Line" -> lineAlertList = mDao.allRedLineAlertStations
+////                    "Yellow Line" -> lineAlertList = mDao.allRedLineAlertStations
+////                    else -> {
+////                        lineAlertList = MutableLiveData<List<Station>>(listOf())
+////                    }
+////                }
+////            }
+////        }
+////        thread.start()
+////        try {
+////            thread.join()
+////        } catch (e: InterruptedException) {
+////            e.printStackTrace()
+////        }
+//
+////        return lineAlertList
+//        return when (line) {
+//            "Red Line" -> database.alertsDao.allRedLineAlertStations()
+//            "Blue Line" -> database.alertsDao.allBlueLineAlertStations()
+//            "Brown Line" -> database.alertsDao.allBrownLineAlertStations()
+//            "Green Line" -> database.alertsDao.allGreenLineAlertStations()
+//            "Orange Line" -> database.alertsDao.allOrangeLineAlertStations()
+//            "Pink Line" -> database.alertsDao.allPinkLineAlertStations()
+//            "Purple Line" -> database.alertsDao.allPurpleLineAlertStations()
+//            "Yellow Line" -> database.alertsDao.allYellowLineAlertStations()
+//            else -> MutableLiveData<List<DatabaseStation>>(listOf())
 //        }
-//        thread.start()
-//        try {
-//            thread.join()
-//        } catch (e: InterruptedException) {
-//            e.printStackTrace()
-//        }
-
-//        return lineAlertList
-        Log.d("repositoryline", line)
-        return when (line) {
-            "Red Line" -> database.alertsDao.allRedLineAlertStations()
-            "Blue Line" -> database.alertsDao.allBlueLineAlertStations()
-            "Brown Line" -> database.alertsDao.allBrownLineAlertStations()
-            "Green Line" -> database.alertsDao.allGreenLineAlertStations()
-            "Orange Line" -> database.alertsDao.allOrangeLineAlertStations()
-            "Pink Line" -> database.alertsDao.allPinkLineAlertStations()
-            "Purple Line" -> database.alertsDao.allPurpleLineAlertStations()
-            "Yellow Line" -> database.alertsDao.allYellowLineAlertStations()
-            else -> MutableLiveData<List<DatabaseStation>>(listOf())
-        }
-    }
+//    }
 }

@@ -1,13 +1,8 @@
 package com.github.cta_elevator_alerts_kotlin.network
 
 import com.github.cta_elevator_alerts_kotlin.database.DatabaseStation
-
-/**
- * Holds a list of Stations.
- */
-//@JsonClass(generateAdapter = true)
-data class NetworkStationContainer(
-        val stations: List<NetworkStation>)
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 /**
  * Each CTA El station.
@@ -56,31 +51,6 @@ fun List<NetworkStation>.asDatabaseModel(): Array<DatabaseStation> {
                 alertDescription = "")
     }
     return databaseStations.values.toTypedArray()
-
-//    return map {
-//        //fix incorrect data for Quincy/Wells
-//        var ada = it.ada
-//        if (it.map_id == "40040") {
-//            ada = true
-//        }
-//
-//        DatabaseStation (
-//                stationID = it.map_id,
-//                hasElevator = ada,
-//                hasElevatorAlert = false,
-//                isFavorite = false,
-//                red = it.red,
-//                blue = it.blue,
-//                brown = it.brn,
-//                green = it.g,
-//                orange = it.o,
-//                pink = it.pnk,
-//                purple = it.p || it.pexp,
-//                yellow = it.y,
-//                name = shortenStationName(it.map_id) ?: it.station_name,
-//                alertDescription = "")
-//    }
-//            .toTypedArray()
 }
 
 fun shortenStationName(mapID: String): String?{
@@ -95,3 +65,50 @@ fun shortenStationName(mapID: String): String?{
         else -> null
     }
 }
+
+data class NetworkData(
+        val CTAAlerts: NetworkAlertContainer)
+
+data class NetworkAlertContainer(
+        @Json(name = "Alert") val alerts: List<NetworkAlert>)
+
+data class NetworkAlert(
+        @Json(name = "ShortDescription") val shortDescription: String,
+        @Json(name = "Headline") val headline: String,
+        @Json(name = "Impact") val impact: String,
+        @Json(name = "ImpactedService") val impactedService: ImpactedServiceContainer)
+
+//TODO: fix array or object variably
+data class ImpactedServiceContainer (
+        val servicesObject: List<ImpactedService>,
+        val servicesArray: ImpactedService)
+
+data class ImpactedService(
+        @Json(name = "ServiceType") val type: String,
+        @Json(name = "ServiceId") val stationID: String)
+
+
+fun List<NetworkAlert>.asDatabaseModel(): Array<Pair<String, String>> {
+    val pairs: ArrayList<Pair<String, String>> = ArrayList()
+
+    this.forEach{
+        if (it.impact != "Elevator Status" || it.headline.contains("Back in Service")){
+            return@forEach
+        }
+
+        //"T" = Train station alert
+        for (impactedService in it.impactedService.servicesObject){
+            if (impactedService.type == "T"){
+                val stationID = impactedService.stationID
+                val desc = it.shortDescription
+                pairs.add(Pair(stationID, desc))
+            }
+        }
+
+        val stationID = it.impactedService.servicesArray.stationID
+        val desc = it.shortDescription
+        pairs.add(Pair(stationID, desc))
+    }
+    return pairs.toTypedArray()
+}
+
