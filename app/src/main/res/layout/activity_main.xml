@@ -6,7 +6,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".ui.MainActivity">
 
         <ImageView
             android:layout_width="match_parent"
@@ -40,7 +40,6 @@
                             android:src="@drawable/back_arrow"/>
 
                         <TextView
-                            android:id="@+id/txt_toolbar"
                             android:text="@string/app_name"
                             style="@style/TitleText"
                             android:layout_toRightOf="@+id/img_back_arrow"
@@ -81,7 +80,7 @@
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             app:itemIconTint="@color/colorWhite"
             app:itemTextColor="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -2,22 +2,15 @@
     <string name="elevator_alerts">Elevator Alerts</string>
     <string name="all_stations">All Stations</string>
     <string name="app_name">ELEVATE</string>
-    <string name="title_activity_display_alert">Alert Details</string>
     <string name="title_favorites">Favorites</string>
     <string name="favorite_alerts">Favorite Alerts</string>
     <string name="all_lines">All Lines</string>
-    <string name="view_all_lines">View All Lines</string>
     <string name="no_favorites_added">Click View All Lines button to add your favorite stations.</string>
     <string name="no_current_alerts">No current elevator alerts!</string>
     <string name="title_all_alerts">All Elevator Alerts</string>
     <string name="title_all_alerts_short">All Alerts</string>
-    <string name="title_activity_all_lines">All Train Lines</string>
     <string name="image_elevator_out">Elevator Out Status</string>
     <string name="status">Elevator Status</string>
-    <string name="title_activity_specific_line">Specific Line</string>
-    <string name="present_elevator">All elevators at this station are working properly.</string>
-    <string name="no_elevator">There are no elevators at this station.</string>
-    <string name="no_elevator_title">No Elevators!</string>
     <string name="content_description_train">Background image of CTA train</string>
     <string name="content_description_right_arrow">Right arrow</string>
     <string name="content_description_train_icon">Train icon</string>
@@ -26,22 +19,16 @@
     <string name="content_status">Elevator status</string>
     <string name="back_arrow">Back arrow</string>
     <string name="about">About the App</string>
+    <string name="no_alerts">All elevators at this station are working properly.</string>
+    <string name="no_elevators">There are no elevators at this station.</string>
+    <string name="no_elevators_header">No elevators!</string>
     <string name="about_short">About the App</string>
     <string name="contact_email"><a href="mailto:southportdevelopers@gmail.com?subject=Elevate%20App">southportdevelopers@gmail.com</a></string>
     <string name="privacy_policy_link"><a href="https://sites.google.com/view/elevateappprivacypolicy/home">Privacy Policy</a></string>
-    <string name="title_activity_about">AboutActivity</string>
     <string name="add_to_favorites">Add to Favorites</string>
     <string name="added_to_favorites">Added to Favorites!</string>
     <string name="about_text">Elevate was created by Loyola University graduate students Sam Siner and Tyler Arndt. They are looking for software
         development jobs - hire them please!\n\nYou will receive a push notification if the status of an elevator changes at one of your saved stations. Data provided by CTA.\n\nSubmit feature requests, bug reports,
-        and other comments:
-
-    </string>
+        and other comments: </string>
     <string name="star_icon">Star Icon</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <!--<string name="lines">lines</string>-->
-    <!--<string name="info">info</string>-->
 </resources>

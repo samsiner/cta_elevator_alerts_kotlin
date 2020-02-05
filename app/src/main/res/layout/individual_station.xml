@@ -5,10 +5,10 @@
     <data>
         <variable
             name="station"
-            type="com.github.cta_elevator_alerts_kotlin.model.Station" />
+            type="com.github.cta_elevator_alerts_kotlin.domain.Station" />
         <variable
             name="stationListener"
-            type="com.github.cta_elevator_alerts_kotlin.adapters.StationListener" />
+            type="com.github.cta_elevator_alerts_kotlin.ui.StationListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="station"
-            type="com.github.cta_elevator_alerts_kotlin.model.Station" />
+            type="com.github.cta_elevator_alerts_kotlin.domain.Station" />
         <variable
             name="lineName"
             type="String" />
@@ -17,7 +17,7 @@
             type="Integer" />
         <variable
             name="specificLineListener"
-            type="com.github.cta_elevator_alerts_kotlin.adapters.SpecificLineListener" />
+            type="com.github.cta_elevator_alerts_kotlin.ui.SpecificLineListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
