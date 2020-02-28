@@ -1,11 +1,14 @@
 package com.github.cta_elevator_alerts_kotlin.database
 
-import android.util.Log
-import androidx.lifecycle.Transformations.map
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
+import com.github.cta_elevator_alerts_kotlin.domain.Alert
 import com.github.cta_elevator_alerts_kotlin.domain.Line
 import com.github.cta_elevator_alerts_kotlin.domain.Station
+import com.github.cta_elevator_alerts_kotlin.domain.StationAndAlert
+
 
 /**
  * Room Database entity (Station)
@@ -48,6 +51,8 @@ fun List<DatabaseStation>.asStationDomainModel(): List<Station>{
                 yellow = it.yellow,
                 name = it.name,
                 alertDescription = it.alertDescription)
+    }.sortedBy {
+         it.name
     }
 }
 

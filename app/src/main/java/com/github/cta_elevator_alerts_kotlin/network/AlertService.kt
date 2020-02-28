@@ -17,27 +17,13 @@ interface AlertService {
     suspend fun getAllAlerts(): NetworkData
 }
 
-//class ImpactedServiceAdapter {
-//    @FromJson
-//    fun fromJson(container: ImpactedService): ImpactedService {
-//        if (container.alerts.)
-//
-//        return when (card[1]) {
-//            'C' -> javax.smartcardio.Card(rank, Suit.CLUBS)
-//            'D' -> javax.smartcardio.Card(rank, Suit.DIAMONDS)
-//            'H' -> javax.smartcardio.Card(rank, Suit.HEARTS)
-//            'S' -> javax.smartcardio.Card(rank, Suit.SPADES)
-//            else -> throw JsonDataException("unknown suit: $card")
-//        }
-//    }
-//}
-
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
  * full Kotlin compatibility.
  */
 private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
+        .add(SingleToArrayAdapter.INSTANCE)
         .build()
 
 object AlertNetwork {

@@ -1,11 +1,13 @@
 package com.github.cta_elevator_alerts_kotlin.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.github.cta_elevator_alerts_kotlin.database.*
 import com.github.cta_elevator_alerts_kotlin.domain.Line
 import com.github.cta_elevator_alerts_kotlin.domain.Station
+import com.github.cta_elevator_alerts_kotlin.domain.StationAndAlert
 import com.github.cta_elevator_alerts_kotlin.network.AlertNetwork
 import com.github.cta_elevator_alerts_kotlin.network.StationNetwork
 import com.github.cta_elevator_alerts_kotlin.network.asDatabaseModel
@@ -33,8 +35,13 @@ class AlertsRepository(private val database: AlertsDatabase) {
     }
 
     val alertStations: LiveData<List<Station>> = Transformations.map(database.alertsDao.getAllAlertStations()){
+        Log.d("Alert Alert", it.size.toString())
         it.asStationDomainModel()
     }
+
+//    val stationsAndAlerts: LiveData<List<Station>> = Transformations.map(database.alertsDao.getStationsAndAlerts()){
+//        it.asDomainModel()
+//    }
 
     val favoriteStations: LiveData<List<Station>> = Transformations.map(database.alertsDao.getFavoriteStations()){
         it.asStationDomainModel()
@@ -84,16 +91,38 @@ class AlertsRepository(private val database: AlertsDatabase) {
         }
     }
 
-    suspend fun refreshAllAlerts(){
+    suspend fun buildAllAlerts(){
         withContext(Dispatchers.IO){
-            val allAlerts = AlertNetwork.alerts.getAllAlerts()
             database.alertsDao.removeAllAlerts()
+//            val allStations = StationNetwork.stations.getAllStations()
+//            database.alertsDao.insertAll(*allStations.asDatabaseModel())
+            val allAlerts = AlertNetwork.alerts.getAllAlerts()
 
             for (alert in allAlerts.CTAAlerts.alerts.asDatabaseModel()){
                 database.alertsDao.addAlert(alert.first, alert.second)
+//                Log.d("Database Alert added", alert.first + " " + alert.second)
             }
         }
     }
+
+//    suspend fun deleteAllAlerts(){
+//        withContext(Dispatchers.IO){
+//            database.alertsDao.removeAllAlerts()
+//        }
+//    }
+//
+//    suspend fun addAllAlerts() {
+//        withContext(Dispatchers.IO) {
+//            val allAlerts = AlertNetwork.alerts.getAllAlerts()
+//
+//            for (alert in allAlerts.CTAAlerts.alerts.asDatabaseModel()){
+//                database.alertsDao.addAlert(alert.first, alert.second)
+//                Log.d("Database Alert added", alert.first + " " + alert.second)
+//            }
+//            Log.d("Database Alerts Size +", database.alertsDao.allAlertStationIDs().size.toString())
+//
+//        }
+//    }
 
     suspend fun switchFavorite(stationID: String){
         withContext(Dispatchers.IO){

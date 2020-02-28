@@ -1,13 +1,18 @@
 package com.github.cta_elevator_alerts_kotlin.network
 
+import android.util.Log
 import com.github.cta_elevator_alerts_kotlin.database.DatabaseStation
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.squareup.moshi.*
+import java.lang.reflect.Type
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+
 
 /**
  * Each CTA El station.
  */
-//@JsonClass(generateAdapter = true)
+@JsonClass(generateAdapter = true)
 data class NetworkStation(
         val map_id: String,
         val ada: Boolean,
@@ -66,49 +71,85 @@ fun shortenStationName(mapID: String): String?{
     }
 }
 
+@JsonClass(generateAdapter = true)
 data class NetworkData(
         val CTAAlerts: NetworkAlertContainer)
 
+@JsonClass(generateAdapter = true)
 data class NetworkAlertContainer(
         @Json(name = "Alert") val alerts: List<NetworkAlert>)
 
+@JsonClass(generateAdapter = true)
 data class NetworkAlert(
         @Json(name = "ShortDescription") val shortDescription: String,
         @Json(name = "Headline") val headline: String,
         @Json(name = "Impact") val impact: String,
         @Json(name = "ImpactedService") val impactedService: ImpactedServiceContainer)
 
-//TODO: fix array or object variably
+@JsonClass(generateAdapter = true)
 data class ImpactedServiceContainer (
-        val servicesObject: List<ImpactedService>,
-        val servicesArray: ImpactedService)
+        @SingleToArray
+        @Json(name = "Service")
+        val services: List<ImpactedService>)
 
+@JsonClass(generateAdapter = true)
 data class ImpactedService(
         @Json(name = "ServiceType") val type: String,
         @Json(name = "ServiceId") val stationID: String)
-
 
 fun List<NetworkAlert>.asDatabaseModel(): Array<Pair<String, String>> {
     val pairs: ArrayList<Pair<String, String>> = ArrayList()
 
     this.forEach{
-        if (it.impact != "Elevator Status" || it.headline.contains("Back in Service")){
-            return@forEach
-        }
-
-        //"T" = Train station alert
-        for (impactedService in it.impactedService.servicesObject){
-            if (impactedService.type == "T"){
-                val stationID = impactedService.stationID
-                val desc = it.shortDescription
-                pairs.add(Pair(stationID, desc))
+        if (it.impact == "Elevator Status" && !it.headline.contains("Back in Service")) {
+            //"T" = Train station alert
+            for (impactedService in it.impactedService.services) {
+                if (impactedService.type == "T") {
+                    val stationID = impactedService.stationID
+                    val desc = it.shortDescription
+                    Log.d("Alert Added", stationID + " " + desc)
+                    pairs.add(Pair(stationID, desc))
+                }
             }
         }
-
-        val stationID = it.impactedService.servicesArray.stationID
-        val desc = it.shortDescription
-        pairs.add(Pair(stationID, desc))
     }
     return pairs.toTypedArray()
 }
+
+//Sometimes the alert is an array and sometimes it is an object. Must account for both.
+class SingleToArrayAdapter(
+        val delegateAdapter: JsonAdapter<List<Any>>,
+        val elementAdapter: JsonAdapter<Any>
+) : JsonAdapter<Any>() {
+
+    companion object {
+        val INSTANCE = SingleToArrayAdapterFactory()
+    }
+
+    override fun fromJson(reader: JsonReader): Any? =
+            if (reader.peek() != JsonReader.Token.BEGIN_ARRAY) {
+                Collections.singletonList(elementAdapter.fromJson(reader))
+            } else delegateAdapter.fromJson(reader)
+
+    override fun toJson(writer: JsonWriter, value: Any?) =
+            throw UnsupportedOperationException("SingleToArrayAdapter is only used to deserialize objects")
+
+    class SingleToArrayAdapterFactory : JsonAdapter.Factory {
+        override fun create(type: Type, annotations: Set<Annotation>, moshi: Moshi): JsonAdapter<Any>? {
+            val delegateAnnotations = Types.nextAnnotations(annotations, SingleToArray::class.java)
+                    ?: return null
+            if (Types.getRawType(type) != List::class.java) throw IllegalArgumentException("Only lists may be annotated with @SingleToArray. Found: $type")
+            val elementType = Types.collectionElementType(type, List::class.java)
+            val delegateAdapter: JsonAdapter<List<Any>> = moshi.adapter(type, delegateAnnotations)
+            val elementAdapter: JsonAdapter<Any> = moshi.adapter(elementType)
+
+            return SingleToArrayAdapter(delegateAdapter, elementAdapter)
+        }
+    }
+}
+
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.FIELD)
+@JsonQualifier
+annotation class SingleToArray
 

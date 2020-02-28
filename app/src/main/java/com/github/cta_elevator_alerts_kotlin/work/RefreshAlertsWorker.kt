@@ -1,6 +1,7 @@
 package com.github.cta_elevator_alerts_kotlin.work
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -22,8 +23,12 @@ class RefreshAlertsWorker(appContext: Context, params: WorkerParameters):
 
         return try {
             val beforeAlerts = repository.getAllAlertStationIDs()
-            repository.refreshAllAlerts()
+//            repository.refreshAllAlerts()
+//            repository.deleteAllAlerts()
+//            repository.addAllAlerts()
+            repository.buildAllAlerts()
             val afterAlerts = repository.getAllAlertStationIDs()
+            Log.d("Database Alerts Worker", afterAlerts.size.toString())
             sendPushNotifications(beforeAlerts, afterAlerts)
             Result.success()
         } catch (exception: HttpException){
