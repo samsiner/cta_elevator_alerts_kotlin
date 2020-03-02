@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.databinding.FragmentDisplayAlertBinding
-import com.github.cta_elevator_alerts_kotlin.domain.Station
 import com.github.cta_elevator_alerts_kotlin.viewmodel.DisplayAlertViewModel
 import com.github.cta_elevator_alerts_kotlin.viewmodel.DisplayAlertViewModelFactory
 

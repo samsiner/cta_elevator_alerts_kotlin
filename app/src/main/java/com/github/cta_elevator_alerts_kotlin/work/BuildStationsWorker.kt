@@ -1,7 +1,6 @@
 package com.github.cta_elevator_alerts_kotlin.work
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters

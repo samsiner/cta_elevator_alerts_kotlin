@@ -2,10 +2,7 @@ package com.github.cta_elevator_alerts_kotlin.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import com.github.cta_elevator_alerts_kotlin.database.getDatabase
-import com.github.cta_elevator_alerts_kotlin.domain.Line
-
 import com.github.cta_elevator_alerts_kotlin.repository.AlertsRepository
 
 /**

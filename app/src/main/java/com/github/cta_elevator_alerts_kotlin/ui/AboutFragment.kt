@@ -3,7 +3,6 @@ package com.github.cta_elevator_alerts_kotlin.ui
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

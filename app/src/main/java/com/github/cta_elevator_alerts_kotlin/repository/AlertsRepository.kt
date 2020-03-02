@@ -1,13 +1,14 @@
 package com.github.cta_elevator_alerts_kotlin.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.github.cta_elevator_alerts_kotlin.database.*
+import com.github.cta_elevator_alerts_kotlin.database.AlertsDatabase
+import com.github.cta_elevator_alerts_kotlin.database.DatabaseLine
+import com.github.cta_elevator_alerts_kotlin.database.asLineDomainModel
+import com.github.cta_elevator_alerts_kotlin.database.asStationDomainModel
 import com.github.cta_elevator_alerts_kotlin.domain.Line
 import com.github.cta_elevator_alerts_kotlin.domain.Station
-import com.github.cta_elevator_alerts_kotlin.domain.StationAndAlert
 import com.github.cta_elevator_alerts_kotlin.network.AlertNetwork
 import com.github.cta_elevator_alerts_kotlin.network.StationNetwork
 import com.github.cta_elevator_alerts_kotlin.network.asDatabaseModel
@@ -35,13 +36,8 @@ class AlertsRepository(private val database: AlertsDatabase) {
     }
 
     val alertStations: LiveData<List<Station>> = Transformations.map(database.alertsDao.getAllAlertStations()){
-        Log.d("Alert Alert", it.size.toString())
         it.asStationDomainModel()
     }
-
-//    val stationsAndAlerts: LiveData<List<Station>> = Transformations.map(database.alertsDao.getStationsAndAlerts()){
-//        it.asDomainModel()
-//    }
 
     val favoriteStations: LiveData<List<Station>> = Transformations.map(database.alertsDao.getFavoriteStations()){
         it.asStationDomainModel()

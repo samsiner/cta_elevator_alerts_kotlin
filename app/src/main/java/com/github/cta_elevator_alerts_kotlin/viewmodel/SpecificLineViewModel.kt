@@ -1,11 +1,11 @@
 package com.github.cta_elevator_alerts_kotlin.viewmodel
 
 import android.app.Application
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.github.cta_elevator_alerts_kotlin.database.getDatabase
-
-import com.github.cta_elevator_alerts_kotlin.domain.Station
 import com.github.cta_elevator_alerts_kotlin.repository.AlertsRepository
 
 /**

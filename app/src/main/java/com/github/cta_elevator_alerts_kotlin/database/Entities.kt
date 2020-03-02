@@ -1,13 +1,9 @@
 package com.github.cta_elevator_alerts_kotlin.database
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.Relation
-import com.github.cta_elevator_alerts_kotlin.domain.Alert
 import com.github.cta_elevator_alerts_kotlin.domain.Line
 import com.github.cta_elevator_alerts_kotlin.domain.Station
-import com.github.cta_elevator_alerts_kotlin.domain.StationAndAlert
 
 
 /**
