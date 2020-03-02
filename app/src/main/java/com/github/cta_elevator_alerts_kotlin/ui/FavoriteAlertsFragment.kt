@@ -29,21 +29,6 @@ class FavoriteAlertsFragment : Fragment() {
                 false
         )
 
-        binding.swipeRefreshFavorites.setOnRefreshListener {
-//            addOneTimeWorker()
-            //TODO: one time worker for refresh
-
-//            val applicationScope = CoroutineScope(Dispatchers.Default)
-//
-//            applicationScope.launch {
-//                val oneTimeAlertRequest = OneTimeWorkRequest.Builder(RefreshAlertsWorker::class.java)
-//                        .build()
-//
-//                WorkManager.getInstance(context).enqueue(oneTimeAlertRequest)
-//            }
-            binding.swipeRefreshFavorites.isRefreshing = false
-        }
-
         val viewModel = ViewModelProvider(this).get(FavoriteAlertsViewModel::class.java)
 
         binding.lifecycleOwner = this
@@ -81,7 +66,6 @@ class FavoriteAlertsFragment : Fragment() {
             binding.txtUpdateAlertTime.text = it
         })
 
-//        addOneTimeWorker()
         return binding.root
     }
 //

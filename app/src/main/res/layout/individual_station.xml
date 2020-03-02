@@ -11,7 +11,7 @@
             type="com.github.cta_elevator_alerts_kotlin.ui.StationListener" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/card_spacing"
@@ -109,5 +109,5 @@
                     app:yellow="@{station}"/>
             </LinearLayout>
         </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 </layout>

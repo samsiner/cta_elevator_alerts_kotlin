@@ -1,6 +1,7 @@
 package com.github.cta_elevator_alerts_kotlin.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,6 @@ class AllAlertsFragment : Fragment() {
 
         binding.swipeRefreshAll.setOnRefreshListener {
             addOneTimeWorker()
-            //TODO: Add OneTimeWorker
             binding.swipeRefreshAll.isRefreshing = false
         }
 
@@ -60,16 +60,18 @@ class AllAlertsFragment : Fragment() {
 
                 //If no alerts
                 val tv = binding.noStationAlerts
-                if (it.isEmpty()) {
-                    tv.visibility = View.VISIBLE
-                } else {
-                    tv.visibility = View.GONE
+                when (it.isEmpty()) {
+                    true -> tv.visibility = View.VISIBLE
+                    false -> tv.visibility = View.GONE
                 }
             }
         })
 
-        viewModel.lastUpdatedTime.observe(viewLifecycleOwner, Observer<String>{
-            binding.txtUpdateAlertTime.text = it
+        viewModel.lastUpdatedTime.observe(viewLifecycleOwner, Observer {
+            Log.d("Time Gotten", it ?: "null")
+            it?.let {
+                binding.txtUpdateAlertTime.text = it
+            }
         })
 
         return binding.root
