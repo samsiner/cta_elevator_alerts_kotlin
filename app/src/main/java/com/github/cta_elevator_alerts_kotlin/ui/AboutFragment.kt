@@ -30,9 +30,6 @@ class AboutFragment : Fragment() {
         binding.txtPrivacy.movementMethod = LinkMovementMethod.getInstance()
         binding.txtContactEmail.movementMethod = LinkMovementMethod.getInstance()
 
-//        //        val about = findViewById<ImageView>(R.id.img_home_icon)
-//        about.visibility = View.INVISIBLE
-
         return binding.root
     }
 }

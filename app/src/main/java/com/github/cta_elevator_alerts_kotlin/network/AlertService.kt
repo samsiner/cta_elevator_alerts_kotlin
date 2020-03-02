@@ -33,5 +33,5 @@ object AlertNetwork {
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
-    val alerts = retrofit.create(AlertService::class.java)
+    val alerts: AlertService = retrofit.create(AlertService::class.java)
 }

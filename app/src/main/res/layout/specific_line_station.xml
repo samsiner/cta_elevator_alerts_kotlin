@@ -20,7 +20,7 @@
             type="com.github.cta_elevator_alerts_kotlin.ui.SpecificLineListener" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> specificLineListener.onClick(station)}">
@@ -100,6 +100,7 @@
                 style="@style/icon_small_star"
                 android:layout_toLeftOf="@id/img_right"
                 android:layout_toStartOf="@id/img_right"
+                android:contentDescription="@string/add_to_favorites"
                 app:favoriteImage="@{station}"/>
 
             <ImageView
@@ -109,5 +110,5 @@
 
         </RelativeLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 </layout>

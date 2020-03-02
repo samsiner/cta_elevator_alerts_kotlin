@@ -1,7 +1,7 @@
 <resources>
     <string name="elevator_alerts">Elevator Alerts</string>
     <string name="all_stations">All Stations</string>
-    <string name="app_name">ELEVATE</string>
+    <string name="app_name">ELEVATE CHICAGO</string>
     <string name="title_favorites">Favorites</string>
     <string name="favorite_alerts">Favorite Alerts</string>
     <string name="all_lines">All Lines</string>
@@ -22,7 +22,6 @@
     <string name="no_alerts">All elevators at this station are working properly.</string>
     <string name="no_elevators">There are no elevators at this station.</string>
     <string name="no_elevators_header">No elevators!</string>
-    <string name="about_short">About the App</string>
     <string name="contact_email"><a href="mailto:southportdevelopers@gmail.com?subject=Elevate%20App">southportdevelopers@gmail.com</a></string>
     <string name="privacy_policy_link"><a href="https://sites.google.com/view/elevateappprivacypolicy/home">Privacy Policy</a></string>
     <string name="add_to_favorites">Add to Favorites</string>

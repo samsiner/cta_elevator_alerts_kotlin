@@ -34,7 +34,7 @@ object StationNetwork {
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
-    val stations = retrofit.create(StationService::class.java)
+    val stations: StationService = retrofit.create(StationService::class.java)
 }
 
 

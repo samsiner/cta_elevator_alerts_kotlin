@@ -3,8 +3,8 @@
 
     <data>
         <variable
-            name="specificLineViewModel"
-            type="com.github.cta_elevator_alerts_kotlin.viewmodel.SpecificLineViewModel" />
+            name="lineName"
+            type="String" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -18,12 +18,21 @@
             android:background="@color/colorWhite">
 
             <TextView
+                android:id="@+id/tv_line_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/LineNameText"
+                android:text="@string/elevator_alerts"
+                android:textColor="@color/colorPrimaryDark"
+                app:lineName="@{lineName}"/>
+
+            <TextView
                 android:id="@+id/tv_elevator_alerts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/SubHeaderText"
                 android:text="@string/elevator_alerts"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimaryDark"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -40,7 +49,7 @@
                 android:layout_height="wrap_content"
                 style="@style/SubHeaderText"
                 android:text="@string/all_stations"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginTop="20dp"
                 />
 

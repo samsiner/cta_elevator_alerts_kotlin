@@ -43,6 +43,7 @@ class SpecificLineFragment : Fragment() {
         val viewModel = ViewModelProvider(this, viewModelFactory).get(SpecificLineViewModel::class.java)
 
         binding.lifecycleOwner = this
+        binding.lineName = lineName
 
         //Create adapter to display all alerts
         val specificLineAlertsAdapter = SpecificLineAlertsAdapter(SpecificLineAlertListener { stationID ->

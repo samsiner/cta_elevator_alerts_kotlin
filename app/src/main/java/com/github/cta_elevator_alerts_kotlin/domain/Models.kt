@@ -19,10 +19,3 @@ data class Station(
 data class Line(
         val id: String,
         val name: String)
-
-data class Alert(
-        val description: String)
-
-data class StationAndAlert(
-        val station: Station,
-        val alert: Alert)

@@ -15,10 +15,8 @@
     <style name="TitleText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">sans-serif-condensed</item>
-        <item name="android:textStyle">normal</item>
         <item name="android:textColor">#ffffff</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:capitalize">sentences</item>
         <item name="android:layout_gravity">center_horizontal</item>
@@ -29,6 +27,12 @@
         <item name="android:textSize">18sp</item>
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">20dp</item>
+    </style>
+
+    <style name="LineNameText" parent="TitleText">
+        <item name="android:textSize">35sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">20dp</item>
     </style>
 
     <style name="StationName">
@@ -48,7 +52,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="StationAlertBold" parent="StationAlertRegular">

@@ -10,11 +10,31 @@ import androidx.databinding.BindingAdapter
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.domain.Line
 import com.github.cta_elevator_alerts_kotlin.domain.Station
+import java.util.*
 
 @BindingAdapter("stationName")
 fun TextView.setStationName(item: Station?){
     item?.let{
         text = item.name
+    }
+}
+
+@BindingAdapter("lineName")
+fun TextView.setLineName(lineName: String?){
+    lineName?.let{
+        text = lineName
+
+        when (lineName){
+            "Red Line" -> setTextColor(ContextCompat.getColor(context, R.color.colorRedLine))
+            "Blue Line" -> setTextColor(ContextCompat.getColor(context, R.color.colorBlueLine))
+            "Brown Line" -> setTextColor(ContextCompat.getColor(context, R.color.colorBrownLine))
+            "Green Line" -> setTextColor(ContextCompat.getColor(context, R.color.colorGreenLine))
+            "Orange Line" -> setTextColor(ContextCompat.getColor(context, R.color.colorOrangeLine))
+            "Pink Line" -> setTextColor(ContextCompat.getColor(context, R.color.colorPinkLine))
+            "Purple Line" -> setTextColor(ContextCompat.getColor(context, R.color.colorPurpleLine))
+            "Yellow Line" -> setTextColor(ContextCompat.getColor(context, R.color.colorYellowLine))
+        }
+
     }
 }
 
