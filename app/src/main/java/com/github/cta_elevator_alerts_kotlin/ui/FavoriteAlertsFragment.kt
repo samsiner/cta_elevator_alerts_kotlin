@@ -62,7 +62,7 @@ class FavoriteAlertsFragment : Fragment() {
             }
         })
 
-        viewModel.lastUpdatedTime.observe(viewLifecycleOwner, Observer<String>{
+        viewModel.lastUpdatedTime.observe(viewLifecycleOwner, Observer{
             binding.txtUpdateAlertTime.text = it
         })
 

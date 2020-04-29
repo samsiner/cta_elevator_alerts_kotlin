@@ -10,7 +10,6 @@ import androidx.databinding.BindingAdapter
 import com.github.cta_elevator_alerts_kotlin.R
 import com.github.cta_elevator_alerts_kotlin.domain.Line
 import com.github.cta_elevator_alerts_kotlin.domain.Station
-import java.util.*
 
 @BindingAdapter("stationName")
 fun TextView.setStationName(item: Station?){

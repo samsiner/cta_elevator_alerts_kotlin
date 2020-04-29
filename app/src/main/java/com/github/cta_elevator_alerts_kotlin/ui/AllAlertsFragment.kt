@@ -81,7 +81,7 @@ class AllAlertsFragment : Fragment() {
         val oneTimeAlertRequest = OneTimeWorkRequest.Builder(RefreshAlertsWorker::class.java)
                 .build()
 
-        WorkManager.getInstance(this.context!!).enqueue(oneTimeAlertRequest)
+        WorkManager.getInstance(this.requireContext()).enqueue(oneTimeAlertRequest)
     }
 }
 

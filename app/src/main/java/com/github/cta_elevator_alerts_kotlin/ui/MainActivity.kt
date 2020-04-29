@@ -2,13 +2,11 @@ package com.github.cta_elevator_alerts_kotlin.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.github.cta_elevator_alerts_kotlin.R
-import com.github.cta_elevator_alerts_kotlin.generated.callback.OnClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**

@@ -34,7 +34,7 @@ class SpecificLineFragment : Fragment() {
                 container,
                 false
         )
-        val arguments = SpecificLineFragmentArgs.fromBundle(arguments!!)
+        val arguments = SpecificLineFragmentArgs.fromBundle(requireArguments())
         val lineName = arguments.lineName
 
         //Create ViewModel and initialize line name at construction

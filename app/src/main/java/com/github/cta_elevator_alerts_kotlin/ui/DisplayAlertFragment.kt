@@ -26,7 +26,7 @@ class DisplayAlertFragment : Fragment() {
                 container,
                 false
         )
-        val arguments = DisplayAlertFragmentArgs.fromBundle(arguments!!)
+        val arguments = DisplayAlertFragmentArgs.fromBundle(requireArguments())
         val stationID = arguments.stationID
 
         //Create ViewModel and initialize line name at construction
